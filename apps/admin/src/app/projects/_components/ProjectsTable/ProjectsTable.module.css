@@ -1,0 +1,153 @@
+.projectsContainer {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 100px);
+  /* Adjust for header/footer */
+  gap: 1rem;
+}
+
+.searchContainer {
+  width: 100%;
+}
+
+.topControls {
+  width: 100%;
+  align-items: center;
+}
+
+.search {
+  flex: 1;
+}
+
+.createButton {
+  background-color: var(--mantine-color-green-9);
+  min-width: 140px;
+}
+
+.createButton:hover {
+  background-color: var(--mantine-color-green-8);
+}
+
+.tableContainer {
+  flex: 1;
+  overflow: auto;
+  background-color: var(--mantine-color-dark-7);
+  border-color: var(--mantine-color-dark-4);
+  display: flex;
+  flex-direction: column;
+}
+
+.table {
+  min-width: 800px;
+  flex: 1;
+}
+
+.table tr {
+  transition: background-color 0.15s ease;
+}
+
+.table th {
+  font-family: var(--mantine-font-family-monospace);
+  color: var(--mantine-color-gray-3);
+  font-weight: 600;
+  text-transform: uppercase;
+  background-color: var(--mantine-color-dark-5);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Unique row colors - different shades rather than higher shade */
+.row0 {
+  background-color: var(--mantine-color-dark-7);
+}
+
+.row1 {
+  background-color: var(--mantine-color-dark-6);
+}
+
+.row2 {
+  background-color: rgba(30, 34, 39, 1);
+}
+
+.row3 {
+  background-color: rgba(33, 37, 43, 1);
+}
+
+.row4 {
+  background-color: rgba(36, 40, 46, 1);
+}
+
+.row5 {
+  background-color: rgba(39, 43, 49, 1);
+}
+
+.row6 {
+  background-color: rgba(42, 46, 53, 1);
+}
+
+.row7 {
+  background-color: rgba(45, 49, 56, 1);
+}
+
+.row8 {
+  background-color: rgba(48, 52, 59, 1);
+}
+
+.row9 {
+  background-color: rgba(51, 55, 62, 1);
+}
+
+.paginationContainer {
+  margin-top: auto;
+  padding: 0.75rem 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pagination {
+  color: var(--mantine-color-green-4);
+}
+
+.pagination [data-active] {
+  background-color: var(--mantine-color-green-7);
+}
+
+.singleRowTable td {
+  padding: 1.25rem 1rem;
+  /* Increased padding for single row */
+  font-size: 1.05rem;
+  /* Slightly larger font */
+}
+
+.singleRowTable .actionButton {
+  width: 38px !important;
+  /* Even bigger buttons for single row */
+  height: 38px !important;
+}
+
+.singleRowTable .container {
+  padding: 0.5rem 0;
+}
+
+.singleRowTable .section {
+  height: 22px !important;
+  /* Taller engagement bar for single row */
+}
+
+.singleRowTable .legend {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  /* Larger legend text */
+}
+
+.singleRowTable .legendItem {
+  gap: 6px;
+}
+
+.singleRowTable .shareColor,
+.singleRowTable .bookmarkColor,
+.singleRowTable .likeColor {
+  width: 10px;
+  height: 10px;
+}

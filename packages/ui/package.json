@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./*": "./src/*.tsx"
+   "./components/*": "./src/components/*/index.ts",
+    "./hooks/*": "./src/hooks/*/index.js",
+    "./utils/*": "./src/utils/*/index.js"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
-    "generate:component": "turbo gen react-component",
+    "clean": "rm -rf dist && rm -rf node_modules",
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
@@ -17,11 +19,42 @@
     "@types/node": "^22.14.0",
     "@types/react": "19.1.0",
     "@types/react-dom": "19.1.1",
+    "autoprefixer": "^10.4.18",
     "eslint": "^9.25.0",
+    "postcss": "^8.5.3",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
     "typescript": "5.8.2"
   },
   "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "@hello-pangea/dnd": "^18.0.1",
+    "@mantine/carousel": "^7.0.0",
+    "@mantine/charts": "^7.0.0",
+    "@mantine/code-highlight": "^7.0.0",
+    "@mantine/core": "^7.0.0",
+    "@mantine/dates": "^7.0.0",
+    "@mantine/dropzone": "^7.0.0",
+    "@mantine/form": "^7.0.0",
+    "@mantine/hooks": "^7.0.0",
+    "@mantine/modals": "^7.0.0",
+    "@mantine/notifications": "^7.0.0",
+    "@mantine/nprogress": "^7.0.0",
+    "@mantine/spotlight": "^7.0.0",
+    "@mantine/tiptap": "^7.0.0",
+    "@tabler/icons-react": "^3.31.0",
+    "@tiptap/extension-link": "^2.2.0",
+    "@tiptap/pm": "^2.2.0",
+    "@tiptap/react": "^2.2.0",
+    "@tiptap/starter-kit": "^2.2.0",
+    "dayjs": "^1.11.10",
+    "embla-carousel-react": "^8.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^2.12.0",
+    "zustand": "^5.0.3"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }

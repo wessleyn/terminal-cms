@@ -1,0 +1,119 @@
+.inlineEditorContainer {
+  position: relative;
+}
+
+.saveStatusIndicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  z-index: 5;
+}
+
+/* Editable fields styling */
+.terminalInput {
+  background-color: transparent;
+  border: 1px solid var(--bs-border-color);
+  color: var(--bs-body-color);
+  font-family: var(--font-mono);
+  padding: 8px 12px;
+  transition: all 0.2s ease;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.terminalInput:focus {
+  outline: none;
+  border-color: rgba(74, 246, 38, 0.5);
+  box-shadow: 0 0 0 2px rgba(74, 246, 38, 0.2);
+}
+
+.terminalLabel {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--bs-primary);
+}
+
+.tagInput {
+  background: transparent;
+  border: none;
+  color: var(--bs-body-color);
+  font-family: var(--font-mono);
+  padding: 4px 8px;
+  min-width: 100px;
+  font-size: 0.85rem;
+}
+
+.tagInput:focus {
+  outline: none;
+}
+
+.tagsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 4px;
+  min-height: 48px;
+  align-items: center;
+}
+
+.editableTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 6px;
+}
+
+.tagRemoveBtn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.tagRemoveBtn:hover {
+  color: white;
+}
+
+.tagSuggestions {
+  margin-top: 0.5rem;
+}
+
+.suggestionTag {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.suggestionTag:hover {
+  background-color: rgba(74, 246, 38, 0.2);
+  transform: scale(1.05);
+}
+
+.previewSection {
+  border-top: 1px solid var(--bs-border-color);
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+.previewContainer {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--bs-border-color);
+}
+
+/* Form group styling */
+.formGroup {
+  margin-bottom: 1.5rem;
+}

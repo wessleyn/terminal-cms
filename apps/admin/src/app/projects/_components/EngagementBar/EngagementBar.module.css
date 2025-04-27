@@ -1,0 +1,52 @@
+.container {
+  width: 100%;
+}
+
+.root {
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.section {
+  transition: all 0.2s ease;
+  height: 18px; /* Increased from 12px */
+}
+
+.legend {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+  font-size: 0.75rem;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.shareColor,
+.bookmarkColor,
+.likeColor {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.shareColor {
+  background-color: var(--mantine-color-blue-6);
+}
+
+.bookmarkColor {
+  background-color: var(--mantine-color-yellow-6);
+}
+
+.likeColor {
+  background-color: var(--mantine-color-red-6);
+}
+
+.label {
+  color: var(--mantine-color-gray-5);
+}

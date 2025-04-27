@@ -1,0 +1,9 @@
+.icon {
+  color: var(--mantine-color-green-4);
+  transition: all 0.2s ease;
+}
+
+:hover > .icon {
+  color: var(--mantine-color-green-2);
+  filter: drop-shadow(0 0 2px rgba(74, 246, 38, 0.4));
+}

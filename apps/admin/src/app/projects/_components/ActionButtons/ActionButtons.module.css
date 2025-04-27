@@ -1,0 +1,21 @@
+.actionButton {
+  transition: transform 0.2s ease;
+  width: 32px; /* Increased from default size */
+  height: 32px; /* Increased from default size */
+}
+
+.actionButton:hover {
+  transform: scale(1.15);
+  background-color: var(--mantine-color-dark-5);
+}
+
+.modalTitle {
+  font-family: var(--mantine-font-family-monospace);
+  color: var(--mantine-color-red-5);
+  font-weight: 600;
+}
+
+.modalButton {
+  width: 80px;
+  height: 36px;
+}

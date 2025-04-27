@@ -1,0 +1,25 @@
+{
+  "name": "@repo/db",
+  "version": "0.0.0",
+  "exports": {
+    ".": "./src/index.ts",
+    "./generated/prisma": "./generated/prisma/index.js"
+  },
+  "prisma": {
+    "schema": "./prisma/schema",
+    "seed": "tsx ./prisma/seed/seed.ts"
+  },
+  "scripts": {
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev --skip-generate",
+    "db:deploy": "prisma migrate deploy",
+    "db:prebuild": "npm run db:generate",
+    "db:predev": "npm run db:generate",
+    "db:studio": "prisma studio",
+    "db:push": "prisma db push",
+    "db:forcePush": "prisma db push  --accept-data-loss",
+    "db:seed": "npm run db:generate && ts-node ./prisma/seed/seed.ts",
+    "db:reset": "prisma migrate reset --force",
+    "postinstall": "prisma generate"
+  }
+}

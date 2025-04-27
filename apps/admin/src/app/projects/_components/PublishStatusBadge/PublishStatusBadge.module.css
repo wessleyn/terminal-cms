@@ -1,0 +1,19 @@
+.badge {
+  cursor: pointer;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding-bottom: 4px;
+}
+
+.badge:hover {
+  filter: brightness(1.1);
+}
+
+.activeItem {
+  background-color: var(--mantine-color-dark-4);
+}

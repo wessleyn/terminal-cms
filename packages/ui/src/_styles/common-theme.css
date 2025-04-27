@@ -1,0 +1,79 @@
+/* Azeret Mono font definitions - static version */
+@font-face {
+  font-family: "Azeret Mono";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("./Azeret_Mono/static/AzeretMono-Light.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "Azeret Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./Azeret_Mono/static/AzeretMono-Regular.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "Azeret Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./Azeret_Mono/static/AzeretMono-Medium.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "Azeret Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./Azeret_Mono/static/AzeretMono-SemiBold.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "Azeret Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./Azeret_Mono/static/AzeretMono-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Azeret Mono";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("./Azeret_Mono/static/AzeretMono-ExtraBold.ttf")
+    format("truetype");
+}
+
+/* Variable font option - can be used as an alternative */
+@font-face {
+  font-family: "Azeret Mono Variable";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("./Azeret_Mono/AzeretMono-VariableFont_wght.ttf")
+    format("truetype-variations");
+}
+
+:root {
+  --font-azeret-mono: "Azeret Mono", monospace;
+  --bs-primary: #4af626;
+  --bs-primary-rgb: 74, 246, 38;
+  --bs-body-color: #d2d2d2;
+  --bs-body-bg: #121212;
+  --bs-dark: #1a1a1a;
+  --bs-secondary: #2b2b2b;
+}
+
+body {
+  font-family: "Azeret Mono", monospace;
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+}

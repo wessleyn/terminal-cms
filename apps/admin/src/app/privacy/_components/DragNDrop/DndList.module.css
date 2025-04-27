@@ -1,0 +1,26 @@
+.item {
+  display: flex;
+  align-items: stretch;
+  border-radius: var(--mantine-radius-md);
+  padding: var(--mantine-spacing-sm);
+  background-color: light-dark(
+    var(--mantine-color-white),
+    var(--mantine-color-dark-5)
+  );
+  margin-bottom: var(--mantine-spacing-md);
+  width: 100%;
+}
+
+.itemDragging {
+  box-shadow: var(--mantine-shadow-md);
+}
+
+.symbol {
+  font-size: 30px;
+  font-weight: 700;
+  width: 60px;
+}
+
+.dragHandle {
+  cursor: grab;
+}

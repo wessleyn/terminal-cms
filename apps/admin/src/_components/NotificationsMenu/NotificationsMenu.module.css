@@ -1,0 +1,102 @@
+.dropdown {
+  background-color: var(--mantine-color-dark-8);
+  border: 1px solid var(--mantine-color-green-9);
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--mantine-color-dark-6);
+  color: var(--mantine-color-green-3);
+}
+
+.notification {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--mantine-color-dark-7);
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.notification:hover {
+  background-color: var(--mantine-color-dark-7);
+}
+
+.notificationRead {
+  composes: notification;
+  opacity: 0.7;
+}
+
+.notificationInner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.notificationContent {
+  flex: 1;
+}
+
+.notificationActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.notification:hover .notificationActions {
+  opacity: 1;
+}
+
+.actionButton {
+  color: var(--mantine-color-green-6);
+  transition: color 0.2s, transform 0.1s;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.actionButton:hover {
+  color: var(--mantine-color-green-4);
+  background-color: var(--mantine-color-dark-6);
+  transform: scale(1.1);
+}
+
+.timeStamp {
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.footer {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--mantine-color-dark-6);
+}
+
+.viewAllButton {
+  color: var(--mantine-color-green-5);
+  font-size: 0.85rem;
+  transition: color 0.2s;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.viewAllButton:hover {
+  color: var(--mantine-color-green-3);
+  background-color: var(--mantine-color-dark-6);
+}
+
+.settingsButton {
+  color: var(--mantine-color-green-6);
+  transition: color 0.2s, transform 0.2s;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.settingsButton:hover {
+  color: var(--mantine-color-green-4);
+  background-color: var(--mantine-color-dark-6);
+  transform: scale(1.1);
+}

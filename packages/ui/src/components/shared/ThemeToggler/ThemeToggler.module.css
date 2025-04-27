@@ -1,0 +1,42 @@
+.icon {
+    width: 22px;
+    height: 22px;
+}
+
+.dark {
+    @mixin dark {
+        display: none;
+    }
+
+    @mixin light {
+        display: block;
+    }
+}
+
+.light {
+    @mixin light {
+        display: none;
+    }
+
+    @mixin dark {
+        display: block;
+    }
+}
+
+.togglerWrapper {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--mantine-color-body);
+    border-radius: 50%;
+    box-shadow: var(--mantine-shadow-md);
+    transition: all 0.3s ease;
+}
+
+.togglerWrapper:hover {
+    transform: scale(1.05);
+}

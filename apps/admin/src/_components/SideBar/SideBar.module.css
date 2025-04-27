@@ -1,0 +1,229 @@
+/* Mobile-first - these styles apply to all screen sizes by default */
+.SideBar {
+  background-color: var(--mantine-color-body);
+  height: 100vh;
+  width: 280px; /* Mobile width by default */
+  padding: var(--mantine-spacing-md);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  transition: width 0.3s ease, transform 0.3s ease, left 0.3s ease;
+  position: fixed; /* Fixed position for mobile by default */
+  left: -100%; /* Start offscreen */
+  top: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+  z-index: 100;
+  box-shadow: var(--mantine-shadow-lg);
+}
+
+.SideBar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Mobile open state */
+.SideBarMobileOpen {
+  left: 0; /* Slide in from left */
+}
+
+/* Tablet styles (min-width: 768px) */
+@media (min-width: 768px) {
+  .SideBar {
+    position: sticky;
+    left: 0;
+    width: 80px; /* Collapsed by default for tablet */
+    box-shadow: none;
+  }
+}
+
+/* Desktop styles (min-width: 992px) */
+@media (min-width: 992px) {
+  .SideBar {
+    width: 300px; /* Expanded by default for desktop */
+  }
+
+  .SideBarCollapsed {
+    width: 80px;
+  }
+}
+
+/* Mobile toggle button */
+.mobileToggle {
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  z-index: 110;
+  box-shadow: var(--mantine-shadow-md);
+}
+
+/* Header styles */
+.header {
+  position: relative;
+  margin-bottom: var(--mantine-spacing-md);
+}
+
+.logo {
+  gap: var(--mantine-spacing-sm);
+  margin-bottom: var(--mantine-spacing-md);
+}
+
+.logoCollapsed {
+  justify-content: center;
+  margin-bottom: var(--mantine-spacing-xl);
+}
+
+.clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.clickable:hover {
+  transform: scale(1.02);
+}
+
+.title {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: -0.25px;
+}
+
+.sectionIndicator {
+  display: flex;
+  align-items: center;
+  padding: var(--mantine-spacing-xs);
+  margin: var(--mantine-spacing-xs) 0;
+  background-color: var(--mantine-color-dark-8);
+  color: var(--mantine-color-green-2);
+  border-radius: var(--mantine-radius-md);
+  border: 1px solid var(--mantine-color-green-9);
+}
+
+/* Section Toggle Button */
+.sectionToggleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 40px;
+  margin: var(--mantine-spacing-md) auto;
+  border-radius: var(--mantine-radius-md);
+  background-color: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-6)
+  );
+  border: 1px solid var(--mantine-color-green-5);
+  color: var(--mantine-color-green-2);
+  transition: all 0.2s ease;
+}
+
+.sectionToggleButton:hover {
+  background-color: var(--mantine-color-green-9);
+  color: var(--mantine-color-green-0);
+  border-color: var(--mantine-color-green-7);
+  box-shadow: 0 0 5px var(--mantine-color-green-5);
+}
+
+.sectionToggleButton .linkIcon {
+  color: inherit;
+  margin-right: 0;
+}
+
+/* Main content area */
+.SideBarMain {
+  flex: 1;
+  margin-top: var(--mantine-spacing-md);
+  overflow-y: auto;
+}
+
+.SideBarCollapsed .SideBarMain {
+  overflow-y: visible;
+  overflow-x: visible;
+}
+
+/* Link styles */
+.link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: var(--mantine-font-size-sm);
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  border-radius: var(--mantine-radius-sm);
+  font-weight: 500;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.link:hover {
+  background-color: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-6)
+  );
+  color: light-dark(var(--mantine-color-green-5), var(--mantine-color-green-4));
+}
+
+.link:hover .linkIcon {
+  color: light-dark(var(--mantine-color-green-5), var(--mantine-color-green-4));
+}
+
+.link[data-active],
+.link[data-active]:hover {
+  /* background-color: var(--mantine-color-green-1); */
+  color: var(--mantine-color-green-7);
+}
+
+.link[data-active] .linkIcon,
+.link[data-active]:hover .linkIcon {
+  color: var(--mantine-color-green-7);
+}
+
+.SideBarCollapsed .link {
+  width: 50px;
+  height: 50px;
+  justify-content: center;
+  border-radius: var(--mantine-radius-md);
+  padding: 0;
+}
+
+.link{
+  padding: 12px 16px;
+}
+
+.linkIcon {
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-2));
+  margin-right: var(--mantine-spacing-sm);
+  width: 25px;
+  height: 25px;
+  transition: color 0.2s ease;
+}
+
+.SideBarCollapsed .linkIcon {
+  margin-right: 0;
+}
+
+.linkLabel {
+  display: inline;
+}
+
+.SideBarCollapsed .linkLabel {
+  display: none;
+}
+
+/* Footer styles */
+.footer {
+  border-top: 1px solid
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  padding-top: var(--mantine-spacing-md);
+  margin-top: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .SideBar:not(.SideBarMobile):not(.SideBarCollapsed) {
+    width: 250px;
+  }
+}

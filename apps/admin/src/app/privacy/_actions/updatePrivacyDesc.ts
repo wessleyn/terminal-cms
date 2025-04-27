@@ -1,0 +1,41 @@
+'use server';
+
+import { prisma } from '@repo/db';
+import { revalidatePath } from 'next/cache';
+import { ApiResponse, PrivacyType } from '../_types/types';
+
+export async function updatePrivacyDesc(
+    type: PrivacyType = PrivacyType.PORTFOLIO,
+    descPhrase: string
+): Promise<ApiResponse<void>> {
+    try {
+        // Find the privacy document
+        const privacy = await prisma.privacy.findUnique({
+            where: { type }
+        });
+
+        if (!privacy) {
+            return {
+                success: false,
+                error: `No privacy policy found for type: ${type}`
+            };
+        }
+
+        // Update the description
+        await prisma.privacy.update({
+            where: { id: privacy.id },
+            data: { descPhrase }
+        });
+
+        revalidatePath('/dashboard/privacy');
+        revalidatePath('/privacy');
+
+        return { success: true, data: undefined };
+    } catch (error) {
+        console.error('Failed to update privacy description:', error);
+        return {
+            success: false,
+            error: 'Failed to update privacy description'
+        };
+    }
+}

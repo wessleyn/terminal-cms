@@ -1,0 +1,43 @@
+model Project {
+    id             String         @id @default(uuid())
+    title          String
+    description    String         @db.Text
+    imageUrl       String
+    githubUrl      String?
+    liveUrl        String?
+    tags           String[] // Technologies used
+    featured       Boolean        @default(false)
+    publishStatus  PublishStatus  @default(DRAFT)
+    activityStatus ActivityStatus @default(NOT_STARTED)
+    projectType ProjectType @default(SOLO)
+    happyIndex     HappyIndex @default(NEUTRAL)
+    engagement     Json? // { share: number, bookmark: number, like: number }
+    createdAt      DateTime       @default(now())
+    updatedAt      DateTime       @updatedAt
+}
+
+enum PublishStatus {
+    PUBLISHED
+    ARCHIVED
+    DRAFT
+}
+
+enum ActivityStatus {
+    NOT_STARTED
+    IN_PROGRESS
+    COMPLETED
+    ABANDONED
+    ARCHIVED
+}
+
+enum HappyIndex {
+    AWESOME
+    USEFUL
+    COOL
+    NEUTRAL
+}
+
+enum ProjectType {
+    SOLO
+    FEATURED
+}
