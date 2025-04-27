@@ -1,28 +1,54 @@
 {
   "name": "web",
   "version": "0.1.0",
-  "type": "module",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack --port 3000",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "lint": "next lint",
+    "prisma:generate": "prisma generate",
+    "prisma:studio": "prisma studio",
+    "prisma:migrate:dev": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:db:push": "prisma db push",
+    "prisma:db:forcePush": "prisma db push --force-reset",
+    "prisma:seed": "prisma db seed",
+    "prisma:format": "prisma format",
+    "prisma:reset": "prisma migrate reset"
+  },
+  "prisma": {
+    "schema": "./prisma/schema",
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} ./prisma/seed/seed.ts"
   },
   "dependencies": {
-    "@repo/ui": "*",
-    "next": "^15.3.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "@auth/prisma-adapter": "^2.8.0",
+    "@repo/db": "^0.0.0",
+    "@repo/eslint-config": "^0.0.0",
+    "@repo/typescript-config": "^0.0.0",
+    "@repo/ui": "^0.0.0",
+    "@tabler/icons-react": "^3.31.0",
+    "bcryptjs": "^3.0.2",
+    "next": "15.3.1",
+    "next-auth": "^5.0.0-beta.25",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.3",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "@types/node": "^22.14.0",
-    "@types/react": "19.1.0",
-    "@types/react-dom": "19.1.1",
-    "eslint": "^9.25.0",
-    "typescript": "5.8.2"
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.1",
+    "prettier": "3.5.3",
+    "realfavicon": "^0.4.18",
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
   }
 }

@@ -1,0 +1,11 @@
+.next
+node_modules
+out
+build
+dist
+coverage
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+.vscode
+public/assets

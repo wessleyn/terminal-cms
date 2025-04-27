@@ -1,0 +1,29 @@
+.card {
+    position: relative;
+    background-color: var(--mantine-color-body);
+}
+
+.rating {
+    position: absolute;
+    top: var(--mantine-spacing-xs);
+    right: 12px;
+    pointer-events: none;
+}
+
+.title {
+    display: block;
+    margin-top: var(--mantine-spacing-md);
+    margin-bottom: 5px;
+}
+
+.action {
+    background-color: transparent;
+}
+
+.action:hover {
+    background-color: var(--mantine-color-body);
+}
+
+.footer {
+    margin-top: var(--mantine-spacing-md);
+}

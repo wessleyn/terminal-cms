@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><style>
+    #light-icon {
+      display: inline;
+    }
+    #dark-icon {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #light-icon {
+        display: none;
+      }
+      #dark-icon {
+        display: inline;
+      }
+    }
+  </style><g id="light-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><g><g transform="matrix(20.833333333333332,0,0,20.833333333333332,0,0)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="48" height="48"><svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="48" height="48" id="terminal">
+  <path d="M39 48H9a9 9 0 0 1-9-9V9a9 9 0 0 1 9-9h30c4.968 0 9 4.029 9 9v30c0 4.971-4.032 9-9 9zm3-39a3 3 0 0 0-3-3H9C7.344 6 6 7.344 6 9v6h36V9zm0 9H6v21a3 3 0 0 0 3 3h30c1.659 0 3-1.341 3-3V18zM15 30h6v3h-6v-3zm-6 0v-3h3v3H9zm3-6h3v3h-3v-3zm-3-3h3v3H9v-3zm3-9H9V9h3v3zm6 0h-3V9h3v3zm21 0H21V9h18v3z"></path>
+</svg></svg></g></g></svg></g><g id="dark-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><g><g transform="matrix(20.833333333333332,0,0,20.833333333333332,0,0)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="48" height="48"><svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 48 48" id="Terminal">
+  <path d="M39 48H9a9 9 0 0 1-9-9V9a9 9 0 0 1 9-9h30c4.968 0 9 4.029 9 9v30c0 4.971-4.032 9-9 9zm3-39a3 3 0 0 0-3-3H9C7.344 6 6 7.344 6 9v6h36V9zm0 9H6v21a3 3 0 0 0 3 3h30c1.659 0 3-1.341 3-3V18zM15 30h6v3h-6v-3zm-6 0v-3h3v3H9zm3-6h3v3h-3v-3zm-3-3h3v3H9v-3zm3-9H9V9h3v3zm6 0h-3V9h3v3zm21 0H21V9h18v3z" fill="#d6fece" class="color000000 svgShape"></path>
+</svg></svg></g></g></svg></g></svg>

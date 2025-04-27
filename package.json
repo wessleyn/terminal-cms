@@ -5,7 +5,9 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "dev:admin": "turbo run dev --filter=admin",
+    "dev:web": "turbo run dev --filter=web",
     "start:admin": "turbo run start --filter=admin",
+    "start:web": "turbo run start --filter=web",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
