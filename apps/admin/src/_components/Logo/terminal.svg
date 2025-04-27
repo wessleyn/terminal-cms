@@ -1,3 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 48 48" id="Terminal">
-  <path d="M39 48H9a9 9 0 0 1-9-9V9a9 9 0 0 1 9-9h30c4.968 0 9 4.029 9 9v30c0 4.971-4.032 9-9 9zm3-39a3 3 0 0 0-3-3H9C7.344 6 6 7.344 6 9v6h36V9zm0 9H6v21a3 3 0 0 0 3 3h30c1.659 0 3-1.341 3-3V18zM15 30h6v3h-6v-3zm-6 0v-3h3v3H9zm3-6h3v3h-3v-3zm-3-3h3v3H9v-3zm3-9H9V9h3v3zm6 0h-3V9h3v3zm21 0H21V9h18v3z" fill="#d6fece" class="color000000 svgShape"></path>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" id="Terminal" viewBox="0 0 48 48" xml:space="preserve"><path fill="#d6fece" d="M39 48H9a9 9 0 0 1-9-9V9a9 9 0 0 1 9-9h30c4.968 0 9 4.029 9 9v30c0 4.971-4.032 9-9 9zm3-39a3 3 0 0 0-3-3H9C7.344 6 6 7.344 6 9v6h36V9zm0 9H6v21a3 3 0 0 0 3 3h30c1.659 0 3-1.341 3-3V18zM15 30h6v3h-6v-3zm-6 0v-3h3v3H9zm3-6h3v3h-3v-3zm-3-3h3v3H9v-3zm3-9H9V9h3v3zm6 0h-3V9h3v3zm21 0H21V9h18v3z" class="color000000 svgShape"/></svg>
