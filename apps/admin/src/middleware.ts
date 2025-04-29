@@ -11,7 +11,8 @@ export default async function middleware(req: NextRequest) {
     console.log("Middleware triggered for path:", req.nextUrl.pathname);
     try {
         // Get the session token from cookies
-        const sessionCookie = req.cookies.get('authjs.session-token');
+        const cookieName = process.env.NODE_ENV === 'production' ? '__Secure-authjs.session-token' : 'authjs.session-token';
+const sessionCookie = req.cookies.get(cookieName);
 
         if (!sessionCookie?.value) {
             // If no session token exists, redirect to login
