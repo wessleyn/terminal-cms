@@ -3,30 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 const LOGIN_PAGE = `${process.env.WEB_PUBLIC_URL}/login`
 const NOT_FOUND_URL = `${process.env.WEB_PUBLIC_URL}/404`
 
-// export default async function middleware(request: NextRequest) {
-//     const session = await auth()
-//     console.log("Session", session)
-
-//     const newUrl = new URL(LOGIN_PAGE, request.nextUrl.origin)
-//     newUrl.searchParams.set('callbackUrl', request.nextUrl.origin + request.nextUrl.pathname);
-
-//     if (!session) {
-//         return Response.redirect(newUrl)
-//     }
-
-//     if (session.user.role) {
-//         if (session.user.role !== "ADMIN") {
-//             // Redirect to a 404 page instead of using notFound()
-//             return NextResponse.redirect(new URL(NOT_FOUND_URL, request.nextUrl.origin))
-//         } else {
-//             return NextResponse.next()
-//         }
-//     } else {
-//         // Redirect to a 404 page instead of using notFound()
-//         return NextResponse.redirect(new URL(NOT_FOUND_URL, request.nextUrl.origin))
-//     }
-// }
-
 export const config = {
     matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 }
@@ -58,6 +34,9 @@ export default async function middleware(req: NextRequest) {
             console.log("Session verification response:", data);
 
             if (!res.ok || !data.authenticated) {
+                if (data.reason.includes('Not an admin')) {
+                    return NextResponse.redirect(new URL(NOT_FOUND_URL, req.nextUrl.origin))
+                }
                 console.log("Session invalid or expired:", data);
                 return redirectToLogin(req);
             }

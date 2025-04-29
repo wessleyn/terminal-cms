@@ -106,7 +106,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
 
             // Check if this is an explicit admin URL
-            if (url.includes('localhost:3001') || url.includes('admin.wessleyn.me')) {
+            if (url.includes(process.env.ADMIN_PUBLIC_URL!)) {
                 console.log('Preserving admin URL:', url);
                 return url;
             }

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import LoginForm from "./_components/LoginForm";
 
+// TODO: add a binary bg with floating green, terminal like ones and 0s 
 export default async function LoginPage({
     searchParams
 }: {
