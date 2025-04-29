@@ -1,4 +1,4 @@
-import { PrivacyType } from "../../../src/app/(dashboard)/dashboard/privacy/_types/types";
+import { PrivacyType } from '../../../generated/prisma'
 
 export const privacyData = {
     type: PrivacyType.PORTFOLIO,

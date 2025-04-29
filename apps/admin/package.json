@@ -4,12 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p3001",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p3001",
     "lint": "next lint"
   },
   "dependencies": {
+    "@repo/auth": "^0.1.0",
     "@repo/db": "^0.0.0",
     "@repo/ui": "^0.0.0",
     "next": "15.3.1",

@@ -74,7 +74,7 @@ export default function ProjectGalleryCard({
                         className="mb-2"
                     />
                 </div>
-
+                {/* FIXME: Make these Links responsive to the viewport , like layering on top of each other when space starts to run out  */}
                 <div className="d-flex gap-2 mt-auto">
                     <Link
                         href={`/projects/${id}`}

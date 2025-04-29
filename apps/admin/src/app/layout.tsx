@@ -1,7 +1,6 @@
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import { CustomProvider } from "@repo/ui/components/shared";
-import 'glob';
 import DashboardThemeToggler from "../_components/DashboardThemeToggler";
 import EmailsMenu from "../_components/EmailsMenu";
 import HeaderTitle from "../_components/HeaderTitle";
@@ -31,11 +30,7 @@ export default function DashboardLayout({
                 <DashboardThemeToggler />
                 <NotificationsMenu />
                 <EmailsMenu />
-                <ProfileMenu
-                  profileImag="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png"
-                  name="Peter Forkur"
-                  role="Admin"
-                />
+                <ProfileMenu />
               </div>
             </header>
             <main className="dashboard-content">

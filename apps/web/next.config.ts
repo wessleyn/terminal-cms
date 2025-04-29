@@ -7,7 +7,17 @@ const nextConfig = {
                 hostname: 'skillicons.dev',
                 port: '',
                 pathname: '/icons/**', // Note: Added leading slash to match exact URL pattern
-            }
+            },
+            // google
+            {
+                protocol: 'https',
+                hostname: 'lh3.googleusercontent.com',
+            },
+            // github
+            {
+                protocol: 'https',
+                hostname: 'avatars.githubusercontent.com',
+            },
         ],
         dangerouslyAllowSVG: true,
         contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",

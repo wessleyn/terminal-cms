@@ -1,7 +1,7 @@
 'use client';
 
 import { Badge, Menu } from '@mantine/core';
-import { ActivityStatus } from '@repo/db';
+import { ActivityStatus } from '@repo/db/types';
 import { IconChevronDown } from '@tabler/icons-react';
 import { useState } from 'react';
 import classes from './ActivityStatusBadge.module.css';
