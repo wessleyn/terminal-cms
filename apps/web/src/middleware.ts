@@ -4,7 +4,10 @@ const LOGIN_PAGE = `${process.env.WEB_PUBLIC_URL}/login`
 
 
 export const config = {
-    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+    matcher: [
+        "/((?!api|_next/static|_next/image|favicon.ico).*)",
+        "/dashboard/:path*",
+    ],
 }
 
 export default async function middleware(req: NextRequest) {

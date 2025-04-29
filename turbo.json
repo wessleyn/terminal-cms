@@ -7,7 +7,12 @@
         "WEB_PUBLIC_URL",
         "ADMIN_PUBLIC_URL",
         "DATABASE_URL",
-        "AUTH_SECRET"
+        "AUTH_SECRET",
+        "AUTH_GITHUB_ID",
+        "AUTH_GITHUB_SECRET",
+        "RESEND_API_KEY",
+        "RESEND_MAILING_ADDRESS",
+        "AUTH_TRUST_HOST"
       ],
       "dependsOn": [
         "^build",
