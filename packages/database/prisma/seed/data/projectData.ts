@@ -1,4 +1,4 @@
-import { ActivityStatus, HappyIndex, PublishStatus } from "../../../src/generated/prisma";
+import { ActivityStatus, HappyIndex, PublishStatus } from "../../../generated/prisma";
 
 export const projectsData = [
     {

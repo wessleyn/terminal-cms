@@ -1,0 +1,25 @@
+{
+    "name": "@repo/auth",
+    "version": "0.1.0",
+    "private": true,
+    "exports": {
+        "." : "./src/index.ts",
+        "./src/utils" : "./src/utils.ts"
+    },
+    "scripts": {
+        "lint": "eslint ."
+    },
+    "dependencies": {
+        "@auth/prisma-adapter": "^2.9.0",
+        "@repo/db": "*",
+        "install": "^0.13.0",
+        "next-auth": "^5.0.0-beta.27",
+        "npm": "^11.3.0"
+    },
+    "devDependencies": {
+        "@repo/eslint-config": "*",
+        "@repo/typescript-config": "*",
+        "@types/node": "^20.10.5",
+        "typescript": "^5.3.3"
+    }
+}

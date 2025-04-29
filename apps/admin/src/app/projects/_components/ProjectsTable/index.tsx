@@ -130,7 +130,7 @@ export default function ProjectsTable({ initialProjects }: ProjectsTableProps) {
 
     // Handler for project view - navigate to project details page
     const handleView = useCallback((id: string) => {
-        router.push(`/dashboard/projects/${id}`);
+        router.push(`/projects/${id}`);
     }, [router]);
 
     // Handler for creating a new project
@@ -140,7 +140,7 @@ export default function ProjectsTable({ initialProjects }: ProjectsTableProps) {
 
             if (result.success && result.data?.id) {
                 // Navigate to the new project's page for editing
-                router.push(`/dashboard/projects/${result.data.id}`);
+                router.push(`/projects/${result.data.id}`);
             } else {
                 console.error('Failed to create project:', result.error);
                 // You could add a toast notification here
@@ -153,7 +153,7 @@ export default function ProjectsTable({ initialProjects }: ProjectsTableProps) {
 
     // Click handler for row selection
     const handleRowClick = useCallback((id: string) => {
-        router.push(`/dashboard/projects/${id}`);
+        router.push(`/projects/${id}`);
     }, [router]);
 
     return (

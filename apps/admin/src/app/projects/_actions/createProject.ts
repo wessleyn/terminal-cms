@@ -1,7 +1,6 @@
 'use server';
 
-import { prisma } from '@repo/db';
-import { ActivityStatus, PublishStatus } from '@repo/db';
+import { ActivityStatus, prisma, PublishStatus } from '@repo/db';
 
 import { revalidatePath } from 'next/cache';
 

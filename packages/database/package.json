@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "exports": {
     ".": "./src/index.ts",
+    "./types": "./src/index.ts",
     "./generated/prisma": "./generated/prisma/index.js"
   },
   "prisma": {
@@ -21,5 +22,9 @@
     "db:seed": "npm run db:generate && ts-node ./prisma/seed/seed.ts",
     "db:reset": "prisma migrate reset --force",
     "postinstall": "prisma generate"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.2",
+    "tsx": "^4.19.3"
   }
 }

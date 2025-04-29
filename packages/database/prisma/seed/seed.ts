@@ -6,10 +6,11 @@ import { projectsData } from './data/projectData';
 const prisma = new PrismaClient();
 
 async function main() {
-    // Clear existing data
+    // Clear existing data - delete child records before parent records to avoid foreign key constraint violations
     await prisma.project.deleteMany();
     await prisma.emailSubscription.deleteMany();
-    await prisma.privacy.deleteMany();
+    await prisma.privacySection.deleteMany(); // Delete sections first
+    await prisma.privacy.deleteMany(); // Then delete privacy records
 
     // Seed projects
     for (const project of projectsData) {

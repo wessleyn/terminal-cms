@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-   "./components/*": "./src/components/*/index.ts",
+    "./components/*": "./src/components/*/index.ts",
     "./hooks/*": "./src/hooks/*/index.js",
     "./utils/*": "./src/utils/*/index.js"
   },
@@ -41,6 +41,7 @@
     "@mantine/nprogress": "^7.0.0",
     "@mantine/spotlight": "^7.0.0",
     "@mantine/tiptap": "^7.0.0",
+    "@mantinex/dev-icons": "^1.1.0",
     "@tabler/icons-react": "^3.31.0",
     "@tiptap/extension-link": "^2.2.0",
     "@tiptap/pm": "^2.2.0",

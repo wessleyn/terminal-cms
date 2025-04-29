@@ -1,51 +1,93 @@
 'use client';
 
-import { Avatar, Menu, Text, UnstyledButton } from '@mantine/core';
+import { Avatar, Loader, Menu, Text, UnstyledButton } from '@mantine/core';
+import { getCurrentUser, SignOut } from '@repo/auth/src/utils';
 import { IconChevronDown, IconLogout, IconSettings, IconSwitchHorizontal } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-interface ProfileMenuProps {
-    profileImag: string;
-    name?: string;
-    role?: string;
+type UserSession = {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+  role?: string;
 }
 
-export default function ProfileMenu({ profileImag, name = 'User', role = 'User' }: ProfileMenuProps) {
-    const [opened, setOpened] = useState(false);
+export default function ProfileMenu() {
+  const [session, setSession] = useState<UserSession | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchSession = async () => {
+      try {
+        const userData = await getCurrentUser();
+        // Ensure userData has an id before setting it as session
+        if (userData && userData.id) {
+          setSession({
+            id: userData.id,
+            name: userData.name || null,
+            email: userData.email || null,
+            image: userData.image || null,
+            role: userData.role
+          });
+        }
+      } catch (err) {
+        console.error("Failed to load user data:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSession();
+  }, []);
+
+  const handleSignOut = async () => {
+    await SignOut();
+  };
+
+  const [opened, setOpened] = useState(false);
+
+  if (isLoading) {
     return (
-        <Menu
-            width={200}
-            position="bottom-end"
-            transitionProps={{ transition: 'pop-top-right' }}
-            onClose={() => setOpened(false)}
-            onOpen={() => setOpened(true)}
-            withinPortal
-        >
-            <Menu.Target>
-                <UnstyledButton className="profile-button">
-                    <div className="profile-info">
-                        <Avatar src={profileImag} alt={name} radius="xl" size={36} />
-                        <div className="profile-details">
-                            <Text size="sm" fw={500}>{name}</Text>
-                            <Text c="dimmed" size="xs">{role}</Text>
-                        </div>
-                    </div>
-                    <IconChevronDown size={16} className={opened ? 'chevron-rotated' : ''} />
-                </UnstyledButton>
-            </Menu.Target>
-
-            <Menu.Dropdown>
-                <Menu.Item leftSection={<IconSettings size={14} />}>
-                    Account settings
-                </Menu.Item>
-                <Menu.Item leftSection={<IconSwitchHorizontal size={14} />}>
-                    Change account
-                </Menu.Item>
-                <Menu.Item leftSection={<IconLogout size={14} />}>
-                    Logout
-                </Menu.Item>
-            </Menu.Dropdown>
-        </Menu>
+      <div className="profile-button" style={{ display: 'flex', alignItems: 'center' }}>
+        <Loader size="sm" />
+      </div>
     );
+  }
+
+  return (
+    <Menu
+      width={200}
+      position="bottom-end"
+      transitionProps={{ transition: 'pop-top-right' }}
+      onClose={() => setOpened(false)}
+      onOpen={() => setOpened(true)}
+      withinPortal
+    >
+      <Menu.Target>
+        <UnstyledButton className="profile-button">
+          <div className="profile-info">
+            <Avatar src={session?.image} alt={'profile'} radius="xl" size={36} />
+            <div className="profile-details">
+              <Text size="sm" fw={500}>{session?.name || 'User'}</Text>
+              <Text c="dimmed" size="xs">{session?.role || 'Loading...'}</Text>
+            </div>
+          </div>
+          <IconChevronDown size={16} className={opened ? 'chevron-rotated' : ''} />
+        </UnstyledButton>
+      </Menu.Target>
+
+      <Menu.Dropdown>
+        <Menu.Item leftSection={<IconSettings size={14} />}>
+          Account settings
+        </Menu.Item>
+        <Menu.Item leftSection={<IconSwitchHorizontal size={14} />}>
+          Change account
+        </Menu.Item>
+        <Menu.Item leftSection={<IconLogout size={14} />} onClick={handleSignOut}>
+          Logout
+        </Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
 }

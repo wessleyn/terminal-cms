@@ -31,11 +31,7 @@ export default function DashboardLayout({
                 <DashboardThemeToggler />
                 <NotificationsMenu />
                 <EmailsMenu />
-                <ProfileMenu
-                  profileImag="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png"
-                  name="Peter Forkur"
-                  role="Admin"
-                />
+                <ProfileMenu />
               </div>
             </header>
             <main className="dashboard-content">

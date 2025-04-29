@@ -9,17 +9,8 @@ model User {
     // Optional for WebAuthn support
     Authenticator Authenticator[]
 
-    // New admin type field - only one user can be admin
+    //  only one user can be an admin and have the portfolio on the site
     role UserRole @default(USER)
-
-    // Profile information
-    tagline     String?
-    description String?
-    workEmail   String?
-
-    // Relationships to new models
-    profileImages ProfileImage[]
-    socials       Social[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -31,37 +22,6 @@ enum UserRole {
     ADMIN
 }
 
-// Model for storing multiple profile images with version control
-model ProfileImage {
-    id        String   @id @default(cuid())
-    url       String
-    isCurrent Boolean  @default(false)
-    userId    String
-    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
-// Model for storing social media links
-model Social {
-    id        String     @id @default(cuid())
-    platform  SocialType
-    url       String
-    userId    String
-    user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-    createdAt DateTime   @default(now())
-    updatedAt DateTime   @updatedAt
-}
-
-enum SocialType {
-    GITHUB
-    LINKEDIN
-    TWITTER
-    INSTAGRAM
-    FACEBOOK
-    YOUTUBE
-    OTHER
-}
 
 model Account {
     userId            String
