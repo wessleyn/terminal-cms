@@ -17,6 +17,7 @@
 /.next/
 /out/
 env
+env
 
 # production
 /build
@@ -41,5 +42,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+
+certificates
 
 certificates
