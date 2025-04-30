@@ -1,4 +1,4 @@
-import { prisma, UserRole } from '@repo/db';
+import { prisma } from '@repo/db';
 import { NextResponse } from 'next/server';
 
 // Add a GET method to support checking authentication from middleware
@@ -20,7 +20,7 @@ export async function GET(request: Request) {
         if (!token) {
             return NextResponse.json({ authenticated: false, reason: 'No token provided' }, { status: 401 });
         }
-        
+
         // Use Prisma client instead of direct neon connection
         const session = await prisma.session.findUnique({
             where: {
@@ -48,13 +48,11 @@ export async function GET(request: Request) {
             return NextResponse.json({ authenticated: false, reason: 'Session expired' }, { status: 401 });
         }
 
-        if (session.user.role !== UserRole.ADMIN) {
-            return NextResponse.json({ authenticated: false, reason: 'Not an admin' }, { status: 401 });
-        }
-        
+        // Return user info including role so middleware can make role-based decisions
         return NextResponse.json({
             authenticated: true,
-            userId: session.user.id
+            userId: session.user.id,
+            role: session.user.role
         }, { status: 200 });
 
     } catch (error) {

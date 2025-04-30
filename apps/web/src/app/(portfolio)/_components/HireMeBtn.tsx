@@ -9,7 +9,7 @@ const HireMeBtn = () => {
 
     return (
         <Link
-            className="btn btn-lg btn-primary-dragient mt-3" role="button"
+            className="btn btn-lg mt-3 terminal-btn" role="button"
             href={isHireMePage ? "/" : "/hireMe"}>
             {isHireMePage ? "~/ cd root" : "~/ cd Hire me"}
         </Link>

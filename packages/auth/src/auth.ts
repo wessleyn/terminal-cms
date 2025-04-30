@@ -79,6 +79,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         error: "/error",
         verifyRequest: "/verify-request",
     },
+    cookies: {
+        sessionToken: {
+            options: {
+                domain: process.env.PUBLIC_DOMAIN
+                    ? `.${process.env.PUBLIC_DOMAIN}`
+                    : process.env.NODE_ENV === 'development'
+                        ? 'localhost'  // Use localhost in development
+                        : undefined    // Let the browser determine the domain in production if env not set
+            }
+        }
+    },
     callbacks: {
         // Make the user's role available in the session
         session({ session, user }) {

@@ -46,10 +46,33 @@ export async function MagicSignIn(formData: FormData) {
 export async function getCurrentUser() {
     const session = await auth();
     if (session == null) redirect(`${process.env.WEB_PUBLIC_URL}/login`);
-    if( session.user == null ) redirect(`${process.env.WEB_PUBLIC_URL}/login`);
+    if (session.user == null) redirect(`${process.env.WEB_PUBLIC_URL}/login`);
     const user = {
         ...session.user,
-        role: session.user.role 
+        role: session.user.role
     }
     return user
+}
+
+/**
+ * Server action to check if a user session exists
+ * Returns the user data if a session exists, null otherwise
+ * Does not redirect if no session is found
+ */
+export async function checkUserSession() {
+    const session = await auth();
+
+    // If no session or user exists, return null
+    if (!session?.user) {
+        return null;
+    }
+
+    // Return the user data
+    return {
+        id: session.user.id,
+        name: session.user.name,
+        email: session.user.email,
+        image: session.user.image,
+        role: session.user.role
+    };
 }

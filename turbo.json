@@ -50,6 +50,13 @@
       "cache": false,
       "persistent": true
     },
+    "devStart": {
+      "dependsOn": [
+        "^db:generate"
+      ],
+      "cache": false,
+      "persistent": true
+    },
     "db:generate": {
       "cache": false
     },

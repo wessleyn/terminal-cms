@@ -14,14 +14,14 @@ export default function PortfolioLayout({ children }: { children: React.ReactNod
                             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-1">
                                 <div className="col profile">
                                     <Link href="/">
-                                    <Image
-                                        className="img-fluid border rounded border-0 shadow-sm mb-4"
-                                        alt="Wessley Nyakanyanga Profile"
-                                        src="/assets/img/profile.png"
-                                        width={300}
-                                        height={300}
-                                    />
-                                </Link>
+                                        <Image
+                                            className="img-fluid border rounded border-0 shadow-sm mb-4"
+                                            alt="Wessley Nyakanyanga Profile"
+                                            src="/assets/img/profile.png"
+                                            width={300}
+                                            height={300}
+                                        />
+                                    </Link>
                                 </div>
                                 <div className="col">
                                     <h3 className="fs-5 fw-bold text-primary ">
@@ -56,9 +56,9 @@ export default function PortfolioLayout({ children }: { children: React.ReactNod
                                             </svg></Link></li>
                                     </ul>
                                     <div className='row justify-content-center'>
-                                        <Link className="btn btn-lg btn-primary-dragient mt-3" role="button"
+                                        <Link className="btn btn-lg mt-3 terminal-btn" role="button"
                                             href="/blog">~/ cd Blog</Link>
-                                      <HireMeBtn />
+                                        <HireMeBtn />
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@ export default function PortfolioLayout({ children }: { children: React.ReactNod
                     </div>
                 </div>
             </section>
-                <Footer />
+            <Footer />
         </main>
 
     )

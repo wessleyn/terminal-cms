@@ -1,7 +1,9 @@
 import { redirect } from 'next/navigation';
+import BinaryBackground from "../_components/BinaryBackground";
+import SessionContinue from '../_components/SessionContinue';
 import LoginForm from "./_components/LoginForm";
 
-// TODO: add a binary bg with floating green, terminal like ones and 0s 
+// Binary background with floating green, terminal-like ones and zeros implemented
 export default async function LoginPage({
     searchParams
 }: {
@@ -32,15 +34,33 @@ export default async function LoginPage({
 
             } else {
                 // If there was an error, show login form with the error message
-                return <LoginForm callbackUrl={callbackUrl} error={result} />;
+                return (
+                    <>
+                        <SessionContinue callbackUrl={callbackUrl} />
+                        <BinaryBackground />
+                        <LoginForm callbackUrl={callbackUrl} error={result} />
+                    </>
+                );
             }
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             // Show login form with generic error message
-            return <LoginForm callbackUrl={callbackUrl} error="Authentication failed. Please try again." />;
+            return (
+                <>
+                    <SessionContinue callbackUrl={callbackUrl} />
+                    <BinaryBackground />
+                    <LoginForm callbackUrl={callbackUrl} error="Authentication failed. Please try again." />
+                </>
+            );
         }
     }
 
     // If no token/email or authentication failed, show the login form
-    return <LoginForm callbackUrl={callbackUrl} />;
+    return (
+        <>
+            <SessionContinue callbackUrl={callbackUrl} />
+            <BinaryBackground />
+            <LoginForm callbackUrl={callbackUrl} />
+        </>
+    );
 }

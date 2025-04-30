@@ -20,6 +20,7 @@ import {
 import { IconAlertCircle } from '@tabler/icons-react';
 import { useActionState } from 'react';
 import { GoogleIcon } from '../../_components/GoogleButton';
+import styles from './LoginForm.module.css';
 
 export default function LoginForm({
     callbackUrl,
@@ -70,8 +71,12 @@ export default function LoginForm({
     const isRegisterButtonDisabled = type === 'register' && !form.values.terms;
 
     return (
-        <Center>
-            <Paper radius="md" p="xl" withBorder>
+        <Center style={{ height: '100vh' }}>
+            <Paper
+                radius="md"
+                p="xl"
+                className={styles.loginPaper}
+            >
                 <Text size="lg" fw={500}>
                     Welcome to Wessly&apos;s Terminal, {type} with
                 </Text>

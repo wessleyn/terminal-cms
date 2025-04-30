@@ -1,0 +1,46 @@
+.root {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.inner {
+  position: relative;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  opacity: 0.9;
+  color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  z-index: -1;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.content {
+  padding-top: 300px;
+  position: relative;
+  z-index: 1;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    padding-top: 160px;
+  }
+}
+
+.button{
+  background-color: var(--mantine-color-green-2);
+  color: var(--mantine-color-green-9);
+  border-radius: 4px; /* Added border-radius for button styling */
+}
+
+.description {
+  max-width: 540px;
+  margin: auto;
+  margin-top: var(--mantine-spacing-xl);
+  margin-bottom: calc(var(--mantine-spacing-xl) * 1.5);
+}

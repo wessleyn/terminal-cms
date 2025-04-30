@@ -116,7 +116,7 @@ export default async function ErrorPage({ params }: { params: Promise<{ error: s
 
     return (
         <ErrorComp {...errorInfo}>
-            <ErrorActionLink url={errorInfo.actionLink!} action={errorInfo.actionLink!} />
+            <ErrorActionLink url={errorInfo.actionLink!} action={errorInfo.action!} />
             <ErrorActionLink url={'/login'} action={'Log In with a diff Account'} />
         </ErrorComp >
     );

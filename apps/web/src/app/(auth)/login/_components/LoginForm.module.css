@@ -1,0 +1,10 @@
+.loginPaper {
+  border: 1px solid var(--mantine-color-dark-4);
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .loginPaper {
+    border: none;
+  }
+}
