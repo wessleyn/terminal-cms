@@ -11,6 +11,7 @@ export async function GET(request: Request) {
         const authHeader = request.headers.get('Authorization');
         console.log(`[Auth][${requestId}] Checking authorization header: ${authHeader ? 'present' : 'missing'}`);
 
+        console.log("Headers", request.headers)
         if (!authHeader) {
             console.log(`[Auth][${requestId}] Authentication failed: No authorization header`);
             return NextResponse.json({ authenticated: false, reason: 'No authorization header' }, { status: 401 });
