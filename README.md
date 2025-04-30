@@ -157,6 +157,18 @@ AUTH_TRUST_HOST=true
 PUBLIC_DOMAIN=yourdomain.com
 ```
 
+## Deployment Notes
+
+### Vercel Domain Configuration
+
+When setting up the application on Vercel, make sure to use the `www.` prefix for your domain (e.g., `www.yourdomain.com` instead of just `yourdomain.com`). This ensures that authentication works properly across redirects and sessions.
+
+If using a root domain without `www.` prefix, you may encounter authentication issues with session cookies not being properly set or recognized, particularly with OAuth providers.
+
+### Prisma in Production
+
+For production builds, the project is configured to use Prisma's `--no-engine` flag to optimize bundle size and improve deployment performance. This is handled automatically via the `db:generate:prod` script.
+
 ## Commands Reference
 
 ```
