@@ -4,6 +4,9 @@ import { fetchProjectById } from './_actions/fetchProject';
 import ProjectDetail from './_components/ProjectDetail';
 import { getProjectNavigation } from './_utils/projectNavigation';
 
+// Add revalidation to refresh content every 60 seconds
+export const revalidate = 60;
+
 interface ProjectPageProps {
     params: Promise<{
         id: string;

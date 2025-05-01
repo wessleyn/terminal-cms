@@ -1,0 +1,53 @@
+.container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  border-radius: 24px;
+}
+
+.button {
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 128, 0, 0.2);
+}
+
+/* Blink-in animation using CSS keyframes */
+.blinkIn {
+  animation: blinkIn 0.5s ease-in-out;
+}
+
+@keyframes blinkIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.blob {
+  position: fixed;
+  top: 25px;
+  left: 25px;
+  transform-origin: center;
+  background-color: var(--mantine-color-green-5);
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  z-index: 10;
+}
+
+.floatingProfile {
+  position: fixed;
+  z-index: 200;
+  pointer-events: none;
+}

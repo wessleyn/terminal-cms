@@ -4,7 +4,8 @@
     "private": true,
     "exports": {
         "." : "./src/index.ts",
-        "./src/utils" : "./src/utils.ts"
+        "./src/utils" : "./src/utils.ts",
+        "./src/lib": "./src/lib.ts"
     },
     "scripts": {
         "lint": "eslint ."

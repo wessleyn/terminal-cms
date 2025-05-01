@@ -12,14 +12,15 @@
   },
   "scripts": {
     "db:generate": "prisma generate",
+    "db:generate:prod": "prisma generate --no-engine",
     "db:migrate": "prisma migrate dev --skip-generate",
     "db:deploy": "prisma migrate deploy",
-    "db:prebuild": "npm run db:generate",
+    "db:prebuild": "npm run db:generate:prod",
     "db:predev": "npm run db:generate",
     "db:studio": "prisma studio",
     "db:push": "prisma db push",
     "db:forcePush": "prisma db push  --accept-data-loss",
-    "db:seed": "npm run db:generate && ts-node ./prisma/seed/seed.ts",
+    "db:seed": "npm run db:generate && npx prisma db seed",
     "db:reset": "prisma migrate reset --force",
     "postinstall": "prisma generate --no-engine"
   },

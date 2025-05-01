@@ -12,11 +12,14 @@
         "AUTH_GITHUB_SECRET",
         "RESEND_API_KEY",
         "RESEND_MAILING_ADDRESS",
-        "AUTH_TRUST_HOST"
+        "AUTH_TRUST_HOST",
+        "PUBLIC_DOMAIN",
+        "AUTH_GOOGLE_ID",
+        "AUTH_GOOGLE_SECRET"
       ],
       "dependsOn": [
         "^build",
-        "^db:generate"
+        "^db:generate:prod"
       ],
       "inputs": [
         "$TURBO_DEFAULT$",
@@ -41,7 +44,8 @@
       "dependsOn": [
         "build"
       ],
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "dev": {
       "dependsOn": [
@@ -50,7 +54,17 @@
       "cache": false,
       "persistent": true
     },
+    "devStart": {
+      "dependsOn": [
+        "^db:generate"
+      ],
+      "cache": false,
+      "persistent": true
+    },
     "db:generate": {
+      "cache": false
+    },
+    "db:generate:prod": {
       "cache": false
     },
     "db:migrate": {

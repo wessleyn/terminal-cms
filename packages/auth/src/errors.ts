@@ -1,7 +1,51 @@
-import ErrorComp, { ErrorActionLink } from "../_components/ErrorComp";
+/**
+ * Authentication error messages
+ * Provides user-friendly messages for various authentication error types
+ */
+export const AUTH_ERROR_MESSAGES: Record<string, string> = {
+    "Configuration": "There's a server configuration issue. Please try again later or contact support.",
+    "Verification": "This verification link has expired or has already been used. Please request a new one.",
+    "token-already-used": "This sign-in link has already been used. Please request a new one.",
+    "VerificationTokenError": "This sign-in link has already been used. Please request a new one.",
+    "OAuthAccountNotLinked": "This email is already associated with another account. Please sign in with the method you used originally.",
+    "OAuthSignin": "There was a problem signing in with your account. Please try again or use another method.",
+    "OAuthCallback": "There was a problem during the authentication process. Please try again or use another method.",
+    "Default": "An error occurred during sign-in. Please try again."
+};
 
-// Error types from NextAuth
-type ErrorType =
+/**
+ * Get a user-friendly error message for an authentication error code
+ * @param errorCode The error code from NextAuth
+ * @returns A user-friendly error message
+ */
+export function getAuthErrorMessage(errorCode: string | undefined): string {
+    if (!errorCode) {
+        return '';
+    }
+
+    // For Verification errors, always use the verification message
+    if (errorCode === 'Verification' || errorCode === 'Configuration') {
+        return AUTH_ERROR_MESSAGES['Verification'] || '';
+    }
+
+    // For other error types, use the mapped error or fall back to default
+    return AUTH_ERROR_MESSAGES[errorCode] || AUTH_ERROR_MESSAGES['Default'] || '';
+}
+
+/**
+ * Error information with title and message for the error page
+ */
+export type ErrorInfo = {
+    title: string;
+    message: string;
+    action?: string;
+    actionLink?: string;
+};
+
+/**
+ * Error types from NextAuth
+ */
+export type AuthErrorType =
     | 'Configuration'
     | 'AccessDenied'
     | 'Verification'
@@ -14,13 +58,13 @@ type ErrorType =
     | 'EmailSignin'
     | 'CredentialsSignin'
     | 'SessionRequired'
-    | 'VerificationTokenError'  // Custom error type
+    | 'VerificationTokenError'
     | 'Default';
 
-const errorMessages: Record<
-    ErrorType,
-    { title: string; message: string; action?: string; actionLink?: string }
-> = {
+/**
+ * Detailed error messages for the error page
+ */
+export const ERROR_MESSAGES: Record<AuthErrorType, ErrorInfo> = {
     Configuration: {
         title: 'Server Configuration Error',
         message:
@@ -107,29 +151,3 @@ const errorMessages: Record<
         actionLink: '/login',
     },
 };
-
-
-export default async function ErrorPage({ params }: { params: Promise<{ error: string }> }) {
-    const errorParam = (await params).error;
-
-    // Map custom token errors to our error type
-    let error: ErrorType = (errorParam as ErrorType) || 'Default';
-
-    if (errorParam === 'token-already-used') {
-        error = 'VerificationTokenError';
-    }
-
-    // Log error for debugging purposes
-    if (error) {
-        console.error('Authentication error:', error);
-    }
-
-    const errorInfo = errorMessages[error] || errorMessages.Default;
-
-    return (
-        <ErrorComp {...errorInfo}>
-            <ErrorActionLink url={errorInfo.actionLink!} action={errorInfo.action!} />
-            <ErrorActionLink url={'/login'} action={'Log In with a Different Account'} />
-        </ErrorComp >
-    );
-}
