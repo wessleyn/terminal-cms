@@ -23,6 +23,7 @@ import { useActionState, useEffect, useState } from 'react';
 import { GoogleIcon } from '../../_components/GoogleButton';
 import styles from './LoginForm.module.css';
 
+
 // Create a wrapper function for socialSignIn that accepts string | undefined as its parameter
 // This makes it compatible with useActionState's expected signature
 const socialSignInWrapper = (state: string | undefined, formData?: FormData) => {
