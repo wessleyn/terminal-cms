@@ -4,6 +4,9 @@ import ProjectGallery from './_components/ProjectGallery';
 import ProjectHero from './_components/ProjectHero';
 import './_styles/projectGallery.css';
 
+// Add revalidation to refresh content every 60 seconds
+export const revalidate = 60;
+
 export const metadata: Metadata = {
     title: "Projects | Wessley's Terminal",
     description: "Browse my portfolio of software development projects showcasing my skills and experience.",

@@ -1,8 +1,10 @@
 'use client';
 
 import { Avatar, Loader, Menu, Text, UnstyledButton } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { getCurrentUser, SignOut } from '@repo/auth/src/utils';
 import { IconChevronDown, IconLogout, IconSettings, IconSwitchHorizontal } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 type UserSession = {
@@ -16,6 +18,8 @@ type UserSession = {
 export default function ProfileMenu() {
   const [session, setSession] = useState<UserSession | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -42,7 +46,38 @@ export default function ProfileMenu() {
   }, []);
 
   const handleSignOut = async () => {
-    await SignOut();
+    try {
+      setIsSigningOut(true);
+      const result = await SignOut('/login');
+
+      if (result.success) {
+        // Show success notification
+        notifications.show({
+          title: 'Signed out successfully',
+          message: 'You have been signed out of your account',
+          color: 'green',
+        });
+
+        // Redirect to login page
+        router.push('/login');
+      } else {
+        // Show error notification
+        notifications.show({
+          title: 'Sign out failed',
+          message: result.error || 'Failed to sign out. Please try again.',
+          color: 'red',
+        });
+      }
+    } catch (error) {
+      console.error('Error during sign out:', error);
+      notifications.show({
+        title: 'Sign out failed',
+        message: 'An unexpected error occurred. Please try again.',
+        color: 'red',
+      });
+    } finally {
+      setIsSigningOut(false);
+    }
   };
 
   const [opened, setOpened] = useState(false);
@@ -84,8 +119,12 @@ export default function ProfileMenu() {
         <Menu.Item leftSection={<IconSwitchHorizontal size={14} />}>
           Change account
         </Menu.Item>
-        <Menu.Item leftSection={<IconLogout size={14} />} onClick={handleSignOut}>
-          Logout
+        <Menu.Item
+          leftSection={<IconLogout size={14} />}
+          onClick={handleSignOut}
+          disabled={isSigningOut}
+        >
+          {isSigningOut ? 'Signing out...' : 'Logout'}
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

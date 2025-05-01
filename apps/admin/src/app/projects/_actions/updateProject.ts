@@ -1,6 +1,7 @@
 'use server';
 
 import { ActivityStatus, HappyIndex, Prisma, prisma, PublishStatus } from '@repo/db';
+import { triggerPublicRevalidation } from '@utils/revalidation';
 import { revalidatePath } from 'next/cache';
 
 export type UpdateField = 'publishStatus' | 'activityStatus' | 'happyIndex'
@@ -44,6 +45,13 @@ export async function updateProjectStatus(
     // Revalidate the projects page to show updated data
     revalidatePath('/dashboard/projects');
 
+    // Trigger revalidation on the public frontend
+    await triggerPublicRevalidation('/projects');
+    await triggerPublicRevalidation(`/projects/${id}`);
+
+    // Also revalidate the landing page since it shows featured projects
+    await triggerPublicRevalidation('/');
+
     return { success: true };
   } catch (error) {
     console.error(`Error updating project ${field}:`, error);
@@ -78,6 +86,11 @@ export async function updateProject(id: string, data: UpdateProjectData): Promis
     revalidatePath('/dashboard/projects');
     revalidatePath('/projects');
 
+    // Trigger revalidation on the public frontend
+    await triggerPublicRevalidation('/projects');
+    await triggerPublicRevalidation(`/projects/${id}`);
+    await triggerPublicRevalidation('/');
+
     return {
       success: true,
       data: updatedProject,
@@ -103,6 +116,10 @@ export async function deleteProject(id: string) {
 
     // Revalidate the projects page to show updated data
     revalidatePath('/dashboard/projects');
+
+    // Trigger revalidation on the public frontend
+    await triggerPublicRevalidation('/projects');
+    await triggerPublicRevalidation('/');
 
     return { success: true };
   } catch (error) {

@@ -1,7 +1,7 @@
 'use server';
 
 import { ActivityStatus, prisma, PublishStatus } from '@repo/db';
-
+import { triggerPublicRevalidation } from '@utils/revalidation';
 import { revalidatePath } from 'next/cache';
 
 interface CreateProjectResult {
@@ -34,6 +34,11 @@ export async function createProject(): Promise<CreateProjectResult> {
 
         // Revalidate the projects page to show the new project
         revalidatePath('/dashboard/projects');
+
+        // Trigger revalidation on the public frontend if the project is published
+        if (newProject.publishStatus === PublishStatus.PUBLISHED) {
+            await triggerPublicRevalidation('/projects');
+        }
 
         return {
             success: true,

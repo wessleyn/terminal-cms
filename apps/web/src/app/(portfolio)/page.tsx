@@ -3,6 +3,9 @@ import ArticleCard from "./_components/ArticleCard";
 import ProjectCard from "./_components/ProjectCard";
 import TitleCommand from "./_components/TitleCommand";
 
+// Add revalidation to refresh content every 60 seconds
+export const revalidate = 60;
+
 export default async function Home() {
   // Fetch awesome projects
   const awesomeProjects = await fetchAwesomeProj();
