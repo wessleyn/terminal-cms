@@ -3,7 +3,6 @@
 import { prisma } from "@repo/db";
 import { redirect } from 'next/navigation';
 import { auth, signIn, signOut } from "./auth";
-
 /**
  * Check if a user with the given email exists in the database
  * @param email Email to check
@@ -122,18 +121,17 @@ export async function socialSignIn(formData: FormData): Promise<string | undefin
     const provider = formData.get('action') as string;
     const callbackUrl = formData.get('callbackUrl') as string || '/dashboard';
 
-    try {
-        // Sign in with the provider
-        await signIn(provider, {
-            callbackUrl,
-        });
+    // We're not using try-catch here because signIn with OAuth providers will
+    // intentionally throw a NEXT_REDIRECT error, which is normal behavior
+    console.log(`Starting OAuth flow with provider: ${provider}`);
 
-        // The above should redirect, so if we get here, something went wrong
-        return "An error occurred during social sign in. Please try again.";
-    } catch (error) {
-        console.error(`Error signing in with ${provider}:`, error);
-        return "An error occurred during social sign in. Please try again.";
-    }
+    // Sign in with the provider - this will redirect the user
+    // so no code after this line will execute
+    await signIn(provider, { callbackUrl });
+
+    // This code will never be reached due to the redirect,
+    // but we need to return something to satisfy TypeScript
+    return undefined;
 }
 
 // Get current user session helper
