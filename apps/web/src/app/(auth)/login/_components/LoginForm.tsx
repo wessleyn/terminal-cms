@@ -22,10 +22,14 @@ import { IconAlertCircle, IconCheck } from '@tabler/icons-react';
 import { useActionState, useEffect, useState } from 'react';
 import { GoogleIcon } from '../../_components/GoogleButton';
 import styles from './LoginForm.module.css';
+
 // Create a wrapper function for socialSignIn that accepts string | undefined as its parameter
 // This makes it compatible with useActionState's expected signature
 const socialSignInWrapper = (state: string | undefined, formData?: FormData) => {
     if (!formData) return Promise.resolve(undefined);
+    
+    // The socialSignIn function will cause a redirect and won't actually return anything
+    // We don't need to catch errors here - the redirect is intentional
     return socialSignIn(formData);
 };
 
