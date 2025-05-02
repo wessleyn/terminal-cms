@@ -82,7 +82,7 @@ export const TechTags: FC<TechTagsProps> = ({
                 {loadError ? (
                     // Fallback when image fails to load
                     <span style={{ fontSize: iconSize / 2, color: 'rgba(255,255,255,0.7)' }}>
-                        {tag[0].toUpperCase()}
+                        {tag[0] && tag[0].toUpperCase()}
                     </span>
                 ) : (
                     <Image

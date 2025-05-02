@@ -15,7 +15,8 @@ A monorepo project containing a terminal-themed portfolio website with integrate
 
 - Next.js (API Routes)
 - Prisma (ORM)
-- PostgreSQL (Storage)
+- Prisma Accelerate (Storage)
+- Cloudinary (Image Hosting)
 - Auth.js (Authentication)
 - Cloudflare Workers (Email Routing to Custom Inbox)
 

@@ -4,8 +4,9 @@
   "private": true,
   "exports": {
     "./components/*": "./src/components/*/index.ts",
-    "./hooks/*": "./src/hooks/*/index.js",
-    "./utils/*": "./src/utils/*/index.js"
+    "./hooks/*": "./src/hooks/*/index.ts",
+    "./utils/*": "./src/utils/*/index.ts",
+    "./utils": "./src/utils/index.ts"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -19,6 +20,7 @@
     "@types/node": "^22.14.0",
     "@types/react": "19.1.0",
     "@types/react-dom": "19.1.1",
+    "@types/react-vertical-timeline-component": "^3.3.6",
     "autoprefixer": "^10.4.18",
     "eslint": "^9.25.0",
     "postcss": "^8.5.3",
@@ -49,8 +51,10 @@
     "@tiptap/starter-kit": "^2.2.0",
     "dayjs": "^1.11.10",
     "embla-carousel-react": "^8.0.0",
+    "next-cloudinary": "^6.16.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-vertical-timeline-component": "^3.5.3",
     "recharts": "^2.12.0",
     "zustand": "^5.0.3"
   },

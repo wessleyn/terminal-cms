@@ -1,0 +1,122 @@
+.carousel {
+  width: 100%;
+  @mixin hover {
+    .carouselControls {
+      opacity: 1;
+    }
+  }
+}
+
+.carouselControls {
+  margin-top: -30px;
+  z-index: 10;
+  transition: opacity 150ms ease;
+  opacity: 0;
+}
+
+.carouselIndicator {
+  width: 8px;
+  height: 4px;
+  transition: width 250ms ease;
+  background-color: var(--mantine-color-white);
+
+  &[data-active] {
+    width: 16px;
+  }
+}
+
+.imageContainer {
+  position: relative;
+  overflow: hidden;
+  height: 220px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.imageContainer:hover {
+  transform: scale(1.01);
+}
+
+.carouselImage {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.imageOverlay {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease;
+  border-radius: var(--mantine-radius-md);
+}
+
+.imageContainer:hover .imageOverlay {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.editableField {
+  border: none;
+  border-radius: 0;
+  padding: 4px;
+  transition: all 0.2s;
+}
+
+.editableField:hover:not(:focus) {
+  border-color: var(--mantine-color-dark-0);
+  border-radius: var(--mantine-radius-sm);
+}
+
+.editableField:focus {
+  background-color: light-dark(
+    var(--mantine-color-gray-1),
+    var(--mantine-color-dark-5)
+  ) !important;
+  border-bottom: 1px dashed var(--mantine-color-gray-4) !important;
+}
+
+.editableField::placeholder {
+  color: light-dark(var(--mantine-color-gray-5), var(--mantine-color-dark-3));
+  font-style: italic;
+  opacity: 0.6;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.socialLinkInput {
+  width: 100%;
+}
+
+.savingIndicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--mantine-color-green-6);
+  font-size: 0.875rem;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

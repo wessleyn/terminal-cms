@@ -5,5 +5,8 @@
     "**/*.sass",
     "**/*.less",
     "/packages/ui/node_modules/@mantine/core/styles.css"
-  ]
+  ],
+  "[css]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  }
 }

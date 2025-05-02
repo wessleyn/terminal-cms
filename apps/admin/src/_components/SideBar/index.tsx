@@ -4,9 +4,7 @@ import { useClickOutside } from '@mantine/hooks';
 import { Center, SegmentedControl, Stack, Text, Title, Tooltip, UnstyledButton } from '@repo/ui/components/mantine';
 import {
     IconBook2,
-    IconFolders,
-    IconLogout,
-    IconSwitchHorizontal
+    IconFolders
 } from '@tabler/icons-react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -148,6 +146,7 @@ const SideBar = () => {
         );
     });
 
+
     return (
         <>
             {/* Backdrop for mobile overlay - remove onClick handler as useClickOutside will handle it */}
@@ -248,22 +247,21 @@ const SideBar = () => {
                 </div>
 
                 <div className={classes.footer}>
-                    <SideBarLink
-                        icon={IconSwitchHorizontal}
-                        label="Change account"
-                        link="#"
-                        isCollapsed={collapsed}
-                        showLabel={storeIsMobile && mobileOpen}
-                        onClick={(event) => event.preventDefault()}
-                    />
-                    <SideBarLink
-                        icon={IconLogout}
-                        label="Logout"
-                        link="#"
-                        isCollapsed={collapsed}
-                        showLabel={storeIsMobile && mobileOpen}
-                        onClick={(event) => event.preventDefault()}
-                    />
+                    {
+                        sideBarTabs.global[section].map(item => (
+                            <SideBarLink
+                                key={item.label}
+                                icon={item.icon}
+                                label={item.label}
+                                link={item.link}
+                                active={false}            // typically you don’t “highlight” global items
+                                isCollapsed={collapsed}
+                                showLabel={storeIsMobile && mobileOpen}
+                                onClick={() => {
+                                    if (storeIsMobile) setMobileSidebar(false)
+                                }}
+                            />
+                        ))}
                 </div>
             </aside>
         </>

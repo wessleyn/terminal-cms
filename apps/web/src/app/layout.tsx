@@ -10,12 +10,12 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://wessleyn.me'),
-  title: "Wessley's - Terminal Portfolio - Wessley Nyakanyanga",
+  title: "Wessley's Terminal",
   description: "Software Developer Portfolio showcasing projects and skills in a terminal-themed interface",
   keywords: "software developer, portfolio, programming, coding, terminal, developer",
   authors: [{ name: "Wessley Nyakanyanga" }],
   openGraph: {
-    title: "Wessley Nyakanyanga - Software Developer Portfolio",
+    title: "Wessley Terminal - Software Developer Portfolio",
     description: "Terminal-themed portfolio showcasing projects and skills",
     images: ["/assets/img/profile.png"],
     url: "https://wessleyn.me",

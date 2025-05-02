@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import classes from "./ProfileInfo.module.css";
 
 const HireMeBtn = () => {
     const pathname = usePathname();
@@ -9,7 +10,7 @@ const HireMeBtn = () => {
 
     return (
         <Link
-            className="btn btn-lg mt-3 terminal-btn" role="button"
+            className={classes.btn} role="button"
             href={isHireMePage ? "/" : "/hireMe"}>
             {isHireMePage ? "~/ cd root" : "~/ cd Hire me"}
         </Link>

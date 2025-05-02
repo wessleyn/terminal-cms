@@ -1,3 +1,5 @@
+// Export shared UI components
+export * from './SocialIcon';
 
 export { default as CustomProvider } from './CustomProvider';
 export { default as TagInput } from './TagInput';
