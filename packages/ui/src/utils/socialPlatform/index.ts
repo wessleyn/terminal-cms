@@ -78,7 +78,9 @@ export function normalizePlatformName(platform: string): SocialPlatform {
     if (['li', 'in', 'linked'].includes(normalized)) return 'linkedin';
     if (['ig', 'insta'].includes(normalized)) return 'instagram';
     if (['fb', 'face'].includes(normalized)) return 'facebook';
-    if (['yt'].includes(normalized)) return 'youtube';
+    // Enhanced YouTube detection with more variants
+    if (['yt', 'you tube', 'you-tube', 'youtub', 'u tube', 'utube'].includes(normalized) ||
+        normalized.includes('youtube') || normalized.includes('you tube')) return 'youtube';
 
     return 'other';
 }
