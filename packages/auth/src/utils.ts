@@ -118,6 +118,7 @@ export async function MagicSignIn(formData: FormData): Promise<string | undefine
 /**
  * Sign in with a social provider (GitHub or Google)
  */
+// TODO: reduce the complexity here 
 export async function socialSignIn(formData: FormData): Promise<string | undefined> {
     const provider = formData.get('action') as string;
     const callbackUrl = formData.get('callbackUrl') as string || '/dashboard';

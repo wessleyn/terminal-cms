@@ -102,7 +102,7 @@ export function DraggableSocialLinks({ initialLinks }: DraggableSocialLinksProps
 
             // Debounced save
             const debouncedSave = setTimeout(async () => {
-                const result = await updateSocialLink(id, url);
+                const result = await updateSocialLink(id, url, platform);
 
                 if (result.success) {
                     // If platform has changed, update the platform in the local state

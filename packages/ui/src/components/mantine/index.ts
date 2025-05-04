@@ -24,3 +24,5 @@ export * from '@tabler/icons-react';
 // Export Cloudinary components
 export * from '../cloudinary';
 
+export * from './MaintenancePage';
+

@@ -49,6 +49,7 @@
     "@tiptap/pm": "^2.2.0",
     "@tiptap/react": "^2.2.0",
     "@tiptap/starter-kit": "^2.2.0",
+    "date-fns": "^4.1.0",
     "dayjs": "^1.11.10",
     "embla-carousel-react": "^8.0.0",
     "next-cloudinary": "^6.16.0",

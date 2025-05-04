@@ -39,7 +39,6 @@ export function SocialIcon({
 }: SocialIconProps) {
     // Normalize platform name
     const normalizedPlatform = normalizePlatformName(platform);
-
     // Return appropriate icon based on platform
     switch (normalizedPlatform) {
         case 'github':

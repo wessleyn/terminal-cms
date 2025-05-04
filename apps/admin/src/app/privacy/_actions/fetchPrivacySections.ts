@@ -31,7 +31,6 @@ export async function fetchPrivacySections(type: PrivacyType = PrivacyType.PORTF
                 }
             });
 
-            console.log(`Created new privacy policy for type: ${type}`);
         }
 
         return {

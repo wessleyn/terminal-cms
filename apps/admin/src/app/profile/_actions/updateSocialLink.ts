@@ -5,11 +5,11 @@ import { revalidatePath } from 'next/cache';
 import { ApiResponse } from './types';
 
 // Update social link
-export async function updateSocialLink(id: string, url: string): Promise<ApiResponse<void>> {
+export async function updateSocialLink(id: string, url: string, platform: string): Promise<ApiResponse<void>> {
     try {
         await prisma.portfolioProfileSocialLink.update({
             where: { id },
-            data: { url }
+            data: { url, platform }
         });
 
         revalidatePath('/profile');

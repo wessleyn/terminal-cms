@@ -15,8 +15,8 @@ export default function ProfileEditorWrapper({
     initialError
 }: ProfileEditorWrapperProps) {
     const [profile, setProfile] = useState<ProfileData | null>(initialProfile);
-    const [error, setError] = useState<string | null>(initialError);
-    const [loading, setLoading] = useState<boolean>(!initialProfile && !initialError);
+    const error = initialError;
+    const loading = !initialProfile && !initialError;
 
     // Handle profile updates from child components
     const handleProfileUpdate = (updatedProfile: ProfileData) => {
