@@ -23,13 +23,18 @@ function SideBarLink({ icon: Icon, label, link, active, onClick, isCollapsed, sh
                     className={classes.link}
                     styles={{
                         root: {
-                            'padding': '8px 16px',
+                            padding: isCollapsed && !showLabel ? '12px' : '8px 16px',
+                            width: isCollapsed && !showLabel ? '50px' : 'auto',
+                            height: isCollapsed && !showLabel ? '50px' : 'auto',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: isCollapsed && !showLabel ? 'center' : 'flex-start',
                         }
                     }}
                     data-active={active || undefined}
                 >
                     <Icon className={classes.linkIcon} stroke={1.5} />
-                    <span className={isCollapsed && !showLabel ? classes.linkLabel : ''}>{label}</span>
+                    {(!isCollapsed || showLabel) && <span className={classes.linkLabel}>{label}</span>}
                 </UnstyledButton>
             </Link>
         </Tooltip>

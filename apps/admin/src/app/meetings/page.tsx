@@ -1,15 +1,45 @@
-// use the react timeline library to create a timeline of meetings
-// on each card show the meeting date (as a timeline element data), project name , project desc, project link , project source code link, if avalikabke
-// then clicking on each card should ref to the emais tab with the meeting email(the contact email) and auto populate a template
-// or maybe it should check for the chat conversation of that meeting and show it
-
+import { prisma } from '@repo/db';
+import {
+    Badge,
+    Container,
+    Group,
+    Paper,
+    Text,
+    Title
+} from '@repo/ui/components/mantine';
+import MeetingsTimeline from './_components/MeetingsTimeline';
 
 export default async function ProjectMeetingsPage() {
+    // Fetch all scheduled meetings from the database
+    const meetings = await prisma.scheduledMeeting.findMany({
+        orderBy: {
+            scheduleMeetingDate: 'desc',
+        },
+    });
+
     return (
-        <div className="container">
-            <h1>Project Meetings</h1>
-            <p>Meetings are a great way to keep track of your project progress.</p>
-            <p>Use the form below to add a new meeting.</p>
-        </div>
+        <Container size="xl" p="md">
+            <Group justify="space-between" mb="lg">
+                <Title order={2}>Project Meetings</Title>
+                <Badge size="lg" variant="filled" color="blue">
+                    {meetings.length} Meeting{meetings.length !== 1 ? 's' : ''}
+                </Badge>
+            </Group>
+
+            <Text c="dimmed" mb="xl">
+                View all scheduled meetings from potential clients. Click on a meeting card to view details or respond.
+            </Text>
+
+            {meetings.length === 0 ? (
+                <Paper p="xl" withBorder ta="center">
+                    <Title order={3} mb="sm">No meetings scheduled yet</Title>
+                    <Text c="dimmed">
+                        When someone submits a hire request form, it will appear here
+                    </Text>
+                </Paper>
+            ) : (
+                <MeetingsTimeline meetings={meetings} />
+            )}
+        </Container>
     );
 }

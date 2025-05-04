@@ -8,7 +8,10 @@
   flex-direction: column;
   border-right: 1px solid
     light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
-  transition: width 0.3s ease, transform 0.3s ease, left 0.3s ease;
+  transition:
+    width 0.3s ease,
+    transform 0.3s ease,
+    left 0.3s ease;
   position: fixed; /* Fixed position for mobile by default */
   left: -100%; /* Start offscreen */
   top: 0;
@@ -181,16 +184,11 @@
   color: var(--mantine-color-green-7);
 }
 
+/* Remove the fixed width/height that was causing shrinking */
 .SideBarCollapsed .link {
-  width: 50px;
-  height: 50px;
   justify-content: center;
   border-radius: var(--mantine-radius-md);
-  padding: 0;
-}
-
-.link{
-  padding: 12px 16px;
+  /* Width and height are now controlled by inline styles */
 }
 
 .linkIcon {
@@ -199,6 +197,7 @@
   width: 25px;
   height: 25px;
   transition: color 0.2s ease;
+  flex-shrink: 0; /* Prevent icon from shrinking */
 }
 
 .SideBarCollapsed .linkIcon {
@@ -207,6 +206,7 @@
 
 .linkLabel {
   display: inline;
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
 .SideBarCollapsed .linkLabel {

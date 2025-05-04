@@ -18,7 +18,6 @@ enum Tabs {
     PORTFOLIO = 'portfolio',
     BLOG = 'blog',
 }
-// TODO: Add a query param or a filter to select the different policy type for the policy tab
 
 const SideBar = () => {
     const [section, setSection] = useState<Tabs>(Tabs.PORTFOLIO);
