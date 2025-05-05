@@ -1,10 +1,11 @@
 'use client';
 
 import { useClickOutside } from '@mantine/hooks';
-import { Center, SegmentedControl, Stack, Text, Title, Tooltip, UnstyledButton } from '@repo/ui/components/mantine';
+import { Avatar, Badge, Center, SegmentedControl, Stack, Text, Title, Tooltip, UnstyledButton } from '@repo/ui/components/mantine';
 import {
     IconBook2,
-    IconFolders
+    IconFolders,
+    IconPlus
 } from '@tabler/icons-react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -13,28 +14,41 @@ import Logo from '../Logo';
 import classes from './SideBar.module.css';
 import SideBarLink from './SideBarLink';
 import { sideBarTabs } from './sideBarTabs';
+import { SecondaryItem, SidebarItemWithSecondary } from './types';
 
 enum Tabs {
     PORTFOLIO = 'portfolio',
     BLOG = 'blog',
 }
 
+// FIXME: Remove the flashing of the sidebar when moving towards a tab with a secondary tab
+// TODO: Add a primary sidebar trigger on the secondary nav , header wehn on mobile, to shwitch back between navs
+
 const SideBar = () => {
     const [section, setSection] = useState<Tabs>(Tabs.PORTFOLIO);
     const [, setActive] = useState('');
     const pathname = usePathname();
+    const [activeTabWithSecondary, setActiveTabWithSecondary] = useState<SidebarItemWithSecondary | null>(null);
     const {
         collapsed,
         isMobile: storeIsMobile,
         mobileOpen,
+        secondaryOpen,
         setSidebar,
         setIsMobile,
         setMobileSidebar,
+        setSecondarySidebar,
     } = useSidebarStore();
 
     const overlayRef = useClickOutside(() => {
         if (storeIsMobile && mobileOpen) {
             setMobileSidebar(false);
+        }
+    });
+
+    const secondaryRef = useClickOutside(() => {
+        if (storeIsMobile && secondaryOpen && activeTabWithSecondary) {
+            setSecondarySidebar(false);
         }
     });
 
@@ -74,8 +88,16 @@ const SideBar = () => {
 
         if (foundActiveTab) {
             setActive(foundActiveTab.label);
+
+            // Check if active tab has secondary navigation
+            if (foundActiveTab.secondary && foundActiveTab.secondary.length > 0) {
+                setActiveTabWithSecondary(foundActiveTab);
+                setSidebar(true); // Force collapse main sidebar
+            } else {
+                setActiveTabWithSecondary(null);
+            }
         }
-    }, [pathname, section]);
+    }, [pathname, section, setSidebar]);
 
     useEffect(() => {
         // Set initial state based on window width
@@ -86,8 +108,8 @@ const SideBar = () => {
             setIsMobile(isMobile);
 
             // Set collapsed state based on screen size
-            if (isTablet) {
-                setSidebar(true); // Collapsed on tablet
+            if (isTablet || activeTabWithSecondary) {
+                setSidebar(true); // Collapsed on tablet or when there's secondary nav
             } else if (!isMobile) {
                 setSidebar(false); // Expanded on desktop
             }
@@ -101,7 +123,7 @@ const SideBar = () => {
 
         // Clean up
         return () => window.removeEventListener('resize', checkMobile);
-    }, [setSidebar, setIsMobile]);
+    }, [setSidebar, setIsMobile, activeTabWithSecondary]);
 
     // Handle logo click to collapse the overlay when it's open
     const handleLogoClick = () => {
@@ -127,6 +149,9 @@ const SideBar = () => {
                 item.label !== 'Dashboard' &&
                 pathname.startsWith(item.link + '/'));
 
+        // Check if this item has secondary navigation
+        const hasSecondary = item.secondary && item.secondary.length > 0;
+
         return (
             <SideBarLink
                 key={item.label}
@@ -134,8 +159,8 @@ const SideBar = () => {
                 label={item.label}
                 link={item.link}
                 active={isActive}
-                isCollapsed={collapsed}
-                showLabel={storeIsMobile && mobileOpen}
+                isCollapsed={Boolean(collapsed || (isActive && hasSecondary))}
+                showLabel={Boolean(storeIsMobile && mobileOpen)}
                 onClick={() => {
                     if (storeIsMobile) {
                         setMobileSidebar(false);
@@ -145,6 +170,123 @@ const SideBar = () => {
         );
     });
 
+    // Render secondary sidebar if active tab has secondary navigation
+    const renderSecondarySidebar = () => {
+        if (!activeTabWithSecondary || !activeTabWithSecondary.secondary) return null;
+
+        // Determine appropriate class for secondary sidebar state:
+        // On desktop: apply collapsed class when not open
+        // On mobile: hide completely when not open
+        const secondarySidebarClasses = `
+            ${classes.secondarySidebar} 
+            ${storeIsMobile && !secondaryOpen ? classes.secondarySidebarHidden : ''}
+            ${!storeIsMobile && !secondaryOpen ? classes.secondarySidebarCollapsed : ''}
+            ${storeIsMobile && secondaryOpen ? classes.secondarySidebarVisible : ''}
+        `;
+
+        return (
+            <>
+                {storeIsMobile && secondaryOpen && (
+                    <div className={classes.secondarySidebarBackdrop} />
+                )}
+
+                <div
+                    ref={secondaryRef}
+                    className={secondarySidebarClasses}
+                >
+                    <div className={classes.secondarySidebarHeader}>
+                        {(!storeIsMobile || secondaryOpen) && (
+                            <Title order={4}>{activeTabWithSecondary.label}</Title>
+                        )}
+                    </div>
+
+                    {activeTabWithSecondary.secondary.map((item, index) => {
+                        if ('section' in item) {
+                            return (
+                                <div key={item.section} className={classes.secondarySidebarSection}>
+                                    {(!storeIsMobile || secondaryOpen) && (
+                                        <Text className={classes.secondarySidebarSectionTitle}>{item.section}</Text>
+                                    )}
+                                    {item.items.map((subItem) => renderSecondaryItem(subItem, index, !storeIsMobile && !secondaryOpen))}
+                                </div>
+                            );
+                        } else {
+                            return renderSecondaryItem(item as SecondaryItem, index, !storeIsMobile && !secondaryOpen);
+                        }
+                    })}
+                </div>
+            </>
+        );
+    };
+
+    // Helper to render secondary navigation items
+    const renderSecondaryItem = (item: SecondaryItem, index?: number, isCollapsed = false) => {
+        const isActive = pathname === item.link;
+
+        if (item.special === 'new') {
+            return (
+                <UnstyledButton
+                    key={item.label}
+                    className={classes.newMessageButton}
+                    onClick={() => {/* handle new message */ }}
+                >
+                    {!isCollapsed ? (
+                        <>
+                            <IconPlus size={16} style={{ marginRight: 8 }} />
+                            {item.label}
+                        </>
+                    ) : (
+                        <Tooltip label={item.label} position="right">
+                            <IconPlus size={20} />
+                        </Tooltip>
+                    )}
+                </UnstyledButton>
+            );
+        }
+
+        return (
+            <Tooltip
+                key={item.label || index}
+                label={isCollapsed ? item.label : undefined}
+                position="right"
+                disabled={!isCollapsed}
+            >
+                <UnstyledButton
+                    className={`${classes.secondaryLink} ${isCollapsed ? classes.secondaryLinkCollapsed : ''}`}
+                    data-active={isActive || undefined}
+                    onClick={() => {
+                        if (storeIsMobile) {
+                            setSecondarySidebar(false);
+                        }
+                        // Handle navigation
+                    }}
+                >
+                    <div className={classes.secondaryLinkMain}>
+                        {item.avatar ? (
+                            <div className={classes.avatarStatus}>
+                                <Avatar src={item.avatar} size="sm" radius="xl" mr={isCollapsed ? 0 : "xs"} />
+                                {item.status === 'online' && <div className={classes.statusIndicator} />}
+                            </div>
+                        ) : (
+                            item.icon && <item.icon className={classes.secondaryLinkIcon} size={20} color={item.color && `var(--mantine-color-${item.color}-6)`} />
+                        )}
+                        {!isCollapsed && <Text>{item.label}</Text>}
+                    </div>
+
+                    {!isCollapsed && item.count && (
+                        <Badge
+                            className={classes.secondaryLinkBadge}
+                            size="sm"
+                            variant="filled"
+                            color={item.color || "blue"}
+                        >
+                            {item.count}
+                        </Badge>
+                    )}
+                </UnstyledButton>
+            </Tooltip>
+        );
+    };
 
     return (
         <>
@@ -155,18 +297,18 @@ const SideBar = () => {
 
             <aside ref={overlayRef} className={`
                 ${classes.SideBar} 
-                ${collapsed ? classes.SideBarCollapsed : ''} 
+                ${collapsed || (activeTabWithSecondary && !storeIsMobile) ? classes.SideBarCollapsed : ''} 
                 ${storeIsMobile ? classes.SideBarMobile : ''}
                 ${storeIsMobile && mobileOpen ? classes.SideBarMobileOpen : ''}
             `}>
                 <div className={classes.header}>
                     {/* Logo with click handler */}
                     <Center
-                        className={`${collapsed ? classes.logoCollapsed : classes.logo} ${classes.clickable}`}
+                        className={`${collapsed || (activeTabWithSecondary && !storeIsMobile) ? classes.logoCollapsed : classes.logo} ${classes.clickable}`}
                         onClick={handleLogoClick}
                     >
-                        <Logo width={collapsed ? 30 : 20} height={collapsed ? 30 : 20} />
-                        {(!collapsed || (storeIsMobile && mobileOpen)) &&
+                        <Logo width={collapsed || (activeTabWithSecondary && !storeIsMobile) ? 30 : 20} height={collapsed || (activeTabWithSecondary && !storeIsMobile) ? 30 : 20} />
+                        {(!collapsed || (storeIsMobile && mobileOpen)) && !activeTabWithSecondary &&
                             <Title order={3} className={classes.title}>Control Terminal</Title>
                         }
                     </Center>
@@ -193,7 +335,7 @@ const SideBar = () => {
                                 <SectionIcon className={classes.linkIcon} stroke={1.5} />
                             </UnstyledButton>
                         </Tooltip>
-                    ) : (!storeIsMobile || (storeIsMobile && mobileOpen)) && (
+                    ) : (!storeIsMobile || (storeIsMobile && mobileOpen)) && !activeTabWithSecondary && (
                         <SegmentedControl
                             value={section}
                             onChange={(value) => setSection(value as Tabs)}
@@ -253,9 +395,9 @@ const SideBar = () => {
                                 icon={item.icon}
                                 label={item.label}
                                 link={item.link}
-                                active={false}            // typically you don’t “highlight” global items
-                                isCollapsed={collapsed}
-                                showLabel={storeIsMobile && mobileOpen}
+                                active={false}          
+                                isCollapsed={Boolean(collapsed || (activeTabWithSecondary && !storeIsMobile))}
+                                showLabel={Boolean(storeIsMobile && mobileOpen)}
                                 onClick={() => {
                                     if (storeIsMobile) setMobileSidebar(false)
                                 }}
@@ -263,6 +405,9 @@ const SideBar = () => {
                         ))}
                 </div>
             </aside>
+
+            {/* Render secondary sidebar if needed */}
+            {renderSecondarySidebar()}
         </>
     );
 };

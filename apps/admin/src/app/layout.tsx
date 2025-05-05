@@ -11,34 +11,36 @@ import SidebarToggle from "../_components/SidebarToggle";
 import "./_styles/dashboard.css";
 
 export default function DashboardLayout({
-    children
+  children
 }: { children: React.ReactNode }) {
-    return (
-         
-      <CustomProvider>
-        <div className="dashboard-layout">
-          <div className="sidebar-container">
-            <SideBar />
-          </div>
-          <div className="main-container">
-            <header className="dashboard-header">
-              <div className="header-left">
-                <SidebarToggle />
-                <HeaderTitle />
-              </div>
-              <div className="header-right">
-                <DashboardThemeToggler />
-                <NotificationsMenu />
-                <EmailsMenu />
-                <ProfileMenu />
-              </div>
-            </header>
-            <main className="dashboard-content">
-              {children}
-            </main>
-          </div>
+  return (
+
+    <CustomProvider>
+      <div className="dashboard-layout">
+        <div className="sidebar-container">
+          <SideBar />
         </div>
-          </CustomProvider>
-    );
+        <div className="main-container">
+          <header className="dashboard-header">
+            <div className="header-left">
+              <div className="header-toggle-container">
+                <SidebarToggle />
+              </div>
+              <HeaderTitle />
+            </div>
+            <div className="header-right">
+              <DashboardThemeToggler />
+              <NotificationsMenu />
+              <EmailsMenu />
+              <ProfileMenu />
+            </div>
+          </header>
+          <main className="dashboard-content">
+            {children}
+          </main>
+        </div>
+      </div>
+    </CustomProvider>
+  );
 }
 

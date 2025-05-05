@@ -46,10 +46,18 @@
   z-index: 20;
 }
 
+/* Ensure the header-left has proper spacing for dynamic toggle position */
 .header-left {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+/* Add a specific class for the toggle wrapper in header context */
+.header-toggle-container {
+  position: relative;
+  z-index: 1200;
+  transition: all 0.3s ease;
 }
 
 .dashboard-title {

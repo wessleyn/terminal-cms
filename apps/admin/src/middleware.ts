@@ -1,4 +1,4 @@
-import { redirectToLogin, verifySession } from "@repo/auth/src/lib";
+import { redirectToLogin } from "@repo/auth/src/lib";
 import { NextRequest, NextResponse } from "next/server";
 const NOT_FOUND_URL = `${process.env.WEB_PUBLIC_URL}/404`
 

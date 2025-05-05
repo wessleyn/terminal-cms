@@ -2,10 +2,10 @@ import { Tooltip, UnstyledButton } from '@repo/ui/components/mantine';
 import Link from 'next/link';
 import React from 'react';
 import classes from './SideBar.module.css';
+import { IconComponent } from './types';
 
 interface SideBarLinkProps {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    icon: React.FC<any>;
+    icon: IconComponent;
     label: string;
     link: string;
     active?: boolean;
@@ -15,6 +15,8 @@ interface SideBarLinkProps {
 }
 
 function SideBarLink({ icon: Icon, label, link, active, onClick, isCollapsed, showLabel = false }: SideBarLinkProps) {
+    console.log(`Rendering SideBarLink: ${label}, isCollapsed: ${isCollapsed}, showLabel: ${showLabel}`);
+    console.log(`is Linka ctive: ${active} `);
     return (
         <Tooltip label={label} position="right" transitionProps={{ duration: 0 }} disabled={!isCollapsed || showLabel}>
             <Link href={link} passHref>
