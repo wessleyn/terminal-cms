@@ -1,4 +1,3 @@
-<!-- omit in toc -->
 # Contributing to Terminal Portfolio
 
 First off, thanks for taking the time to contribute! ❤️
