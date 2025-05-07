@@ -1,10 +1,10 @@
 import { prisma } from '@repo/db';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import UniversalNewsletter from '../_components/UniversalNewsletter';
 import { getBlogPostBySlug } from './_actions/getBlogPostBySlug';
 import BlogPostHeader from './_components/BlogPostHeader';
 import MainContent from './_components/MainContent';
-import Newsletter from './_components/Newsletter';
 import RelatedPosts from './_components/RelatedPosts';
 
 export const revalidate = 3600; // Revalidate at most every hour
@@ -79,7 +79,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             />
             <MainContent post={post} />
             <RelatedPosts posts={relatedPosts} />
-            <Newsletter postId={post.id} />
+            <UniversalNewsletter
+                type="post"
+                postId={post.id}
+                title="Subscribe to this post"
+                subtitle="Get notified about updates and follow-ups to this article."
+            />
         </>
     );
 }

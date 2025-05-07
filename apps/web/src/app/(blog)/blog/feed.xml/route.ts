@@ -8,7 +8,7 @@ export async function GET(): Promise<Response> {
 
     try {
         // Get blog site information
-        const siteTitle = 'Wessley N\'s Blog';
+        const siteTitle = 'Terminal Blog';
         const siteDescription = 'Tech articles and coding insights by Wessley N';
 
         // Create a new RSS feed instance

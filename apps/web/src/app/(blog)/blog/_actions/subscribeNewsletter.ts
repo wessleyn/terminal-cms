@@ -1,57 +1,53 @@
 'use server';
 
-import { PostCategory, prisma } from '@repo/db';
 import { validateTurnstile } from '@repo/ui/utils';
-import { revalidatePath } from 'next/cache';
-import { z } from 'zod';
-
-// Define subscription types
-export type SubscriptionType = 'blog' | 'post' | 'category';
-
-// Define schema for newsletter subscription validation based on type
-const subscribeSchema = z.object({
-    email: z.string().email('Valid email is required'),
-    type: z.enum(['blog', 'post', 'category']),
-    postId: z.string().optional(),
-    category: z.enum(['SPELLS', 'POTIONS', 'SCROLLS', 'ARTIFACTS']).optional(),
-    'cf-turnstile-response': z.string().optional(),
-}).refine(data => {
-    // If type is post, postId is required
-    if (data.type === 'post') {
-        return !!data.postId;
-    }
-    // If type is category, category is required
-    if (data.type === 'category') {
-        return !!data.category;
-    }
-    return true;
-}, {
-    message: "Missing required field for selected subscription type",
-    path: ['_form']
-});
-
-export interface NewsletterFormState {
-    errors?: {
-        email?: string[];
-        _form?: string[];
-    };
-    message?: string;
-    success?: boolean;
-}
+import { handleBlogSubscription } from './handleBlogSubscription';
+import { handleCategorySubscription } from './handleCategorySubscription';
+import { handlePostSubscription } from './handlePostSubscription';
+import { NewsletterFormState, subscribeSchema } from './types';
 
 export async function subscribeNewsletter(formData: FormData): Promise<NewsletterFormState> {
+    console.log('[subscribeNewsletter] Function called');
+
     try {
-        // Extract data from the FormData object
-        const rawData = {
-            email: formData.get('email'),
-            type: formData.get('type'),
+        // Extract and properly format data from the FormData object
+        const rawFormData = {
+            email: formData.get('email') as string,
+            type: formData.get('type') as 'blog' | 'post' | 'category',
             postId: formData.get('postId'),
             category: formData.get('category'),
             'cf-turnstile-response': formData.get('cf-turnstile-response'),
         };
 
-        // Validate Turnstile token
-        const turnstileResult = await validateTurnstile(rawData['cf-turnstile-response'] as string | null);
+        // Convert empty strings to null for optional fields
+        const rawData = {
+            ...rawFormData,
+            // Normalize values - empty strings should be null
+            postId: rawFormData.postId || null,
+            category: rawFormData.category || null,
+        };
+
+        console.log('[subscribeNewsletter] Raw form data:', rawData);
+
+        // Validate Turnstile token first before proceeding with form validation
+        console.log('[subscribeNewsletter] Validating Turnstile token');
+        const turnstileToken = rawData['cf-turnstile-response'] as string | null;
+
+        // Check if turnstile token is missing
+        if (!turnstileToken) {
+            console.log('[subscribeNewsletter] Missing CAPTCHA token');
+            return {
+                success: false,
+                errors: {
+                    _form: ['Please complete the CAPTCHA verification.']
+                }
+            };
+        }
+
+        // Validate turnstile token
+        const turnstileResult = await validateTurnstile(turnstileToken);
+        console.log('[subscribeNewsletter] Turnstile validation result:', turnstileResult);
+
         if (!turnstileResult.success) {
             return {
                 success: false,
@@ -61,30 +57,47 @@ export async function subscribeNewsletter(formData: FormData): Promise<Newslette
             };
         }
 
-        // Validate form data using Zod
-        const result = subscribeSchema.safeParse(rawData);
-        if (!result.success) {
-            const fieldErrors = result.error.flatten().fieldErrors;
+        // If CAPTCHA is valid, then proceed with form validation
+        console.log('[subscribeNewsletter] Validating form data with Zod');
+        const validationResult = await subscribeSchema.safeParseAsync(rawData);
+        console.log('[subscribeNewsletter] Form validation result success:', validationResult.success);
+
+        if (!validationResult.success) {
+            const formattedErrors = validationResult.error.format();
+            console.log('[subscribeNewsletter] Form validation errors:', formattedErrors);
+
             return {
                 success: false,
                 errors: {
-                    ...fieldErrors,
-                    _form: ['Please provide a valid email address and all required information.']
+                    ...validationResult.error.flatten().fieldErrors,
+                    _form: ['Please provide all required information for the selected subscription type.']
                 }
             };
         }
 
-        const { email, type } = result.data;
+        const { email, type } = validationResult.data;
+        console.log(`[subscribeNewsletter] Processing ${type} subscription for ${email}`);
 
         // Handle different subscription types
         switch (type) {
-            case 'post':
-                return await handlePostSubscription(email, result.data.postId!);
-            case 'category':
-                return await handleCategorySubscription(email, result.data.category!);
+            case 'post': {
+                const postId = validationResult.data.postId;
+                console.log(`[subscribeNewsletter] Handling post subscription with ID: ${postId}`);
+                return await handlePostSubscription(email, postId);
+            }
+
+            case 'category': {
+                const category = validationResult.data.category;
+                console.log(`[subscribeNewsletter] Handling category subscription for: ${category}`);
+                return await handleCategorySubscription(email, category);
+            }
+
             case 'blog':
+                console.log('[subscribeNewsletter] Handling blog subscription');
                 return await handleBlogSubscription(email);
+
             default:
+                console.log('[subscribeNewsletter] Invalid subscription type:', type);
                 return {
                     success: false,
                     errors: {
@@ -93,7 +106,7 @@ export async function subscribeNewsletter(formData: FormData): Promise<Newslette
                 };
         }
     } catch (error) {
-        console.error('Error submitting newsletter form:', error);
+        console.error('[subscribeNewsletter] Error processing subscription:', error);
         return {
             success: false,
             errors: {
@@ -101,107 +114,4 @@ export async function subscribeNewsletter(formData: FormData): Promise<Newslette
             }
         };
     }
-}
-
-// Handle subscription to a specific post
-async function handlePostSubscription(email: string, postId: string): Promise<NewsletterFormState> {
-    // Check if this subscriber already exists for this post
-    const existingSubscriber = await prisma.postSubscriber.findFirst({
-        where: {
-            email,
-            subsribedPostId: postId,
-            unsubscribedAt: null,
-        }
-    });
-
-    if (existingSubscriber) {
-        return {
-            success: true,
-            message: 'You are already subscribed to updates for this post.'
-        };
-    }
-
-    // Create a new post subscriber
-    await prisma.postSubscriber.create({
-        data: {
-            email,
-            subsribedPostId: postId,
-        },
-    });
-
-    // Revalidate the blog post page
-    revalidatePath(`/blog/${encodeURIComponent(postId)}`);
-
-    return {
-        success: true,
-        message: 'You have successfully subscribed to updates for this post!'
-    };
-}
-
-// Handle subscription to a specific category
-async function handleCategorySubscription(email: string, category: string): Promise<NewsletterFormState> {
-    // Check if this subscriber already exists for this category
-    const existingSubscriber = await prisma.categorySubscriber.findFirst({
-        where: {
-            email,
-            category: category as PostCategory,
-            unsubscribedAt: null,
-        }
-    });
-
-    if (existingSubscriber) {
-        return {
-            success: true,
-            message: `You are already subscribed to updates for the ${category.toLowerCase()} category.`
-        };
-    }
-
-    // Create a new category subscriber
-    await prisma.categorySubscriber.create({
-        data: {
-            email,
-            category: category as PostCategory,
-        },
-    });
-
-    // Revalidate the category page
-    revalidatePath(`/blog/category/${category.toLowerCase()}`);
-
-    return {
-        success: true,
-        message: `You have successfully subscribed to updates for the ${category.toLowerCase()} category!`
-    };
-}
-
-// Handle subscription to the general blog
-async function handleBlogSubscription(email: string): Promise<NewsletterFormState> {
-    // Check if this subscriber already exists for the blog
-    const existingSubscriber = await prisma.blogSubscriber.findFirst({
-        where: {
-            email,
-            unsubscribedAt: null,
-        }
-    });
-
-    if (existingSubscriber) {
-        return {
-            success: true,
-            message: 'You are already subscribed to our blog newsletter.'
-        };
-    }
-
-    // Create a new blog subscriber
-    await prisma.blogSubscriber.create({
-        data: {
-            email,
-        },
-    });
-
-    // Revalidate the blog pages
-    revalidatePath('/blog');
-
-    return {
-        success: true,
-        message: 'You have successfully subscribed to our blog newsletter!'
-    };
 }

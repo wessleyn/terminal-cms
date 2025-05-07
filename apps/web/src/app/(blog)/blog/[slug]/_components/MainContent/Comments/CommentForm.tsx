@@ -2,9 +2,10 @@
 
 import { useForm } from '@mantine/form';
 import { Alert, Button, Group, Stack, Textarea, TextInput } from '@repo/ui/components/mantine';
-import { IconAlertCircle, IconMessageCircle2, IconUser } from '@tabler/icons-react';
+import { IconAlertCircle } from '@tabler/icons-react';
 import { useState } from 'react';
 import { CommentFormValues, submitComment } from '../../../_actions/submitComment';
+import styles from './CommentForm.module.css';
 
 interface CommentFormProps {
     postId: string;
@@ -74,26 +75,9 @@ export default function CommentForm({ postId, slug, parentId = null, onSuccess }
         }
     };
 
-    // Custom styles for borderless inputs
-    const inputStyles = {
-        input: {
-            border: 'none',
-            borderBottom: '1px solid var(--mantine-color-gray-4)',
-            borderRadius: 0,
-            padding: '8px 0',
-            '&:focus': {
-                borderColor: 'var(--mantine-color-green-6)',
-                boxShadow: 'none',
-            },
-        },
-        label: {
-            marginBottom: '4px',
-        },
-    };
-
     return (
         <form onSubmit={form.onSubmit(handleSubmit)}>
-            <Stack gap="md">
+            <Stack gap="lg">
                 {submissionState === 'success' && (
                     <Alert title="Success" color="green" withCloseButton onClose={() => setSubmissionState('idle')}>
                         {submissionMessage}
@@ -101,18 +85,21 @@ export default function CommentForm({ postId, slug, parentId = null, onSuccess }
                 )}
 
                 {submissionState === 'error' && (
-                    <Alert title="Error" color="red" icon={<IconAlertCircle />} withCloseButton onClose={() => setSubmissionState('idle')}>
+                    <Alert title="Error" color="red" icon={<IconAlertCircle size={18} />} withCloseButton onClose={() => setSubmissionState('idle')}>
                         {submissionMessage}
                     </Alert>
                 )}
 
                 <Group grow>
                     <TextInput
-                        leftSection={<IconUser size={16} />}
                         label="Name"
                         placeholder="Your name"
                         withAsterisk
-                        styles={inputStyles}
+                        classNames={{
+                            input: styles.formInput,
+                            label: styles.formLabel,
+                            error: styles.formError
+                        }}
                         {...form.getInputProps('name')}
                     />
 
@@ -120,7 +107,11 @@ export default function CommentForm({ postId, slug, parentId = null, onSuccess }
                         label="Email"
                         placeholder="your.email@example.com"
                         withAsterisk
-                        styles={inputStyles}
+                        classNames={{
+                            input: styles.formInput,
+                            label: styles.formLabel,
+                            error: styles.formError
+                        }}
                         {...form.getInputProps('email')}
                     />
                 </Group>
@@ -128,32 +119,36 @@ export default function CommentForm({ postId, slug, parentId = null, onSuccess }
                 <TextInput
                     label="Website"
                     placeholder="https://yourwebsite.com"
-                    styles={inputStyles}
+                    classNames={{
+                        input: styles.formInput,
+                        label: styles.formLabel,
+                        error: styles.formError
+                    }}
                     {...form.getInputProps('website')}
                 />
 
                 <Textarea
-                    leftSection={<IconMessageCircle2 size={16} />}
                     label="Comment"
                     placeholder="Write your thoughts here"
-                    minRows={4}
+                    minRows={3}
                     withAsterisk
-                    styles={{
-                        ...inputStyles,
-                        input: {
-                            ...inputStyles.input,
-                            minHeight: '100px',
-                        },
+                    classNames={{
+                        input: styles.textarea,
+                        label: styles.formLabel,
+                        error: styles.formError
                     }}
                     {...form.getInputProps('message')}
                 />
 
-                <Group justify="flex-end">
+                <Group className={styles.buttonContainer} justify="flex-end">
                     <Button
                         type="submit"
                         loading={submissionState === 'submitting'}
-                        variant="outline"
+                        variant="subtle"
                         color="green"
+                        size="sm"
+                        radius="xs"
+                        className={styles.submitButton}
                     >
                         {parentId ? 'Reply' : 'Post Comment'}
                     </Button>

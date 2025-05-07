@@ -4,8 +4,8 @@ import { Button, Container, Group, Paper, Text, TextInput, Title } from '@repo/u
 import { Turnstile, resetTurnstile } from '@repo/ui/components/shared';
 import { IconMail } from '@tabler/icons-react';
 import { useState } from 'react';
-import type { SubscriptionType } from '../_actions/subscribeNewsletter';
 import { subscribeNewsletter } from '../_actions/subscribeNewsletter';
+import { SubscriptionType } from '../_actions/types';
 
 interface UniversalNewsletterProps {
     type: SubscriptionType;

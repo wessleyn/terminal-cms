@@ -3,9 +3,9 @@ import { getFeaturedPosts } from './_actions/getFeaturedPosts';
 import { getRecentPosts } from './_actions/getRecentPosts';
 import { getTrendingPosts } from './_actions/getTrendingPosts';
 import { FeaturedPostsSection } from './_components/FeaturedPostsSection';
-import { NewsletterSection } from './_components/NewsletterSection';
 import { RecentPostsSection } from './_components/RecentPostsSection';
 import { TrendingPostsSection } from './_components/TrendingPostsSection';
+import UniversalNewsletter from './_components/UniversalNewsletter';
 // Set revalidation time to 1 hour
 export const revalidate = 3600;
 
@@ -41,8 +41,11 @@ export default async function BlogPage() {
           <TrendingPostsSection posts={trendingPosts} />
         </Suspense>
 
-        {/* Newsletter Section */}
-        <NewsletterSection />
+        <UniversalNewsletter
+          type="blog"
+          title="Subscribe to our newsletter"
+          subtitle="Stay updated with our latest articles, tutorials, and insights across all topics."
+        />
       </div>
 
     </div>
