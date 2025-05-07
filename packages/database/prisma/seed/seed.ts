@@ -204,7 +204,8 @@ async function main() {
             data: {
                 ...commentData,
                 postId: post.id,
-                parentId: null
+                parentId: null,
+                authorProfile: "default" // Adding the required authorProfile field
             }
         });
 
@@ -217,7 +218,8 @@ async function main() {
                     data: {
                         ...reply,
                         postId: post.id,
-                        parentId: createdComment.id
+                        parentId: createdComment.id,
+                        authorProfile: "default" // Adding the required authorProfile field
                     }
                 });
                 console.log(`Created reply to comment: ${comment.id}`);

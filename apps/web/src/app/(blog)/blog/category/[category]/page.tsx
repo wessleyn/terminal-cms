@@ -1,8 +1,8 @@
-import { prisma } from '@repo/db';
+import { PostCategory as CategoryEnum, prisma } from '@repo/db';
 import { Container, Group, Pagination, Text } from '@repo/ui/components/mantine';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Newsletter from '../../[slug]/_components/Newsletter';
+import UniversalNewsletter from '../../_components/UniversalNewsletter';
 import CategoryHeader from './_components/CategoryHeader';
 import PostGrid from './_components/PostGrid';
 
@@ -17,13 +17,7 @@ interface CategoryPageProps {
     }>;
 }
 
-// Define our own category enum since we can't import it directly
-enum CategoryEnum {
-    SPELLS = 'SPELLS',
-    POTIONS = 'POTIONS',
-    SCROLLS = 'SCROLLS',
-    ARTIFACTS = 'ARTIFACTS'
-}
+
 
 // Map of URL-friendly category slugs to actual category enum values
 const categoryMap: Record<string, string> = {
@@ -139,7 +133,12 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
                     )}
                 </Container>
 
-                <Newsletter />
+                <UniversalNewsletter
+                    type="category"
+                    category={categoryEnum}
+                    title={`Subscribe to ${categoryEnum.charAt(0) + categoryEnum.slice(1).toLowerCase()} Updates`}
+                    subtitle={`Get the latest articles from the ${categoryEnum.toLowerCase()} category delivered straight to your inbox.`}
+                />
             </>
         );
     } catch (error) {

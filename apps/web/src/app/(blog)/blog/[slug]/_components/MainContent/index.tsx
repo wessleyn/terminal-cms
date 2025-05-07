@@ -2,10 +2,19 @@
 
 import { BlogComment, BlogTag } from "@repo/db"
 import { Badge, Container, Grid, Group, Text } from "@repo/ui/components/mantine"
-import { Suspense } from "react"
+import dynamic from 'next/dynamic'
 import BlogSidebar from "../BlogSidebar"
 import BlogContent from "./BlogContent"
-import DynamicComments from "./Comments/DynamicComments"
+
+// Import the DynamicComments as a dynamic component with SSR enabled
+const DynamicComments = dynamic(() => import('./Comments'), {
+    ssr: true, // Make sure SSR is enabled for the dynamic component
+    loading: () => (
+        <div className="comments-loading">
+            <Text ta="center" c="dimmed" py="xl">Loading comments...</Text>
+        </div>
+    )
+});
 
 interface PostType {
     content: string;
@@ -48,17 +57,11 @@ const MainContent = ({ post }: MainContentProps) => {
                         </Group>
                     </div>
 
-                    {/* Dynamic comments section with Suspense for loading state */}
-                    <Suspense fallback={
-                        <div className="comments-loading">
-                            <Text ta="center" c="dimmed" py="xl">Loading comments...</Text>
-                        </div>
-                    }>
-                        <DynamicComments
-                            postId={post.id}
-                            slug={post.slug}
-                        />
-                    </Suspense>
+                    {/* Use next/dynamic to load the comments section */}
+                    <DynamicComments
+                        postId={post.id}
+                        slug={post.slug}
+                    />
                 </Grid.Col>
 
                 <Grid.Col span={{ base: 12, md: 4 }}>

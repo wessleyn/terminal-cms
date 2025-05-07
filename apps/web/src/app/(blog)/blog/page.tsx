@@ -3,11 +3,9 @@ import { getFeaturedPosts } from './_actions/getFeaturedPosts';
 import { getRecentPosts } from './_actions/getRecentPosts';
 import { getTrendingPosts } from './_actions/getTrendingPosts';
 import { FeaturedPostsSection } from './_components/FeaturedPostsSection';
-import { FooterLinks } from './_components/FooterLinks/indec';
 import { NewsletterSection } from './_components/NewsletterSection';
 import { RecentPostsSection } from './_components/RecentPostsSection';
 import { TrendingPostsSection } from './_components/TrendingPostsSection';
-
 // Set revalidation time to 1 hour
 export const revalidate = 3600;
 
@@ -47,10 +45,6 @@ export default async function BlogPage() {
         <NewsletterSection />
       </div>
 
-      {/* Footer Section */}
-      <div style={{ marginTop: 'auto' }}>
-        <FooterLinks />
-      </div>
     </div>
   );
 }

@@ -21,8 +21,9 @@ model BlogPost {
     author   BlogAuthor? @relation(fields: [authorId], references: [id])
     authorId String?
 
-    tags     BlogTag[]     @relation("PostToTag")
-    comments BlogComment[]
+    tags        BlogTag[]        @relation("PostToTag")
+    subscribers PostSubscriber[]
+    comments    BlogComment[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -55,6 +56,7 @@ model BlogComment {
     id            String   @id @default(cuid())
     content       String
     authorName    String
+    authorProfile String
     authorEmail   String
     authorWebsite String?
     isApproved    Boolean  @default(false)
@@ -68,4 +70,37 @@ model BlogComment {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model PostSubscriber {
+    id    String @id @default(cuid())
+    email String @unique
+
+    subsribedPostId String?
+    post            BlogPost? @relation(fields: [subsribedPostId], references: [id], onDelete: Cascade)
+
+    unsubscribedAt DateTime?
+    subscribedAt   DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt
+}
+
+model BlogSubscriber {
+    id    String @id @default(cuid())
+    email String @unique
+
+    unsubscribedAt DateTime?
+    subscribedAt   DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt
+}
+
+model CategorySubscriber {
+    id       String       @id @default(cuid())
+    email    String
+    category PostCategory
+
+    unsubscribedAt DateTime?
+    subscribedAt   DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt
+
+    @@unique([email, category])
 }

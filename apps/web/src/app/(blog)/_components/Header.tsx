@@ -55,11 +55,13 @@ const Header = () => {
 
     return (
         <div className={classes.inner}>
+                <Link href='/blog' className={classes.link + 'd-flex'}>
             <Group>
                 <Burger size="sm" hiddenFrom="sm" />
-                <BlogLogo />
-                <Title order={2} className={classes.title}>Blog</Title>
+                    <BlogLogo />
+                    <Title order={2} className={classes.title}>Blog</Title>
             </Group>
+                </Link>
             <Group>
             </Group>
             <Autocomplete

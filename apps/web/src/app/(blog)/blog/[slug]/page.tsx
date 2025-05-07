@@ -79,7 +79,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             />
             <MainContent post={post} />
             <RelatedPosts posts={relatedPosts} />
-            <Newsletter />
+            <Newsletter postId={post.id} />
         </>
     );
 }

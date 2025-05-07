@@ -1,6 +1,6 @@
 'use client';
 
-import { Avatar, Button, Divider, Group, Paper, Stack, Text } from '@repo/ui/components/mantine';
+import { Avatar, Button, Group, Paper, Stack, Text } from '@repo/ui/components/mantine';
 import { IconCalendar, IconMessageCircle2 } from '@tabler/icons-react';
 import { useState } from 'react';
 import CommentForm from './CommentForm';
@@ -11,6 +11,7 @@ interface CommentProps {
         content: string;
         authorName: string;
         authorEmail: string;
+        authorProfile: string
         authorWebsite?: string | null;
         createdAt: Date;
         replies?: CommentProps['comment'][];
@@ -37,14 +38,13 @@ export default function Comment({ comment, postId, slug }: CommentProps) {
     };
 
     // Generate avatar from author name
-    const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(comment.authorName)}`;
 
     return (
-        <Paper withBorder p="md" mb="md" radius="md" bg="transparent">
+        <Paper  p="md" mb="md" radius="md" bg="transparent">
             <Stack gap="md">
                 <Group justify="space-between" align="start" wrap="nowrap">
                     <Group align="start" wrap="nowrap">
-                        <Avatar src={avatarUrl} alt={comment.authorName} radius="xl" size="md" />
+                        <Avatar src={comment.authorProfile} alt={comment.authorName} radius="xl" size="md" />
                         <Stack gap="xs">
                             <div>
                                 <Text fw={600}>{comment.authorName}</Text>
@@ -83,7 +83,6 @@ export default function Comment({ comment, postId, slug }: CommentProps) {
 
                 {comment.replies && comment.replies.length > 0 && (
                     <Stack gap="md" style={{ marginLeft: 20, marginTop: 10 }}>
-                        <Divider />
                         {comment.replies.map((reply) => (
                             <Comment key={reply.id} comment={reply} postId={postId} slug={slug} />
                         ))}

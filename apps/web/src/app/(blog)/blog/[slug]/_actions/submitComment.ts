@@ -21,10 +21,13 @@ export async function submitComment(values: CommentFormValues) {
   try {
     // Validate the input data
     const validatedData = CommentSchema.parse(values);
+    // TODO: get the avatar associated with an email just like the gmails!!
+    const authorProfile = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(validatedData.name)}`;
 
     // Create the comment in the database
     await prisma.blogComment.create({
       data: {
+        authorProfile,
         authorName: validatedData.name,
         authorEmail: validatedData.email,
         authorWebsite: validatedData.website || null,
