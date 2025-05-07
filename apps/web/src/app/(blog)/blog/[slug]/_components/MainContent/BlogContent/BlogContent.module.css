@@ -1,0 +1,26 @@
+.content {
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.content img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.content p {
+  margin-bottom: 1.5rem;
+}
+
+.content h2,
+.content h3 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.content pre {
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+}

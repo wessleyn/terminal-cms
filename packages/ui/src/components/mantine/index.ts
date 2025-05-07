@@ -8,13 +8,14 @@ import '@mantine/spotlight/styles.css';
 
 // Export all Mantine components and hooks
 export * from "@mantine/carousel";
+export * from '@mantine/code-highlight';
 export * from "@mantine/core";
 export * from "@mantine/dates";
 export * from "@mantine/form";
 export * from "@mantine/hooks";
 export * from "@mantine/notifications";
 export * from "@mantine/spotlight";
-
+export * from "@mantine/modals";
 // Export icons from Mantinex
 export * from "@mantinex/dev-icons";
 
@@ -26,3 +27,13 @@ export * from '../cloudinary';
 
 export * from './MaintenancePage';
 
+// export const Provider = ({ children }: { children: React.ReactNode }) => {
+//     return (
+//         <MantineProvider defaultColorScheme= { defaultColorScheme } theme = { theme } >
+//             <Notifications />
+//             <ModalsProvider>
+//                      { children }
+//             </ModalsProvider>
+//         </MantineProvider>
+//     )
+// }

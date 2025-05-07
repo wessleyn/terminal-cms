@@ -4,12 +4,12 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "admin:dev": "turbo run dev --filter=admin",
-    "web:dev": "turbo run dev --filter=web",
-    "email:dev": "turbo run dev --filter=email",
-    "admin:start": "turbo run start --filter=admin",
-    "web:start": "turbo run start --filter=web",
-    "email:start": "turbo run start --filter=email",
+    "dev:admin": "turbo run dev --filter=admin",
+    "dev:web": "turbo run dev --filter=web",
+    "dev:email": "turbo run dev --filter=email",
+    "start:admin": "turbo run start --filter=admin",
+    "start:web": "turbo run start --filter=web",
+    "start:email": "turbo run start --filter=email",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
