@@ -1,7 +1,7 @@
 'use server';
 
-import { prisma } from '@repo/db';
-import { ApiResponse, PrivacySection, PrivacyType } from '../_types/types';
+import { prisma, PrivacyType } from '@repo/db';
+import { ApiResponse, PrivacySection } from '../_types/types';
 
 export async function fetchPrivacySections(type: PrivacyType = PrivacyType.PORTFOLIO): Promise<ApiResponse<PrivacySection[]>> {
     try {

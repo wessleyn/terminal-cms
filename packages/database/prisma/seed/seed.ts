@@ -1,7 +1,7 @@
 import { PrismaClient } from '../../generated/prisma';
 import { blogAuthors, blogComments, blogPosts, blogTags } from './data/blogData';
 import { meetingsData } from './data/meetingsData';
-import { privacyData } from './data/privacyData';
+import { blogPrivacyData, privacyData, termsData } from './data/privacyData';
 import { profileData } from './data/profileData';
 import { projectsData } from './data/projectData';
 
@@ -82,7 +82,7 @@ async function main() {
     // Seed privacy policy
     console.log('Seeding privacy data...');
 
-    // Create the main privacy document with all sections
+    // Create the portfolio privacy document with all sections
     const privacy = await prisma.privacy.create({
         data: {
             type: privacyData.type,
@@ -95,6 +95,34 @@ async function main() {
     });
 
     console.log(`Created privacy policy with ${privacyData.sections.length} sections.`);
+
+    // Create the blog privacy document
+    const blogPrivacy = await prisma.privacy.create({
+        data: {
+            type: blogPrivacyData.type,
+            descPhrase: blogPrivacyData.descPhrase,
+            // Create all the sections
+            sections: {
+                create: blogPrivacyData.sections
+            }
+        }
+    });
+
+    console.log(`Created blog privacy policy with ${blogPrivacyData.sections.length} sections.`);
+
+    // Create the terms of service document
+    const terms = await prisma.privacy.create({
+        data: {
+            type: termsData.type,
+            descPhrase: termsData.descPhrase,
+            // Create all the sections
+            sections: {
+                create: termsData.sections
+            }
+        }
+    });
+
+    console.log(`Created terms of service with ${termsData.sections.length} sections.`);
 
     // Seed sample meetings
     console.log('Seeding sample meeting data...');

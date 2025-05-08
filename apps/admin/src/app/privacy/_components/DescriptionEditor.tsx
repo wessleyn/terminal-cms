@@ -4,7 +4,7 @@ import { Button, Card, Group, Text, Textarea } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { useCallback, useState } from 'react';
 import { updatePrivacyDescription } from '../_actions/updatePrivacyDetails';
-import { PrivacyType } from '../_types/types';
+import { PrivacyType } from '@repo/db';
 
 interface DescriptionEditorProps {
     initialDesc: string;
