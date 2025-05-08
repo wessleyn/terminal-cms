@@ -62,7 +62,7 @@ export default async function Home() {
             {blogPosts.length > 0 ? (
               blogPosts.map((post) => (
                 <div key={post.id} className="col-md-6">
-                  <ArticleCard />
+                  <ArticleCard post={post} />
                 </div>
               ))
             ) : (
