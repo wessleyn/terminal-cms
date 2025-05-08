@@ -1,7 +1,7 @@
 import { PostCategory as CategoryEnum, prisma } from '@repo/db';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import CategoryPageClient from './_components/CategoryPageClient';
+import LazyCategoryContent from './_components/LazyCategoryContent';
 
 export const revalidate = 3600; // Revalidate at most every hour
 
@@ -125,7 +125,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         }));
 
         return (
-            <CategoryPageClient
+            <LazyCategoryContent
                 posts={formattedPosts}
                 category={categoryEnum}
                 description={description}
@@ -137,7 +137,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     } catch (error) {
         console.error("Error loading category page:", error);
         return (
-            <CategoryPageClient
+            <LazyCategoryContent
                 posts={[]}
                 category={categoryEnum}
                 description=""

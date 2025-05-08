@@ -2,7 +2,7 @@ import { prisma } from '@repo/db';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getBlogPostBySlug } from './_actions/getBlogPostBySlug';
-import BlogPostClient from './_components/BlogPostClient';
+import LazyBlogPostContent from './_components/LazyBlogPostContent';
 
 export const revalidate = 3600; // Revalidate at most every hour
 
@@ -23,7 +23,6 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
             title: 'Post Not Found',
         };
     }
-
 
     return {
         title: post.title,
@@ -67,7 +66,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         take: 4
     });
 
-    return <BlogPostClient post={post} relatedPosts={relatedPosts} />;
+    return <LazyBlogPostContent post={post} relatedPosts={relatedPosts} />;
 }
 
 export async function generateStaticParams() {

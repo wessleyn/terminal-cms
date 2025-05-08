@@ -1,7 +1,7 @@
 import { getFeaturedPosts } from './_actions/getFeaturedPosts';
 import { getRecentPosts } from './_actions/getRecentPosts';
 import { getTrendingPosts } from './_actions/getTrendingPosts';
-import BlogPageClient from './_components/BlogPageClient';
+import LazyBlogContent from './_components/LazyBlogContent';
 
 // Set revalidation time to 1 hour
 export const revalidate = 3600;
@@ -15,7 +15,7 @@ export default async function BlogPage() {
   ]);
 
   return (
-    <BlogPageClient
+    <LazyBlogContent
       featuredPosts={featuredPosts}
       recentPosts={recentPosts}
       trendingPosts={trendingPosts}
