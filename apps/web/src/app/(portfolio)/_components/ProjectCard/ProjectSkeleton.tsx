@@ -1,4 +1,4 @@
-import { Card } from "@repo/ui/components/mantine";
+import { Card } from "@mantine/core";
 
 export default function ProjectSkeleton() {
     return (

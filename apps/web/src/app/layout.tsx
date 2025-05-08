@@ -5,11 +5,10 @@ import {
   createTheme,
   mantineHtmlProps,
   MantineProvider,
-  ModalsProvider,
-  Notifications
-} from '@repo/ui/components/mantine'
-
+} from '@mantine/core'
 import '@mantine/core/styles.css'
+import { ModalsProvider } from '@mantine/modals'
+import { Notifications } from '@mantine/notifications'
 import '@mantine/notifications/styles.css'
 import './globals.css'
 

@@ -1,5 +1,6 @@
 'use client';
-import { Container, Group, Pagination, SimpleGrid, Title } from '@repo/ui/components/mantine';
+
+import { Container, Group, Pagination, SimpleGrid, Title } from '@mantine/core';
 import { useState } from 'react';
 import { BlogPost } from '../../_actions/getRecentPosts';
 import { PostCard } from './PostCard';

@@ -18,6 +18,7 @@
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
+    "@types/webpack": "^5.28.5",
     "prettier": "^3.5.3",
     "turbo": "^2.5.3",
     "typescript": "5.8.2"

@@ -1,4 +1,4 @@
-import { Skeleton } from "@repo/ui/components/mantine";
+import { Skeleton } from "@mantine/core";
 import { fetchAwesomePost } from "./_actions/fetchAwesomePost";
 import fetchAwesomeProj from "./_actions/fetchAwesomeProj";
 import ArticleCard from "./_components/ArticleCard";

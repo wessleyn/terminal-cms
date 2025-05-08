@@ -6,7 +6,7 @@ export default function ProfileInfoSkeleton() {
             <div className="col profile">
                 {/* Skeleton for avatar */}
                 <div
-                    className="img-fluid border rounded border-0 shadow-sm mb-4 skeleton-pulse"
+                    className="img-fluid rounded border-0 shadow-sm mb-4 skeleton-pulse"
                     style={{
                         width: '300px',
                         height: '300px',

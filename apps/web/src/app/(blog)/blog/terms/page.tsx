@@ -1,4 +1,4 @@
-import { Container, Group, Paper, Stack, Text, Title } from '@repo/ui/components/mantine';
+import { Container, Group, Paper, Stack, Text, Title } from '@mantine/core';
 import { format } from 'date-fns';
 import { Metadata } from 'next';
 import { fetchTermsOfService } from './_actions/fetchTerms';

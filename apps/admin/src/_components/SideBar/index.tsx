@@ -1,7 +1,7 @@
 'use client';
 
+import { Avatar, Badge, Center, SegmentedControl, Stack, Text, Title, Tooltip, UnstyledButton } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
-import { Avatar, Badge, Center, SegmentedControl, Stack, Text, Title, Tooltip, UnstyledButton } from '@repo/ui/components/mantine';
 import {
     IconBook2,
     IconFolders,
@@ -395,7 +395,7 @@ const SideBar = () => {
                                 icon={item.icon}
                                 label={item.label}
                                 link={item.link}
-                                active={false}          
+                                active={false}
                                 isCollapsed={Boolean(collapsed || (activeTabWithSecondary && !storeIsMobile))}
                                 showLabel={Boolean(storeIsMobile && mobileOpen)}
                                 onClick={() => {

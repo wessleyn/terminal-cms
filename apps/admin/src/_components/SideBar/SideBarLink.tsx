@@ -1,7 +1,9 @@
-import { Tooltip, UnstyledButton } from '@repo/ui/components/mantine';
+'use client';
+
+import { Tooltip, UnstyledButton } from '@mantine/core';
 import Link from 'next/link';
 import React from 'react';
-import classes from './SideBar.module.css';
+import styles from '../styles/Sidebar.module.css';
 import { IconComponent } from './types';
 
 interface SideBarLinkProps {
@@ -22,7 +24,7 @@ function SideBarLink({ icon: Icon, label, link, active, onClick, isCollapsed, sh
             <Link href={link} passHref>
                 <UnstyledButton
                     onClick={onClick}
-                    className={classes.link}
+                    className={styles.link}
                     styles={{
                         root: {
                             padding: isCollapsed && !showLabel ? '12px' : '8px 16px',
@@ -35,8 +37,8 @@ function SideBarLink({ icon: Icon, label, link, active, onClick, isCollapsed, sh
                     }}
                     data-active={active || undefined}
                 >
-                    <Icon className={classes.linkIcon} stroke={1.5} />
-                    {(!isCollapsed || showLabel) && <span className={classes.linkLabel}>{label}</span>}
+                    <Icon className={styles.linkIcon} stroke={1.5} />
+                    {(!isCollapsed || showLabel) && <span className={styles.linkLabel}>{label}</span>}
                 </UnstyledButton>
             </Link>
         </Tooltip>

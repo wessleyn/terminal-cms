@@ -1,6 +1,6 @@
 'use client';
 
-import { Avatar, Badge, Container, Group, Text, Title } from '@repo/ui/components/mantine';
+import { Avatar, Badge, Container, Group, Text, Title } from '@mantine/core';
 import Link from 'next/link';
 
 interface Author {

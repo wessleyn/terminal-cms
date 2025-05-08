@@ -1,5 +1,5 @@
+import { Container, Group, Pagination, Text } from '@mantine/core';
 import { PostCategory as CategoryEnum, prisma } from '@repo/db';
-import { Container, Group, Pagination, Text } from '@repo/ui/components/mantine';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import UniversalNewsletter from '../../_components/UniversalNewsletter';

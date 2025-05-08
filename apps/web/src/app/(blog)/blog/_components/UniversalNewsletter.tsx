@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Container, Group, Paper, Text, TextInput, Title } from '@repo/ui/components/mantine';
+import { Button, Container, Group, Paper, Text, TextInput, Title } from '@mantine/core';
 import { Turnstile, resetTurnstile } from '@repo/ui/components/shared';
 import { IconMail } from '@tabler/icons-react';
 import { useState } from 'react';

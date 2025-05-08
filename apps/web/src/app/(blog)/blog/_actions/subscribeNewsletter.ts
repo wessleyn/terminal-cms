@@ -1,6 +1,6 @@
 'use server';
 
-import { validateTurnstile } from '@repo/ui/utils';
+import { validateTurnstile } from '@repo/ui/utils/captcha';
 import { handleBlogSubscription } from './handleBlogSubscription';
 import { handleCategorySubscription } from './handleCategorySubscription';
 import { handlePostSubscription } from './handlePostSubscription';

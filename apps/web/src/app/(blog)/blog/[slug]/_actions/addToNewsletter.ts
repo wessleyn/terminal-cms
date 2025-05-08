@@ -1,7 +1,7 @@
 'use server';
 
 import { prisma } from '@repo/db';
-import { validateTurnstile } from '@repo/ui/utils';
+import { validateTurnstile } from '@repo/ui/utils/captcha';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 

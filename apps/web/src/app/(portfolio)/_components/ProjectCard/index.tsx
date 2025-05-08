@@ -9,7 +9,7 @@ import {
     Text,
     Tooltip,
     useMantineTheme
-} from '@repo/ui/components/mantine';
+} from '@mantine/core';
 
 import { Project } from '@repo/db';
 import { TechTag } from '@repo/ui/components/shared';

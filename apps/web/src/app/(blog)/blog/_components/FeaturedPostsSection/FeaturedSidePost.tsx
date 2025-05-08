@@ -1,5 +1,6 @@
 'use client';
-import { Badge, Paper, Text } from '@repo/ui/components/mantine';
+
+import { Badge, Paper, Text } from '@mantine/core';
 import Link from 'next/link';
 import { FeaturedPost } from '../../_actions/getFeaturedPosts';
 

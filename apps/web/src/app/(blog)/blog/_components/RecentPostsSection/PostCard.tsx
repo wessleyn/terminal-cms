@@ -1,5 +1,6 @@
 'use client';
-import { Avatar, Badge, Button, Card, Group, Image, Text } from '@repo/ui/components/mantine';
+
+import { Avatar, Badge, Button, Card, Group, Image, Text } from '@mantine/core';
 import Link from 'next/link';
 import { BlogPost } from '../../_actions/getRecentPosts';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { SignOut } from '@repo/auth/src/utils';
-import { Button, Center, Container, Paper, Text, Title } from '@repo/ui/components/mantine';
+import { Button, Center, Container, Paper, Text, Title } from '@mantine/core';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 

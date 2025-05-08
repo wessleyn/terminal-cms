@@ -1,7 +1,7 @@
 'use client';
 
+import { Alert, Button, Group, Stack, Textarea, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { Alert, Button, Group, Stack, Textarea, TextInput } from '@repo/ui/components/mantine';
 import { IconAlertCircle } from '@tabler/icons-react';
 import { useState } from 'react';
 import { CommentFormValues, submitComment } from '../../../_actions/submitComment';

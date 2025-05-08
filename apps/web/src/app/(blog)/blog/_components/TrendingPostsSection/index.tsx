@@ -1,5 +1,6 @@
 'use client';
-import { Container, Paper, SimpleGrid, Title } from '@repo/ui/components/mantine';
+
+import { Container, Paper, SimpleGrid, Title } from '@mantine/core';
 import { FeaturedPost } from '../../_actions/getTrendingPosts';
 import { TrendingMainPost } from './TrendingMainPost';
 import { TrendingSidePosts } from './TrendingSidePosts';

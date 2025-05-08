@@ -1,6 +1,6 @@
 'use client';
 
-import { Stack } from '@repo/ui/components/mantine';
+import { Stack } from '@mantine/core';
 import styles from './BlogSidebar.module.css';
 import TableOfContents from './TableOfContents';
 

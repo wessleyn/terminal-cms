@@ -1,7 +1,7 @@
 'use client'
 
+import { Badge, Container, Grid, Group, Text } from "@mantine/core"
 import { BlogComment, BlogTag } from "@repo/db"
-import { Badge, Container, Grid, Group, Text } from "@repo/ui/components/mantine"
 import dynamic from 'next/dynamic'
 import Link from "next/link"
 import BlogContent from "./BlogContent"
@@ -70,7 +70,7 @@ const MainContent = ({ post, children }: MainContentProps) => {
                 </Grid.Col>
 
                 <Grid.Col span={{ base: 12, md: 4 }}>
-                   {children}
+                    {children}
                 </Grid.Col>
             </Grid>
         </Container>

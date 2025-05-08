@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Container, Text, Title } from '@repo/ui/components/mantine';
+import { Box, Container, Text, Title } from '@mantine/core';
 
 interface CategoryHeaderProps {
     category: string;

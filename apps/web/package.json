@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "analyze": "NODE_OPTIONS=\"--max-old-space-size=4096\" ANALYZE=true npm run build",
     "prisma:generate": "prisma generate",
     "prisma:studio": "prisma studio",
     "prisma:migrate:dev": "prisma migrate dev",

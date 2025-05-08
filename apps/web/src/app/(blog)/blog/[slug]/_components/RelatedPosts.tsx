@@ -1,6 +1,6 @@
 'use client';
 
-import { Badge, Box, Container, Grid, SimpleGrid, Text, Title } from '@repo/ui/components/mantine';
+import { Badge, Box, Container, Grid, SimpleGrid, Text, Title } from '@mantine/core';
 import Link from 'next/link';
 
 interface RelatedPost {

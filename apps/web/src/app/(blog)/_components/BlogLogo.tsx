@@ -1,15 +1,19 @@
-'use client'
-import { Avatar, AvatarProps } from '@repo/ui/components/mantine'
+'use client';
+
+import { Avatar, AvatarProps } from '@mantine/core';
+import Link from 'next/link';
 
 const BlogLogo = (props: AvatarProps) => {
     return (
-        <Avatar
-            src='/profile.jpg'
-            alt='Picture'
-            radius="xl"
-            size={'md'}
-            {...props}
-        />
+        <Link href='/'>
+            <Avatar
+                src='/profile.jpg'
+                alt='Picture'
+                radius="xl"
+                size={'md'}
+                {...props}
+            />
+        </Link>
     )
 }
 

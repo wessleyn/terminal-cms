@@ -1,7 +1,7 @@
 'use client';
 
+import { Divider, Skeleton, Stack, Text, Title } from '@mantine/core';
 import { BlogComment } from '@repo/db';
-import { Divider, Skeleton, Stack, Text, Title } from '@repo/ui/components/mantine';
 import { IconMessageCircle } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import getCommentsByPostId from '../../../_actions/getCommentsByPostId';

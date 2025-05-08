@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Center, Container, Group, Paper, Text, Title } from '@repo/ui/components/mantine';
+import { Button, Center, Container, Group, Paper, Text, Title } from '@mantine/core';
 import Link from 'next/link';
 
 export default function ErrorComp({ message, title, children }: { message: string, title: string, children: React.ReactNode }) {

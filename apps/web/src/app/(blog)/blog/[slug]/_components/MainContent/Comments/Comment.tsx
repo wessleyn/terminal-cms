@@ -1,6 +1,6 @@
 'use client';
 
-import { Avatar, Button, Group, Paper, Stack, Text } from '@repo/ui/components/mantine';
+import { Avatar, Button, Group, Paper, Stack, Text } from '@mantine/core';
 import { IconCalendar, IconMessageCircle2 } from '@tabler/icons-react';
 import { useState } from 'react';
 import CommentForm from './CommentForm';

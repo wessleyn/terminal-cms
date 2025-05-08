@@ -46,7 +46,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
         "@mantine/notifications",
         "@mantine/nprogress",
         "@mantine/spotlight",
-        "@mantine/tiptap"
+        "@mantine/tiptap",
+        "@repo/ui",
+        "@repo/ui/components/mantine",
     ],
 
 
