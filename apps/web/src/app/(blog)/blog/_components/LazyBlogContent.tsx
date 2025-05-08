@@ -4,10 +4,11 @@ import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
 import { FeaturedPost } from '../_actions/getFeaturedPosts';
 import { BlogPost as RecentBlogPost } from '../_actions/getRecentPosts';
+import { BlogPageSkeleton } from './PostSkeleton';
 
 // Dynamically import the actual content component
 const BlogPageClient = dynamic(() => import('./BlogPageClient'), {
-    loading: () => <div className="loading-placeholder">Loading blog content...</div>,
+    loading: () => <BlogPageSkeleton />,
     ssr: false // Only disable SSR here in a client component
 });
 
@@ -30,11 +31,11 @@ export default function LazyBlogContent({
     }, []);
 
     if (!isClient) {
-        return <div className="loading-placeholder">Loading blog content...</div>;
+        return <BlogPageSkeleton />;
     }
 
     return (
-        <Suspense fallback={<div className="loading-placeholder">Loading blog content...</div>}>
+        <Suspense fallback={<BlogPageSkeleton />}>
             <BlogPageClient
                 featuredPosts={featuredPosts}
                 recentPosts={recentPosts}

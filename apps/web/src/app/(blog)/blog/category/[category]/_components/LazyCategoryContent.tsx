@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
+import CategorySkeleton from './CategorySkeleton';
 
 interface Author {
     name: string;
@@ -28,7 +29,7 @@ interface Post {
 
 // Dynamically import the CategoryPageClient component with SSR disabled
 const CategoryPageClient = dynamic(() => import('./CategoryPageClient'), {
-    loading: () => <div className="loading-placeholder">Loading category content...</div>,
+    loading: () => <CategorySkeleton />,
     ssr: false // Only disable SSR here in a client component
 });
 
@@ -59,11 +60,11 @@ export default function LazyCategoryContent({
     }, []);
 
     if (!isClient) {
-        return <div className="loading-placeholder">Loading category content...</div>;
+        return <CategorySkeleton />;
     }
 
     return (
-        <Suspense fallback={<div className="loading-placeholder">Loading category content...</div>}>
+        <Suspense fallback={<CategorySkeleton />}>
             <CategoryPageClient
                 posts={posts}
                 category={category}

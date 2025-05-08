@@ -1,6 +1,5 @@
 'use client';
 
-import { Suspense } from 'react';
 import { FeaturedPost } from '../_actions/getFeaturedPosts';
 import { BlogPost as RecentBlogPost } from '../_actions/getRecentPosts';
 import { FeaturedPostsSection } from './FeaturedPostsSection';
@@ -29,20 +28,11 @@ export default function BlogPageClient({
             overflow: 'hidden',
         }}>
             <div style={{ flex: 1, width: '100%' }}>
-                {/* Featured Posts Section - Full viewport height initially */}
-                <Suspense fallback={<div>Loading featured posts...</div>}>
-                    <FeaturedPostsSection posts={featuredPosts} />
-                </Suspense>
+                <FeaturedPostsSection posts={featuredPosts} />
 
-                {/* Recent Posts Section */}
-                <Suspense fallback={<div>Loading recent posts...</div>}>
-                    <RecentPostsSection posts={recentPosts} />
-                </Suspense>
+                <RecentPostsSection posts={recentPosts} />
 
-                {/* Trending Posts Section */}
-                <Suspense fallback={<div>Loading trending posts...</div>}>
-                    <TrendingPostsSection posts={trendingPosts} />
-                </Suspense>
+                <TrendingPostsSection posts={trendingPosts} />
 
                 <UniversalNewsletter
                     type="blog"

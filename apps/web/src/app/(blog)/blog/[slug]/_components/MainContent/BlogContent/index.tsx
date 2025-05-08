@@ -1,20 +1,9 @@
 'use client';
 
+import { CodeHighlight } from '@mantine/code-highlight';
 import { Anchor, Blockquote, Code, List, Paper, Table, Text, Title, useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import Markdown from 'markdown-to-jsx';
-import dynamic from 'next/dynamic';
 import { slugify } from '../../../_utils/markdown';
-
-// Dynamically import the CodeHighlighter component with no SSR
-// This ensures it's only loaded when needed
-const DynamicCodeHighlighter = dynamic(
-    () => import('./CodeHighlighter').then((mod) => mod.CodeHighlighter),
-    {
-        ssr: false,
-        loading: () => <div className="code-loading">Loading code...</div>
-    }
-);
-
 interface BlogContentProps {
     content: string;
 }
@@ -154,17 +143,19 @@ export default function BlogContent({ content }: BlogContentProps) {
                         code: {
                             component: ({ className, children, ...props }) => {
                                 const isCodeBlock = className?.includes('lang-');
+                                console.log(isCodeBlock)
                                 const language = className?.replace('lang-', '') || 'text';
+                                console.log(language)
 
                                 if (isCodeBlock) {
                                     // Use dynamically loaded component
                                     return (
-                                        <DynamicCodeHighlighter
+                                        <CodeHighlight
                                             code={String(children)}
                                             language={language}
                                             withCopyButton
                                         />
-                                    );
+                                    )
                                 }
 
                                 // Inline code

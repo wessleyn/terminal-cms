@@ -3,6 +3,7 @@
 import { PostCategory } from '@repo/db';
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
+import BlogPostSkeleton from './BlogPostSkeleton';
 
 // Define proper types for the blog post based on project structure
 interface BlogPostAuthor {
@@ -48,7 +49,7 @@ interface RelatedPost {
 
 // Dynamically import the BlogPostClient component with SSR disabled
 const BlogPostClient = dynamic(() => import('./BlogPostClient'), {
-    loading: () => <div className="loading-placeholder">Loading blog post...</div>,
+    loading: () => <BlogPostSkeleton />,
     ssr: false // Disable SSR here in a client component
 });
 
@@ -66,11 +67,11 @@ export default function LazyBlogPostContent({ post, relatedPosts }: LazyBlogPost
     }, []);
 
     if (!isClient) {
-        return <div className="loading-placeholder">Loading blog post...</div>;
+        return <BlogPostSkeleton />;
     }
 
     return (
-        <Suspense fallback={<div className="loading-placeholder">Loading blog post...</div>}>
+        <Suspense fallback={<BlogPostSkeleton />}>
             <BlogPostClient post={post} relatedPosts={relatedPosts} />
         </Suspense>
     );
