@@ -1,6 +1,7 @@
 'use client';
 
 import { Avatar, Badge, Container, Group, Text, Title } from '@repo/ui/components/mantine';
+import Link from 'next/link';
 
 interface Author {
     name: string;
@@ -47,14 +48,16 @@ export default function BlogPostHeader({ title, category, author, date, imageUrl
             }}
         >
             <Container size="xl" ta="center">
-                <Badge
-                    size="lg"
-                    color={getCategoryColor(category)}
-                    mb="lg"
-                    radius="sm"
-                >
-                    {category}
-                </Badge>
+                <Link href={`/blog/category/${category.toLocaleLowerCase()}`}>
+                    <Badge
+                        size="lg"
+                        color={getCategoryColor(category)}
+                        mb="lg"
+                        radius="sm"
+                    >
+                        {category}
+                    </Badge>
+                </Link>
                 <Title order={1} mb="xl" style={{ color: 'white' }}>{title}</Title>
 
                 <Group justify="center" align="center">

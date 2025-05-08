@@ -22,7 +22,7 @@ export function RecentPostsSection({ posts }: RecentPostsSectionProps) {
   );
 
   return (
-    <Container size="xl" style={{ marginBottom: '3rem' }}>
+    <Container size="xl" style={{ marginBottom: '3rem' }} id="recent">
       <Title order={2} mb="xl">Recent Posts</Title>
 
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="xl">

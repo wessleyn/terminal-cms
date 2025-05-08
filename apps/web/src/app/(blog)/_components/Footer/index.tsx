@@ -12,8 +12,8 @@ export default function Footer() {
         { label: 'Home', link: '/blog' },
         { label: 'RSS Feed', link: '/blog/feed.xml' },
         { label: 'Sitemap', link: '/blog/sitemap.xml' },
-        { label: 'Privacy Policy', link: '/privacy' },
-        { label: 'Terms of Service', link: '/terms' },
+        { label: 'Privacy Policy', link: '/blog/privacy' },
+        { label: 'Terms of Service', link: '/blog/terms' },
     ];
 
     return (

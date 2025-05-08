@@ -45,7 +45,12 @@ export default function CommentForm({ postId, slug, parentId = null, onSuccess }
         },
     });
 
-    const handleSubmit = async (values: CommentFormValues) => {
+    const handleSubmit = async (values: CommentFormValues, event?: React.FormEvent) => {
+        // Prevent default form behavior to avoid page scrolling
+        if (event) {
+            event.preventDefault();
+        }
+
         setSubmissionState('submitting');
         try {
             const result = await submitComment(values);

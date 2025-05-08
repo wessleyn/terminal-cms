@@ -1,5 +1,4 @@
 enum PrivacyType {
-    FAQ
     BLOG
     TERMS
     PORTFOLIO
@@ -7,7 +6,7 @@ enum PrivacyType {
 
 model Privacy{
     id        String   @id @default(uuid())
-    type      PrivacyType @default(TERMS) @unique // use this for querying the privacy data of each part of the system
+    type      PrivacyType @default(PORTFOLIO) @unique // use this for querying the privacy data of each part of the system
     descPhrase String // the desc
     sections PrivacySection[] 
     

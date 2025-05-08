@@ -52,9 +52,9 @@ export default async function Home() {
       <div className="row mt-4">
         <div className="col">
           <TitleCommand
-            title="ls -la ~/articles"
-            hoverTitle="cd ~/articles"
-            href="/articles"
+            title="ls -la ~/posts"
+            hoverTitle="cd ~/posts"
+            href="/blog/#recent"
           />
           <p className="mb-4">Below are some of my blogs</p>
 

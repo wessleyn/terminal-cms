@@ -18,9 +18,10 @@ interface CommentProps {
     };
     postId: string;
     slug: string; // Add slug prop
+    onCommentPosted?: () => void; // Add callback for when a comment is posted
 }
 
-export default function Comment({ comment, postId, slug }: CommentProps) {
+export default function Comment({ comment, postId, slug, onCommentPosted }: CommentProps) {
     const [showReplyForm, setShowReplyForm] = useState(false);
 
     const formatDate = (date: Date) => {
@@ -35,12 +36,16 @@ export default function Comment({ comment, postId, slug }: CommentProps) {
 
     const handleReplySuccess = () => {
         setShowReplyForm(false);
+        // Call the onCommentPosted callback to refresh all comments
+        if (onCommentPosted) {
+            onCommentPosted();
+        }
     };
 
     // Generate avatar from author name
 
     return (
-        <Paper  p="md" mb="md" radius="md" bg="transparent">
+        <Paper p="md" mb="md" radius="md" bg="transparent">
             <Stack gap="md">
                 <Group justify="space-between" align="start" wrap="nowrap">
                     <Group align="start" wrap="nowrap">
@@ -84,7 +89,13 @@ export default function Comment({ comment, postId, slug }: CommentProps) {
                 {comment.replies && comment.replies.length > 0 && (
                     <Stack gap="md" style={{ marginLeft: 20, marginTop: 10 }}>
                         {comment.replies.map((reply) => (
-                            <Comment key={reply.id} comment={reply} postId={postId} slug={slug} />
+                            <Comment
+                                key={reply.id}
+                                comment={reply}
+                                postId={postId}
+                                slug={slug}
+                                onCommentPosted={onCommentPosted}
+                            />
                         ))}
                     </Stack>
                 )}
