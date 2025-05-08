@@ -4,7 +4,7 @@ import { Avatar, Badge, Container, Group, Text, Title } from '@repo/ui/component
 import Link from 'next/link';
 
 interface Author {
-    name: string;
+    displayName: string;
     avatarUrl?: string | null;
 }
 
@@ -69,7 +69,7 @@ export default function BlogPostHeader({ title, category, author, date, imageUrl
                                 radius="xl"
                                 mr="xs"
                             />
-                            <Text size="lg" mr="md">By {author.name}</Text>
+                            <Text size="lg" mr="md">By {author.displayName}</Text>
                         </>
                     )}
                     <Text size="lg">{date ? formatDate(date) : ''}</Text>

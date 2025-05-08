@@ -6,26 +6,27 @@ model PortfolioProfile {
     displayName String // Combined greeting and name: "Hello, I'm John Doe"
     workEmail   String // work@domain.com
     tagline     String // "Full Stack Developer"
-    description String // "A brief description about the profile."
-
-    currentAvatarIndex Int @default(0)
-
+    bio        String // "A brief bio about the profile."
+  
     avatars     PortfolioProfileAvatar[]
     socialLinks PortfolioProfileSocialLink[]
-
+    posts       BlogPost[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
 model PortfolioProfileAvatar {
-    id                 String           @id @default(cuid())
-    url                String
-    publicId           String? // Cloudinary public ID for the image
-    isNew              Boolean          @default(false) // Flag to indicate newly added avatars
-    portfolioProfile   PortfolioProfile @relation(fields: [portfolioProfileId], references: [id], onDelete: Cascade)
+    id       String  @id @default(cuid())
+    url      String
+    publicId String? // Cloudinary public ID for the image
+   
+    isNew    Boolean @default(false) // Flag to indicate newly added avatars
+    isActive Boolean @default(false)
+
+    portfolioProfile PortfolioProfile @relation(fields: [portfolioProfileId], references: [id], onDelete: Cascade)
     portfolioProfileId String
-    createdAt          DateTime         @default(now())
-    updatedAt          DateTime         @updatedAt
+    createdAt        DateTime           @default(now())
+    updatedAt        DateTime           @updatedAt
 }
 
 model PortfolioProfileSocialLink {
@@ -57,8 +58,8 @@ model ScheduledMeeting {
     projectBudget      String
     projectDescription String
 
-    meetingNotes ScheduledMeetingNote[]  
-    status MeetingStatus @default(PENDING)
+    meetingNotes ScheduledMeetingNote[]
+    status       MeetingStatus          @default(PENDING)
 
     scheduleMeetingDate DateTime
     createdAt           DateTime @default(now())
@@ -68,10 +69,10 @@ model ScheduledMeeting {
 model ScheduledMeetingNote {
     id String @id @default(uuid())
 
-    scheduledMeeting ScheduledMeeting @relation(fields: [scheduledMeetingId], references: [id], onDelete: Cascade)
+    scheduledMeeting   ScheduledMeeting @relation(fields: [scheduledMeetingId], references: [id], onDelete: Cascade)
     scheduledMeetingId String
 
-    note String
+    note      String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

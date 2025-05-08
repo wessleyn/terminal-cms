@@ -44,8 +44,16 @@ export async function getRecentPosts(): Promise<BlogPost[]> {
             author: {
                 select: {
                     id: true,
-                    name: true,
-                    avatarUrl: true,
+                    displayName: true,
+                    avatars: {
+                        select: {
+                            url: true,
+                        },
+                        where:{
+                            isActive: true,
+                        },
+                        take: 1,
+                    }
                 },
             },
             tags: {
@@ -63,7 +71,14 @@ export async function getRecentPosts(): Promise<BlogPost[]> {
         take: 6,
     });
 
-    return posts;
+    return posts.map((post) => ({
+        ...post,
+        author: {
+            id: post.author.id,
+            name: post.author.displayName,
+            avatarUrl: post.author.avatars[0]?.url || null,
+        }
+    }));
 }
 
 export async function revalidateRecentPosts() {

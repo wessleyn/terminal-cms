@@ -1,5 +1,5 @@
 import { PrismaClient } from '../../generated/prisma';
-import { blogAuthors, blogComments, blogPosts, blogTags } from './data/blogData';
+import { blogComments, blogPosts, blogTags } from './data/blogData';
 import { meetingsData } from './data/meetingsData';
 import { blogPrivacyData, privacyData, termsData } from './data/privacyData';
 import { profileData } from './data/profileData';
@@ -14,13 +14,13 @@ async function main() {
     await prisma.project.deleteMany();
     await prisma.portfolioProfileSocialLink.deleteMany(); // Delete social links first
     await prisma.portfolioProfileAvatar.deleteMany(); // Delete avatar links
+    await prisma.blogPost.deleteMany(); // Delete posts before authors
     await prisma.portfolioProfile.deleteMany(); // Delete profile
     await prisma.privacySection.deleteMany(); // Delete sections first
     await prisma.privacy.deleteMany(); // Then delete privacy records
     await prisma.blogComment.deleteMany(); // Delete comments first
-    await prisma.blogPost.deleteMany(); // Delete posts before authors
     await prisma.blogTag.deleteMany(); // Delete tags
-    await prisma.blogAuthor.deleteMany(); // Delete authors last
+    // await prisma.blogAuthor.deleteMany(); // Delete authors last
 
     // Seed projects
     for (const project of projectsData) {
@@ -37,8 +37,7 @@ async function main() {
             displayName: profileData.name,
             workEmail: profileData.workEmail,
             tagline: profileData.tagline,
-            description: profileData.description,
-            currentAvatarIndex: profileData.currentAvatarIndex
+            bio: profileData.description,
         }
     });
 
@@ -47,10 +46,12 @@ async function main() {
         await prisma.portfolioProfileAvatar.create({
             data: {
                 url: avatar,
-                portfolioProfileId: profile.id
+                portfolioProfileId: profile.id,
+                isActive: avatar === profileData.avatars[0] // Set the first avatar as active
             }
         });
     }
+
 
     // Add social links
     await prisma.portfolioProfileSocialLink.create({
@@ -149,13 +150,13 @@ async function main() {
     console.log('Creating blog authors...');
     const authorMap = new Map();
 
-    for (const author of blogAuthors) {
-        const createdAuthor = await prisma.blogAuthor.create({
-            data: author
-        });
-        authorMap.set(author.email, createdAuthor);
-        console.log(`Created author: ${author.name}`);
-    }
+    // for (const author of blogAuthors) {
+    //     const createdAuthor = await prisma.blogAuthor.create({
+    //         data: author
+    //     });
+    //     authorMap.set(author.email, createdAuthor);
+    //     console.log(`Created author: ${author.name}`);
+    // }
 
     // Create blog tags
     console.log('Creating blog tags...');
@@ -173,15 +174,7 @@ async function main() {
     console.log('Creating blog posts...');
     const postMap = new Map();
     for (const post of blogPosts) {
-        const { tags, authorEmail, ...postData } = post;
-
-        // Find author by email
-        const author = authorMap.get(authorEmail);
-
-        if (!author) {
-            console.warn(`Author with email ${authorEmail} not found, skipping post: ${post.title}`);
-            continue;
-        }
+        const { tags, ...postData } = post;
 
         // Get valid tag IDs before creating the post
         const validTagConnections: { id: string }[] = [];
@@ -199,7 +192,7 @@ async function main() {
             data: {
                 ...postData,
                 author: {
-                    connect: { id: author.id }
+                    connect: { id: profile.id }
                 },
                 tags: {
                     connect: validTagConnections

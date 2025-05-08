@@ -66,7 +66,20 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
                 }
             },
             include: {
-                author: true,
+                author: {
+                    select: {
+                        displayName: true,
+                        avatars: {
+                            select: {
+                                url: true,
+                            },
+                            where: {
+                                isActive: true,
+                            },
+                            take: 1,
+                        }
+                    }
+                },
                 tags: true,
             },
             orderBy: {
@@ -105,7 +118,10 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
             category: post.category.toString(),
             imageUrl: post.imageUrl,
             publishedAt: post.publishedAt,
-            author: post.author,
+            author: {
+                name: post.author.displayName,
+                avatarUrl: post.author.avatars[0]?.url || null,
+            },
             tags: post.tags
         }));
 

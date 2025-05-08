@@ -135,7 +135,6 @@ As you become more familiar with Hooks, you'll find they offer a more direct way
     imageUrl: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1000",
     publishedAt: new Date(2023, 5, 15),
     featured: true,
-    authorEmail: "wessley@example.com",
     tags: ["React", "JavaScript", "Beginner", "Tutorial"]
   },
   {
@@ -270,7 +269,6 @@ As you become more comfortable with interfaces, you'll find they're an invaluabl
     imageUrl: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?q=80&w=1000",
     publishedAt: new Date(2023, 6, 22),
     featured: true,
-    authorEmail: "luna.silverstone@example.com",
     tags: ["TypeScript", "Advanced"]
   },
   {
@@ -443,7 +441,6 @@ By mastering API routes, you can create full-stack applications with Next.js alo
     imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000",
     publishedAt: new Date(2023, 7, 10),
     featured: true,
-    authorEmail: "wessley@example.com",
     tags: ["NextJS", "JavaScript", "Tutorial"]
   },
   {
@@ -718,7 +715,6 @@ By mastering Mantine, you'll add a valuable tool to your frontend development ar
     imageUrl: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1000",
     publishedAt: new Date(2023, 8, 5),
     featured: false,
-    authorEmail: "orion.blackwood@example.com",
     tags: ["React", "Mantine", "UI", "Tutorial"]
   },
   {
@@ -1024,7 +1020,6 @@ By mastering these patterns, you'll be able to create more organized, maintainab
     imageUrl: "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?q=80&w=1000",
     publishedAt: new Date(2023, 9, 18),
     featured: false,
-    authorEmail: "wessley@example.com",
     tags: ["React", "Advanced", "Dark Magic"]
   }
 ];

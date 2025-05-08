@@ -1,8 +1,10 @@
 import { prisma } from '@repo/db';
+import { Avatar, Button, Group, Stack, Text, Title } from '@repo/ui/components/mantine';
+import { SocialIcon } from '@repo/ui/components/shared';
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import UniversalNewsletter from '../_components/UniversalNewsletter';
-import fetchAuthorProfile from './_actions/fetchAuthorProfile';
 import { getBlogPostBySlug } from './_actions/getBlogPostBySlug';
 import BlogPostHeader from './_components/BlogPostHeader';
 import BlogSidebar from './_components/BlogSidebar';
@@ -38,7 +40,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
             description: post.excerpt,
             type: 'article',
             publishedTime: post.publishedAt?.toISOString(),
-            authors: post.author ? [post.author.name] : [],
+            authors: post.author ? [post.author.displayName] : [],
             images: [
                 {
                     url: post.imageUrl,
@@ -58,7 +60,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     if (!post) {
         notFound();
     }
-    const author = await fetchAuthorProfile();
 
     // Fetch related posts
     const relatedPosts = await prisma.blogPost.findMany({
@@ -83,7 +84,43 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 imageUrl={post.imageUrl}
             />
             <MainContent post={post}>
-                <BlogSidebar author={author} content={post.content} />
+                <BlogSidebar content={post.content}>
+                     <div style={{ padding: "1rem" }} className="mb-4">
+                                <Stack align="center">
+                                    <Avatar
+                                        src={post.author?.avatars[0]?.url}
+                                        size={100}
+                                        radius="xl"
+                                        mb="sm"
+                                    />
+                                    <Title order={4}>{post.author?.displayName}</Title>
+                                    <Text size="sm" ta="center" c="dimmed" mb="md">
+                                        {post.author?.bio}
+                                    </Text>
+                                    <Button variant="outline" size="sm" radius="md">
+                                        <Link href='/#bio'>Read my bio</Link>
+                                    </Button>
+                                    <Group mt="md">
+                                        {post.author?.socialLinks.map((link, index) => (
+                                            <Link
+                                                key={`social-link-${index}`}
+                                                className="text-reset"
+                                                href={link.url}
+                                                target="_blank"
+                                                rel="noopener"
+                                                aria-label={`${link.platform} Profile`}
+                                            >
+                                                <SocialIcon
+                                                    platform={link.platform}
+                                                    size={20}
+                                                    className="bi fs-5"
+                                                />
+                                            </Link>
+                                        ))}
+                                    </Group>
+                                </Stack>
+                            </div>
+                </BlogSidebar>
             </MainContent> 
             <RelatedPosts posts={relatedPosts} />
             <UniversalNewsletter

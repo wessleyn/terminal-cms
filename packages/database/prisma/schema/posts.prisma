@@ -18,8 +18,8 @@ model BlogPost {
     publishedAt DateTime?
     featured    Boolean      @default(false)
 
-    author   BlogAuthor? @relation(fields: [authorId], references: [id])
-    authorId String?
+    author   PortfolioProfile @relation(fields: [authorId], references: [id])
+    authorId String
 
     tags        BlogTag[]        @relation("PostToTag")
     subscribers PostSubscriber[]
@@ -29,17 +29,18 @@ model BlogPost {
     updatedAt DateTime @updatedAt
 }
 
-model BlogAuthor {
-    id        String     @id @default(cuid())
-    name      String
-    email     String     @unique
-    bio       String?
-    avatarUrl String?
-    posts     BlogPost[]
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
+// // NOTE:Leave this be, for future use, just make sure that this links to the active portfolio profile  
+// model BlogAuthor {
+//     id        String     @id @default(cuid())
+//     name      String
+//     email     String     @unique
+//     bio       String?
+//     avatarUrl String?
+//     posts     BlogPost[]
+//     socialLinks SocialLink[]
+//     createdAt DateTime @default(now())
+//     updatedAt DateTime @updatedAt
+// }
 
 model BlogTag {
     id    String     @id @default(cuid())

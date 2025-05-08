@@ -16,7 +16,7 @@ export default function ProfileInfo({ profile }: ProfileInfoProps) {
         return <ProfileInfoSkeleton />;
     }
 
-    const { displayName, workEmail, tagline, avatarUrl, socialLinks, description } = profile;
+    const { displayName, workEmail, tagline, avatarUrl, socialLinks, bio } = profile;
 
     return (
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-1">
@@ -37,7 +37,7 @@ export default function ProfileInfo({ profile }: ProfileInfoProps) {
                     <TypingEffect text={displayName} typingSpeed={70} />
                 </h3>
                 <p>{tagline}</p>
-                <p>{description}</p>
+                <p>{bio}</p>
                 <h3 className="fs-6 fw-bold text-primary">
                     <TypingEffect text="Email" typingSpeed={70} />
                 </h3>

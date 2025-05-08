@@ -11,11 +11,13 @@ export function PostCard({ post }: PostCardProps) {
     return (
         <Card key={post.id} shadow="sm" p="lg" radius="md" withBorder>
             <Card.Section>
-                <Image
-                    src={post.imageUrl || "/placeholder.jpg"}
-                    height={160}
-                    alt={post.title}
-                />
+                <Link href={`/blog/${post.slug}`} style={{ cursor: 'pointer' }}>
+                    <Image
+                        src={post.imageUrl || "/placeholder.jpg"}
+                        height={160}
+                        alt={post.title}
+                    />
+                </Link>
             </Card.Section>
 
             <Badge color={post.tags[0]?.color || "blue"} mt="md">{post.category}</Badge>

@@ -10,7 +10,24 @@ export async function getBlogPostBySlug(slug: string) {
                 slug
             },
             include: {
-                author: true,
+                author: {
+                    include: {
+                        socialLinks: {
+                            select: {
+                                platform: true,
+                                url: true
+                            }
+                        },
+                        avatars: {
+                            select: {
+                                url: true,
+                            },
+                            where: {
+                                isActive: true
+                            }
+                        }
+                    }
+                },
                 tags: true,
                 comments: {
                     where: {

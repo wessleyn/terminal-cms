@@ -1,5 +1,6 @@
 'use client';
 import { Badge, Paper, Text } from '@repo/ui/components/mantine';
+import Link from 'next/link';
 import { FeaturedPost } from '../../_actions/getFeaturedPosts';
 
 interface FeaturedSidePostProps {
@@ -10,26 +11,39 @@ interface FeaturedSidePostProps {
 
 export function FeaturedSidePost({ post, height, isPrimary }: FeaturedSidePostProps) {
     return (
-        <Paper
-            shadow="md"
-            p="xl"
-            radius="md"
-            mb={isPrimary ? "md" : 0}
-            h={height}
-            style={{
-                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${post.imageUrl || "/placeholder.jpg"})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                position: 'relative'
-            }}
-        >
-            <div style={{ position: 'absolute', bottom: '20px', left: '20px', right: '20px' }}>
-                <Badge color={post.color} mb="xs">{post.category}</Badge>
-                <Text size={isPrimary ? "xl" : "md"} fw={700} c="white">{post.title}</Text>
-                <Text size="sm" c="white" mt="xs">
-                    {post.publishedAt ? new Date(post.publishedAt).toLocaleDateString() : "Coming soon"}
-                </Text>
-            </div>
-        </Paper>
+        <Link href={post.slug ? `/blog/${post.slug}` : '#'} style={{
+            textDecoration: 'none',
+            display: 'block',
+            height,
+            width: '100%',
+            marginBottom: isPrimary ? 'var(--mantine-spacing-md)' : 0
+        }}>
+            <Paper
+                shadow="md"
+                p="xl"
+                radius="md"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${post.imageUrl || "/placeholder.jpg"})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    position: 'relative',
+                    cursor: post.slug ? 'pointer' : 'default',
+                    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                    height: '100%',
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end'
+                }}
+            >
+                <div style={{ padding: '20px' }}>
+                    <Badge color={post.color} mb="xs">{post.category}</Badge>
+                    <Text size={isPrimary ? "xl" : "md"} fw={700} c="white">{post.title}</Text>
+                    <Text size="sm" c="white" mt="xs">
+                        {post.publishedAt ? new Date(post.publishedAt).toLocaleDateString() : "Coming soon"}
+                    </Text>
+                </div>
+            </Paper>
+        </Link>
     );
 }
