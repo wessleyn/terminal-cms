@@ -19,7 +19,7 @@
       ],
       "dependsOn": [
         "^build",
-        "^db:generate"
+        "^db:generate:prod"
       ],
       "inputs": [
         "$TURBO_DEFAULT$",
