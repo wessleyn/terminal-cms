@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = {}
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
     images: {
         remotePatterns: [
             {
@@ -44,7 +47,10 @@ const nextConfig = {
         "@mantine/nprogress",
         "@mantine/spotlight",
         "@mantine/tiptap"
-    ]
-};
+    ],
 
-module.exports = nextConfig;
+
+    enabled: process.env.ANALYZE === 'true',
+})
+
+module.exports = withBundleAnalyzer(nextConfig)
