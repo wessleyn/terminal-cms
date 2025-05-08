@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./components/*": "./src/components/*/index.ts",
+    "./components/*": "./src/components/*/index.tsx",
     "./hooks/*": "./src/hooks/*/index.ts",
     "./utils/*": "./src/utils/*/index.ts"
     },

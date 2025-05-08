@@ -1,4 +1,5 @@
-import { SocialIcon, TypingEffect } from '@repo/ui/components/shared';
+import SocialIcon from '@repo/ui/components/shared/SocialIcon';
+import TypingEffect from '@repo/ui/components/shared/TypingEffect';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ProfileData } from '../../_actions/fetchProfile';

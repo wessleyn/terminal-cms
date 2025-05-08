@@ -1,6 +1,6 @@
 'use client';
 
-import { TechTag } from '@repo/ui/components/shared';
+import TechTags from '@repo/ui/components/shared/TechTags';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -67,7 +67,7 @@ export default function ProjectGalleryCard({
                 </p>
 
                 <div className="d-flex flex-wrap gap-2 mb-3">
-                    <TechTag
+                    <TechTags
                         tags={tags}
                         iconSize={20}
                         limit={4}

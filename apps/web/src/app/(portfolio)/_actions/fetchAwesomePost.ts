@@ -4,7 +4,7 @@ import { PostCategory, prisma } from '@repo/db';
 import { cache } from 'react';
 
 // Define the type for blog post data
-export interface BlogPost {
+export interface AwesomePost {
     id: string;
     title: string;
     excerpt: string;
@@ -22,7 +22,7 @@ export interface BlogPost {
 
 // Cache the function to avoid redundant DB calls
 export const fetchAwesomePost = cache(
-    async (): Promise<BlogPost[]> => {
+    async (): Promise<AwesomePost[]> => {
         try {
             // Fetch random published blog posts
             const posts = await prisma.blogPost.findMany({

@@ -2,7 +2,7 @@
 
 import { getCurrentUser, SignOut } from "@repo/auth/src/utils";
 import { UserRole } from "@repo/db";
-import { Avatar, Button, Center, Flex, Loader, Paper, Text } from "@repo/ui/components/mantine";
+import { Avatar, Button, Center, Flex, Loader, Paper, Text } from "@mantine/core";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 

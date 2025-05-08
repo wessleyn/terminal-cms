@@ -2,7 +2,6 @@
 
 import { Box } from '@mantine/core';
 import { ActivityStatus, HappyIndex, PublishStatus } from '@repo/db';
-import { TagInput } from '@repo/ui/components/shared';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -12,6 +11,7 @@ import ActivityStatusBadge from '../../_components/ActivityStatusBadge';
 import HappyStatusBadge from '../../_components/HappyStatusBadge';
 import PublishStatusBadge from '../../_components/PublishStatusBadge';
 import '../_styles/projectGallery.css';
+import TagInput from '@repo/ui/components/shared/TagInput';
 
 interface ProjectDetailProps {
     project: {

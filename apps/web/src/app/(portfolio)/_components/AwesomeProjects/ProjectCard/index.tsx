@@ -12,7 +12,7 @@ import {
 } from '@mantine/core';
 
 import { Project } from '@repo/db';
-import { TechTag } from '@repo/ui/components/shared';
+import TechTags from '@repo/ui/components/shared/TechTags';
 import { IconBookmark, IconHeart, IconShare } from '@tabler/icons-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -95,7 +95,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 
             <Group justify="space-between" className={classes.footer}>
                 <Center className='d-flex gap-2'>
-                    <TechTag
+                    <TechTags
                         tags={project.tags}
                         iconSize={24}
                         limit={3}

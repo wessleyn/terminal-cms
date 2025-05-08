@@ -1,7 +1,7 @@
 'use client'
 
 import useHasSession from '@hooks/useHasSession'
-import { ActionIcon, Autocomplete, Burger, Divider, Group, Title } from "@repo/ui/components/mantine"
+import { ActionIcon, Autocomplete, Burger, Divider, Group, Title } from "@mantine/core"
 import { IconMoon, IconSearch, IconSun } from "@tabler/icons-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"

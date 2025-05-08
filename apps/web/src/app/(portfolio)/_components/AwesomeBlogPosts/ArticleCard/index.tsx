@@ -1,11 +1,11 @@
 'use client';
 
 import { Card, Group, Text } from '@mantine/core';
-import { BlogPost } from '../../_actions/fetchAwesomePost';
+import { AwesomePost } from '../../../_actions/fetchAwesomePost';
 import classes from './ArticleCard.module.css';
 
 interface ArticleCardProps {
-    post: BlogPost;
+    post: AwesomePost;
 }
 
 const ArticleCard = ({ post }: ArticleCardProps) => {

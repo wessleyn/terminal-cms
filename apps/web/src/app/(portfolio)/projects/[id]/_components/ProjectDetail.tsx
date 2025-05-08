@@ -1,7 +1,7 @@
 'use client';
 
 import { Box } from "@mantine/core";
-import { TechTag } from "@repo/ui/components/shared";
+import TechTags from "@repo/ui/components/shared/TechTags";
 import Image from 'next/image';
 import Link from "next/link";
 
@@ -70,7 +70,7 @@ export default function ProjectDetail({
             <span className="terminal-prompt">$</span> ls -la technologies/
           </div>
           <div className="terminal-output">
-            <TechTag tags={tags} iconSize={32} className="mb-3" />
+            <TechTags tags={tags} iconSize={32} className="mb-3" />
           </div>
         </div>
 

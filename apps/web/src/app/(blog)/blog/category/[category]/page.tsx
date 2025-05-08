@@ -1,10 +1,7 @@
-import { Container, Group, Pagination, Text } from '@mantine/core';
 import { PostCategory as CategoryEnum, prisma } from '@repo/db';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import UniversalNewsletter from '../../_components/UniversalNewsletter';
-import CategoryHeader from './_components/CategoryHeader';
-import PostGrid from './_components/PostGrid';
+import CategoryPageClient from './_components/CategoryPageClient';
 
 export const revalidate = 3600; // Revalidate at most every hour
 
@@ -16,8 +13,6 @@ interface CategoryPageProps {
         page?: string;
     }>;
 }
-
-
 
 // Map of URL-friendly category slugs to actual category enum values
 const categoryMap: Record<string, string> = {
@@ -122,47 +117,35 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
                 name: post.author.displayName,
                 avatarUrl: post.author.avatars[0]?.url || null,
             },
-            tags: post.tags
+            tags: post.tags.map(tag => ({
+                id: tag.id,
+                name: tag.name,
+                color: tag.color || 'gray' // Ensure color is always defined
+            }))
         }));
 
         return (
-            <>
-                <CategoryHeader
-                    category={categoryEnum}
-                    description={description}
-                />
-
-                <Container size="xl" py="xl">
-                    <PostGrid posts={formattedPosts} />
-
-                    {totalPages > 1 && (
-                        <Group justify="center" mt="xl" py="xl">
-                            <Pagination
-                                total={totalPages}
-                                value={currentPage}
-                                getItemProps={(page) => ({
-                                    component: 'a',
-                                    href: `/blog/category/${categorySlug}?page=${page}`
-                                })}
-                            />
-                        </Group>
-                    )}
-                </Container>
-
-                <UniversalNewsletter
-                    type="category"
-                    category={categoryEnum}
-                    title={`Subscribe to ${categoryEnum.charAt(0) + categoryEnum.slice(1).toLowerCase()} Updates`}
-                    subtitle={`Get the latest articles from the ${categoryEnum.toLowerCase()} category delivered straight to your inbox.`}
-                />
-            </>
+            <CategoryPageClient
+                posts={formattedPosts}
+                category={categoryEnum}
+                description={description}
+                categorySlug={categorySlug}
+                currentPage={currentPage}
+                totalPages={totalPages}
+            />
         );
     } catch (error) {
         console.error("Error loading category page:", error);
         return (
-            <Container size="xl" py="xl">
-                <Text>Sorry, there was an error loading this category. Please try again later.</Text>
-            </Container>
+            <CategoryPageClient
+                posts={[]}
+                category={categoryEnum}
+                description=""
+                categorySlug={categorySlug}
+                currentPage={1}
+                totalPages={1}
+                error={true}
+            />
         );
     }
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { TypingEffect } from '@repo/ui/components/shared';
+import TypingEffect from '@repo/ui/components/shared/TypingEffect';
 import Script from 'next/script';
 import { startTransition, useActionState, useEffect, useRef, useState } from 'react';
 import { hireMe } from './_actions/hireMe';
