@@ -3,10 +3,11 @@
 import { PrivacySection } from '@repo/db';
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
+import PolicyPageSkeleton from '../../_components/PolicyPageSkeleton';
 
 // Dynamically import the client component with SSR disabled
 const PrivacyPolicyContent = dynamic(() => import('./PrivacyPolicyContent'), {
-    loading: () => <div className="loading-placeholder">Loading privacy policy...</div>,
+    loading: () => <PolicyPageSkeleton />,
     ssr: false // Only disable SSR here in a client component
 });
 
@@ -31,11 +32,11 @@ export default function LazyPrivacyContent({
     }, []);
 
     if (!isClient) {
-        return <div className="loading-placeholder">Loading privacy policy...</div>;
+        return <PolicyPageSkeleton />;
     }
 
     return (
-        <Suspense fallback={<div className="loading-placeholder">Loading privacy policy...</div>}>
+        <Suspense fallback={<PolicyPageSkeleton />}>
             <PrivacyPolicyContent
                 sections={sections}
                 updatedAt={updatedAt}
