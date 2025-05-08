@@ -1,7 +1,8 @@
 'use client';
 
-import { Box, Card, Container, Grid, Paper, SimpleGrid, Skeleton, Stack } from '@mantine/core';
+import { Box, Card, Container, Grid, Group, Paper, SimpleGrid, Skeleton, Stack, useComputedColorScheme, useMantineTheme } from '@mantine/core';
 
+// Fixed: Skeleton for the recent posts
 export function PostCardSkeleton() {
   return (
     <Card withBorder shadow="sm" padding={0} radius="md">
@@ -71,6 +72,11 @@ export function BlogPageSkeleton() {
   const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - var(--mantine-spacing-md) / 2)`;
   const MAIN_POST_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} + ${SECONDARY_COL_HEIGHT} + var(--mantine-spacing-md))`;
 
+  // Add theme access
+  const theme = useMantineTheme();
+  const colorScheme = useComputedColorScheme('dark');
+  const isDark = colorScheme === 'dark';
+
   return (
     <div style={{ width: '100%' }}>
       {/* Featured Posts Section Skeleton */}
@@ -120,10 +126,45 @@ export function BlogPageSkeleton() {
         </Container>
       </Paper>
 
-      {/* Recent Posts Section Skeleton */}
       <Container size="xl" py="xl">
-        <Skeleton height={40} width={250} mb="xl" />
-        <PostGridSkeleton count={3} />
+        <Grid>
+          {Array(3).fill(0).map((_, index) => (
+            <Grid.Col key={index} span={{ base: 12, sm: 6, lg: 4 }}>
+              <Box style={{
+                border: `1px solid ${isDark ? theme.colors.dark[4] : theme.colors.gray[3]}`,
+                borderRadius: theme.radius.md,
+                overflow: 'hidden'
+              }}>
+                <Skeleton height={200} width="100%" radius={0} />
+                <Box p="1rem">
+                  <Group mb="xs">
+                    <Skeleton height={22} width={80} radius="sm" />
+                    <Skeleton height={22} width={80} radius="sm" variant="outline" />
+                  </Group>
+                  <Skeleton height={28} mb="sm" width="90%" radius="sm" />
+                  <Group mb="md">
+                    <Skeleton height={24} width={24} circle />
+                    <Skeleton height={16} width={80} radius="sm" />
+                    <Skeleton height={16} width={100} radius="sm" c="dimmed" />
+                  </Group>
+                  <Skeleton height={16} width="100%" mb="xs" radius="sm" />
+                  <Skeleton height={16} width="90%" mb="xs" radius="sm" />
+                  <Skeleton height={16} width="80%" mb="md" radius="sm" />
+                  <Skeleton height={36} width="100%" radius="md" />
+                </Box>
+              </Box>
+            </Grid.Col>
+          ))}
+        </Grid>
+
+        {/* Pagination Skeleton - Match design of Mantine Pagination component */}
+        <Group justify="center" mt="xl" py="xl">
+          <Group gap="xs">
+            {Array(5).fill(0).map((_, index) => (
+              <Skeleton key={index} height={36} width={36} radius="sm" />
+            ))}
+          </Group>
+        </Group>
       </Container>
 
       {/* Trending Posts Section Skeleton */}

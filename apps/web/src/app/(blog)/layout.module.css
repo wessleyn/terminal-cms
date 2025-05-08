@@ -2,7 +2,8 @@
   height: 56px;
   /* margin-bottom: 120px; */
   background-color: var(--mantine-color-body);
-  border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  border-bottom: 1px solid
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
   padding-left: var(--mantine-spacing-lg);
   padding-right: var(--mantine-spacing-lg);
 }
@@ -25,6 +26,20 @@
   font-weight: 500;
 
   @mixin hover {
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+    background-color: light-dark(
+      var(--mantine-color-gray-0),
+      var(--mantine-color-dark-6)
+    );
   }
+}
+
+/* Added styles for page layout with sticky footer */
+.pageLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full viewport height */
+}
+
+.mainContent {
+  flex: 1; /* This makes the main content expand to fill available space */
 }

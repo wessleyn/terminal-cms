@@ -35,7 +35,7 @@ export default function BlogPostHeader({ title, category, author, date, imageUrl
         };
         return new Date(date).toLocaleDateString('en-US', options);
     };
-
+// TODO: make the bg image cover the first section of the page
     return (
         <div
             style={{

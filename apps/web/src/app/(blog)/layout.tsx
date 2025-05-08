@@ -25,12 +25,12 @@ export const metadata: Metadata = {
 export default function BlogLayout({ children }: { children: React.ReactNode }) {
 
     return (
-        <>
+        <div className={classes.pageLayout}>
             <header className={classes.header}>
                 <Header />
             </header>
-            <main>{children}</main>
-           <Footer />
-        </>
+            <main className={classes.mainContent}>{children}</main>
+            <Footer />
+        </div>
     );
 }

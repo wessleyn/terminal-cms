@@ -99,6 +99,12 @@ const Header = () => {
                 </Group>
                 <Divider orientation='vertical' />
                 <Group>
+                    <Link
+                        href={'/blog/tags'}
+                        className={classes.link}
+                    >
+                        Tags
+                    </Link>
                     {
                         hasSession ? (
                             <Link
