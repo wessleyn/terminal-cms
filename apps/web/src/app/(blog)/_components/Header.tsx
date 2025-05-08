@@ -1,5 +1,6 @@
 'use client'
 
+import useHasSession from '@hooks/useHasSession'
 import { ActionIcon, Autocomplete, Burger, Divider, Group, Title } from "@repo/ui/components/mantine"
 import { IconMoon, IconSearch, IconSun } from "@tabler/icons-react"
 import Link from "next/link"
@@ -10,9 +11,10 @@ import BlogLogo from "./BlogLogo"
 
 const Header = () => {
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
-    const isDark = theme === 'dark';
     const pathname = usePathname();
-
+    const hasSession = useHasSession()
+    const isDark = theme === 'dark';
+    
     // Initialize theme from localStorage or system preference
     useEffect(() => {
         // Check localStorage
@@ -97,18 +99,23 @@ const Header = () => {
                 </Group>
                 <Divider orientation='vertical' />
                 <Group>
-                    <Link
-                        href={'/login'}
-                        className={classes.link}
-                    >
-                        Register
-                    </Link>
-                    <Link
-                        href={'/dashboard'}
-                        className={classes.link}
-                    >
-                        Dashboard
-                    </Link>
+                    {
+                        hasSession ? (
+                            <Link
+                                href={'/dashboard'}
+                                className={classes.link}
+                            >
+                                Dashboard
+                            </Link>
+                        ) : (
+                            <Link
+                                href={'/login'}
+                                className={classes.link}
+                            >
+                                Register
+                            </Link>
+                        )
+                    }
                 </Group>
             </Group>
         </div>

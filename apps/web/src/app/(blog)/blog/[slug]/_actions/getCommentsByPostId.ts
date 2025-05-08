@@ -9,7 +9,6 @@ export default async function getCommentsByPostId(postId: string) {
       where: {
         postId: postId,
         isApproved: true,
-        parentId: null // Only get top-level comments
       },
       orderBy: { createdAt: 'desc' },
       include: {

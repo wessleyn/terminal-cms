@@ -2,6 +2,7 @@
 
 import { Anchor, Blockquote, Code, CodeHighlight, List, Paper, Table, Text, Title, useMantineColorScheme, useMantineTheme } from '@repo/ui/components/mantine';
 import Markdown from 'markdown-to-jsx';
+import { slugify } from '../../../_utils/markdown';
 
 interface BlogContentProps {
     content: string;
@@ -18,39 +19,71 @@ export default function BlogContent({ content }: BlogContentProps) {
                 options={{
                     overrides: {
                         h1: {
-                            component: Title,
-                            props: {
-                                order: 1,
-                                mb: 'lg',
-                                mt: 'xl',
-                                size: "h1"
+                            component: ({ children, ...props }) => {
+                                const id = slugify(children?.toString() || '');
+                                return (
+                                    <Title
+                                        id={id}
+                                        order={1}
+                                        mb="lg"
+                                        mt="xl"
+                                        size="h1"
+                                        {...props}
+                                    >
+                                        {children}
+                                    </Title>
+                                );
                             }
                         },
                         h2: {
-                            component: Title,
-                            props: {
-                                order: 2,
-                                mb: 'md',
-                                mt: 'xl',
-                                size: "h2"
+                            component: ({ children, ...props }) => {
+                                const id = slugify(children?.toString() || '');
+                                return (
+                                    <Title
+                                        id={id}
+                                        order={2}
+                                        mb="md"
+                                        mt="xl"
+                                        size="h2"
+                                        {...props}
+                                    >
+                                        {children}
+                                    </Title>
+                                );
                             }
                         },
                         h3: {
-                            component: Title,
-                            props: {
-                                order: 3,
-                                mb: 'sm',
-                                mt: 'lg',
-                                size: "h3"
+                            component: ({ children, ...props }) => {
+                                const id = slugify(children?.toString() || '');
+                                return (
+                                    <Title
+                                        id={id}
+                                        order={3}
+                                        mb="sm"
+                                        mt="lg"
+                                        size="h3"
+                                        {...props}
+                                    >
+                                        {children}
+                                    </Title>
+                                );
                             }
                         },
                         h4: {
-                            component: Title,
-                            props: {
-                                order: 4,
-                                mb: 'sm',
-                                mt: 'md',
-                                size: "h4"
+                            component: ({ children, ...props }) => {
+                                const id = slugify(children?.toString() || '');
+                                return (
+                                    <Title
+                                        id={id}
+                                        order={4}
+                                        mb="sm"
+                                        mt="md"
+                                        size="h4"
+                                        {...props}
+                                    >
+                                        {children}
+                                    </Title>
+                                );
                             }
                         },
                         p: {

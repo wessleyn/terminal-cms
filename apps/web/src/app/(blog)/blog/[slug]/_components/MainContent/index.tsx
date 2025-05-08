@@ -3,11 +3,11 @@
 import { BlogComment, BlogTag } from "@repo/db"
 import { Badge, Container, Grid, Group, Text } from "@repo/ui/components/mantine"
 import dynamic from 'next/dynamic'
-import BlogSidebar from "../BlogSidebar"
+import Link from "next/link"
 import BlogContent from "./BlogContent"
 
 // Import the DynamicComments as a dynamic component with SSR enabled
-const DynamicComments = dynamic(() => import('./Comments'), {
+const DynamicComments = dynamic(() => import('./Comments/index'), {
     ssr: true, // Make sure SSR is enabled for the dynamic component
     loading: () => (
         <div className="comments-loading">
@@ -28,9 +28,10 @@ interface PostType {
 
 interface MainContentProps {
     post: PostType;
+    children: React.ReactNode;
 }
 
-const MainContent = ({ post }: MainContentProps) => {
+const MainContent = ({ post, children }: MainContentProps) => {
     return (
         <Container size="xl" py="xl" px='xl'>
             <Grid>
@@ -41,16 +42,20 @@ const MainContent = ({ post }: MainContentProps) => {
                         <Group gap="md">
                             <div>
                                 <Text fw={500} span>Category:</Text>{" "}
-                                <Badge variant="light" color="green">{post.category}</Badge>
+                                <Link href={`/blog/category/${post.category.toLowerCase()}`} passHref>
+                                    <Badge variant="light" color="green">{post.category}</Badge>
+                                </Link>
                             </div>
 
                             <div>
                                 <Text fw={500} span>Tags:</Text>{" "}
                                 <Group gap="xs" display="inline-flex">
                                     {post.tags.map((tag: BlogTag) => (
-                                        <Badge key={tag.id} radius="sm" variant="outline">
-                                            #{tag.name}
-                                        </Badge>
+                                        <Link href={`/blog/tag/${tag.name.toLowerCase()}`} passHref key={tag.id}>
+                                            <Badge key={tag.id} radius="sm" variant="outline">
+                                                #{tag.name}
+                                            </Badge>
+                                        </Link>
                                     ))}
                                 </Group>
                             </div>
@@ -65,7 +70,7 @@ const MainContent = ({ post }: MainContentProps) => {
                 </Grid.Col>
 
                 <Grid.Col span={{ base: 12, md: 4 }}>
-                    <BlogSidebar />
+                   {children}
                 </Grid.Col>
             </Grid>
         </Container>

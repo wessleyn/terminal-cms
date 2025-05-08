@@ -23,7 +23,7 @@ export default function ProfileInfo({ profile }: ProfileInfoProps) {
             <div className="col profile">
                 <Link href="/">
                     <Image
-                        className="img-fluid border rounded border-0 shadow-sm mb-4"
+                        className="img-fluid rounded border-0 shadow-sm mb-4"
                         alt="Profile Image"
                         src={avatarUrl}
                         width={300}

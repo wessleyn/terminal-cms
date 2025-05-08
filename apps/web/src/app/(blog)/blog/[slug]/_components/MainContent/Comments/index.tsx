@@ -1,7 +1,7 @@
 'use client';
 
 import { BlogComment } from '@repo/db';
-import { Divider, Stack, Text, Title } from '@repo/ui/components/mantine';
+import { Divider, Skeleton, Stack, Text, Title } from '@repo/ui/components/mantine';
 import { IconMessageCircle } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import getCommentsByPostId from '../../../_actions/getCommentsByPostId';
@@ -20,9 +20,9 @@ export default function Comments({ postId, slug }: CommentsProps) {
     useEffect(() => {
         fetchComments()
         console.log("Called")
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    
+
     // Function to refresh comments after a new comment is posted
     const fetchComments = async () => {
         setIsLoading(true);
@@ -38,8 +38,8 @@ export default function Comments({ postId, slug }: CommentsProps) {
 
 
     if (!comments || isLoading) {
-        // comments should be an empty [] 
-        return <div>Loading</div>
+        // TODO: add skeleton loading
+        return <Skeleton height={100} />;
     }
 
     const isEmpty = comments.length == 0
@@ -69,7 +69,7 @@ export default function Comments({ postId, slug }: CommentsProps) {
             <Divider />
 
             <Stack gap="md">
-                <Title order={3}>{ isEmpty ? 'Leave a Comment' : 'Join the Discussion'} </Title>
+                <Title order={3}>{isEmpty ? 'Leave a Comment' : 'Join the Discussion'} </Title>
                 <CommentForm
                     postId={postId}
                     slug={slug}

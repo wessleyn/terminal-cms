@@ -2,8 +2,10 @@ import { prisma } from '@repo/db';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import UniversalNewsletter from '../_components/UniversalNewsletter';
+import fetchAuthorProfile from './_actions/fetchAuthorProfile';
 import { getBlogPostBySlug } from './_actions/getBlogPostBySlug';
 import BlogPostHeader from './_components/BlogPostHeader';
+import BlogSidebar from './_components/BlogSidebar';
 import MainContent from './_components/MainContent';
 import RelatedPosts from './_components/RelatedPosts';
 
@@ -18,6 +20,7 @@ interface BlogPostPageProps {
 // Generate metadata for the page
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
     const resolvedParams = await params;
+    
     const post = await getBlogPostBySlug(resolvedParams.slug);
 
     if (!post) {
@@ -25,6 +28,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
             title: 'Post Not Found',
         };
     }
+
 
     return {
         title: post.title,
@@ -50,10 +54,11 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
     const resolvedParams = await params;
     const post = await getBlogPostBySlug(resolvedParams.slug);
-
+    
     if (!post) {
         notFound();
     }
+    const author = await fetchAuthorProfile();
 
     // Fetch related posts
     const relatedPosts = await prisma.blogPost.findMany({
@@ -77,7 +82,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 date={post.publishedAt}
                 imageUrl={post.imageUrl}
             />
-            <MainContent post={post} />
+            <MainContent post={post}>
+                <BlogSidebar author={author} content={post.content} />
+            </MainContent> 
             <RelatedPosts posts={relatedPosts} />
             <UniversalNewsletter
                 type="post"
