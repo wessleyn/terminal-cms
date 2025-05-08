@@ -27,9 +27,17 @@ export async function GET(): Promise<Response> {
                 category: true,
                 author: {
                     select: {
-                        name: true,
-                        email: true,
-                        avatarUrl: true,
+                        displayName: true,
+                        workEmail: true,
+                        avatars: {
+                            select: {
+                                url: true,
+                            },
+                            where: {
+                                isActive: true,
+                            },
+                            take: 1, // Get only the active avatar
+                        }
                     },
                 },
                 tags: {

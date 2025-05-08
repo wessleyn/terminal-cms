@@ -36,13 +36,13 @@ export function FeaturedSidePost({ post, height, isPrimary }: FeaturedSidePostPr
                     justifyContent: 'flex-end'
                 }}
             >
-                <div style={{ padding: '20px' }}>
-                    <Badge color={post.color} mb="xs">{post.category}</Badge>
-                    <Text size={isPrimary ? "xl" : "md"} fw={700} c="white">{post.title}</Text>
-                    <Text size="sm" c="white" mt="xs">
-                        {post.publishedAt ? new Date(post.publishedAt).toLocaleDateString() : "Coming soon"}
-                    </Text>
-                </div>
+                <Badge color={post.color} mb="xs" size='md'>{post.category}</Badge>
+                <Text size={isPrimary ? "xl" : "md"} fw={700} c="white">
+                    {isPrimary ? post.title : post.title.length > 19 ? post.title.substring(0, 19) + "..." : post.title}
+                </Text>
+                <Text size="sm" c="white" mt="xs">
+                    {post.publishedAt ? new Date(post.publishedAt).toLocaleDateString() : "Coming soon"}
+                </Text>
             </Paper>
         </Link>
     );

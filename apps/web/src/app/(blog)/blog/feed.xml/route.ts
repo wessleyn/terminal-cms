@@ -53,7 +53,7 @@ export async function GET(): Promise<Response> {
                 url: postUrl,
                 guid: post.id,
                 categories: post.tags.map(tag => tag.name),
-                author: post.author?.name || 'Wessley N',
+                author: post.author?.displayName || 'Wessley N',
                 date: post.publishedAt || new Date(),
                 enclosure: post.imageUrl ? {
                     url: post.imageUrl,
