@@ -132,9 +132,17 @@ body {
 
 /* Link styling */
 a {
-  color: var(----mantine-color-green-6);
   text-decoration: none;
   transition: all 0.3s ease;
+}
+
+/* Default links in text content should be highlighted */
+p a,
+.navbar a,
+.footer a,
+.terminal-breadcrumb a,
+.btn-link {
+  color: var(----mantine-color-green-6);
 }
 
 a:hover {
