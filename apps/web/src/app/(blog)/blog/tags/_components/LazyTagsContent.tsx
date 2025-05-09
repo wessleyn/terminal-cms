@@ -15,7 +15,7 @@ interface Tag {
 
 // Dynamically import the TagsPageClient component with SSR disabled
 const TagsPageClient = dynamic(
-    () => import('/home/coding/Desktop/terminal-portfolio/apps/web/src/app/(blog)/blog/tags/_components/TagsPageClient'), {
+    () => import('../_components/TagsPageClient'), {
     loading: () => <TagsSkeleton />,
     ssr: false // Only disable SSR here in a client component
 });
