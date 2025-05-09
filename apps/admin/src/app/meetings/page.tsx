@@ -1,4 +1,3 @@
-import { prisma } from '@repo/db';
 import {
     Badge,
     Container,
@@ -6,7 +5,8 @@ import {
     Paper,
     Text,
     Title
-} from '@repo/ui/components/mantine';
+} from '@mantine/core';
+import { prisma } from '@repo/db';
 import MeetingsTimeline from './_components/MeetingsTimeline';
 
 export default async function ProjectMeetingsPage() {

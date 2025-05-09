@@ -6,7 +6,7 @@ import {
     Group,
     Stack,
     Text
-} from '@repo/ui/components/mantine';
+} from '@mantine/core';
 import { useCallback, useState } from 'react';
 import type { ProfileData } from '../_actions/types';
 import { DraggableSocialLinks } from './DraggableSocialLinks';
@@ -76,7 +76,7 @@ export default function ProfileEditor({ profile: initialProfile, onUpdate }: Pro
 
             {/* Description */}
             <DescriptionInput
-                initialValue={profile.description || ''}
+                initialValue={profile.bio || ''}
                 className={classes.editableField}
                 onUpdate={handleProfileUpdate}
             />

@@ -1,17 +1,19 @@
 'use client';
 
-import { MeetingStatus } from '@repo/db/types';
 import {
     Button,
     Flex,
+    Select,
+    Title
+} from '@mantine/core';
+import { MeetingStatus } from '@repo/db/types';
+import {
     IconCheck,
     IconMail,
     IconRefresh,
     IconTrash,
-    IconX,
-    Select,
-    Title
-} from '@repo/ui/components/mantine';
+    IconX
+} from '@tabler/icons-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { deleteMeeting } from '../../_actions/deleteMeeting';

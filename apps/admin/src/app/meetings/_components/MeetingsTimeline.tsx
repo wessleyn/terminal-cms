@@ -3,13 +3,14 @@
 import {
     Badge,
     Group,
-    IconCalendarTime,
     Text,
     Title
-} from '@repo/ui/components/mantine';
-import { VerticalTimeline, VerticalTimelineElement } from '@repo/ui/components/timeline';
+} from '@mantine/core';
+import { IconCalendarTime } from '@tabler/icons-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import Link from 'next/link';
+import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
+import 'react-vertical-timeline-component/style.min.css';
 
 // Define the meeting type to match our database schema
 type ScheduledMeeting = {
@@ -69,11 +70,11 @@ export default function MeetingsTimeline({ meetings }: MeetingsTimelineProps) {
                             </Group>
 
                             <Text size="sm" mb="md">
-                               {meeting.projectBudget}
+                                {meeting.projectBudget}
                             </Text>
 
                             <Text size="sm" mb="md">
-                               {meeting.projectName}
+                                {meeting.projectName}
                             </Text>
 
                             <Text size="sm" mb="lg">

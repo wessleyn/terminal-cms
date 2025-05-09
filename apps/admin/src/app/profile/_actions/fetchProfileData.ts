@@ -1,7 +1,7 @@
 'use server';
 
 import { prisma } from '@repo/db';
-import { ApiResponse, DEFAULT_AVATARS, DEFAULT_PROFILE, DEFAULT_SOCIAL_LINKS, ProfileData } from './types';
+import { ApiResponse, DEFAULT_AVATARS, DEFAULT_PROFILE, DEFAULT_SOCIAL_LINKS, ProfileAvatar, ProfileData } from './types';
 
 // Fetch profile data with auto-creation if not exists
 export async function fetchProfileData(): Promise<ApiResponse<ProfileData>> {
@@ -22,15 +22,15 @@ export async function fetchProfileData(): Promise<ApiResponse<ProfileData>> {
         displayName: `${DEFAULT_PROFILE.greeting} ${DEFAULT_PROFILE.name}`,
         workEmail: DEFAULT_PROFILE.workEmail,
         tagline: DEFAULT_PROFILE.tagline,
-        description: DEFAULT_PROFILE.description,
-        currentAvatarIndex: 0,
+        bio: DEFAULT_PROFILE.bio,
 
         // Create default avatars
         avatars: {
           create: DEFAULT_AVATARS.map(avatar => ({
             url: avatar.url,
             publicId: avatar.publicId,
-            isNew: avatar.isNew
+            isNew: avatar.isNew,
+            isActive: true // Set first avatar as active
           }))
         },
 
@@ -53,11 +53,11 @@ export async function fetchProfileData(): Promise<ApiResponse<ProfileData>> {
       }
     });
 
-    // Find the current "active" avatar (marked as isNew)
-    const currentAvatar = profile.avatars.find(avatar => avatar.isNew === true);
+    // Find the current "active" avatar (using isActive flag from schema)
+    const currentAvatar = profile.avatars.find((avatar: ProfileAvatar) => avatar.isActive === true);
     const currentAvatarIndex = currentAvatar
-      ? profile.avatars.findIndex(avatar => avatar.id === currentAvatar.id)
-      : profile.currentAvatarIndex;
+      ? profile.avatars.findIndex((avatar: ProfileAvatar) => avatar.id === currentAvatar.id)
+      : 0;
 
     // Map from DB schema to our ProfileData interface
     const profileData: ProfileData = {
@@ -66,7 +66,7 @@ export async function fetchProfileData(): Promise<ApiResponse<ProfileData>> {
       greeting: DEFAULT_PROFILE.greeting, // Using default since DB doesn't store this separately
       displayName: profile.displayName,
       tagline: profile.tagline,
-      description: profile.description,
+      bio: profile.bio,
       workEmail: profile.workEmail,
       avatars: profile.avatars,
       socialLinks: profile.socialLinks,

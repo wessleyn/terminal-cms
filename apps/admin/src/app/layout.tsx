@@ -1,6 +1,6 @@
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
-import { CustomProvider } from "@repo/ui/components/shared";
+import CustomProvider from "@repo/ui/components/shared/CustomProvider";
 import DashboardThemeToggler from "../_components/DashboardThemeToggler";
 import EmailsMenu from "../_components/EmailsMenu";
 import HeaderTitle from "../_components/HeaderTitle";

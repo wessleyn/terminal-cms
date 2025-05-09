@@ -1,13 +1,13 @@
 'use client';
 
-import { showNotification } from '@mantine/notifications';
-import { MeetingStatus } from '@repo/db/types';
 import {
     Badge,
     Group,
     Menu,
     Title
-} from '@repo/ui/components/mantine';
+} from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
+import { MeetingStatus } from '@repo/db/types';
 import {
     IconCheck,
     IconChevronDown,

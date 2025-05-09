@@ -20,7 +20,7 @@ export interface TableProject {
     title: string;
     publishStatus: PublishStatus;
     activityStatus: ActivityStatus;
-    happyIndex: HappyIndex
+    happyIndex: HappyIndex;
     engagement: {
         share: number;
         bookmark: number;
@@ -207,7 +207,7 @@ export default function ProjectsTable({ initialProjects }: ProjectsTableProps) {
                                     style={{ cursor: 'pointer' }}
                                 >
                                     <Table.Td>{project.title}</Table.Td>
-                                    <Table.Td onClick={e => e.stopPropagation()}>
+                                    <Table.Td onClick={(e: React.MouseEvent) => e.stopPropagation()}>
                                         <PublishStatusBadge
                                             status={project.publishStatus}
                                             onStatusChange={(newStatus) =>
@@ -215,7 +215,7 @@ export default function ProjectsTable({ initialProjects }: ProjectsTableProps) {
                                             }
                                         />
                                     </Table.Td>
-                                    <Table.Td onClick={e => e.stopPropagation()}>
+                                    <Table.Td onClick={(e: React.MouseEvent) => e.stopPropagation()}>
                                         <ActivityStatusBadge
                                             status={project.activityStatus}
                                             onStatusChange={(newStatus) =>
@@ -223,7 +223,7 @@ export default function ProjectsTable({ initialProjects }: ProjectsTableProps) {
                                             }
                                         />
                                     </Table.Td>
-                                    <Table.Td onClick={e => e.stopPropagation()}>
+                                    <Table.Td onClick={(e: React.MouseEvent) => e.stopPropagation()}>
                                         <HappyStatusBadge
                                             status={project.happyIndex}
                                             onStatusChange={(newStatus) =>
@@ -234,7 +234,7 @@ export default function ProjectsTable({ initialProjects }: ProjectsTableProps) {
                                     <Table.Td>
                                         <EngagementBar engagement={project.engagement || DEFAULT_ENGAGEMENT} />
                                     </Table.Td>
-                                    <Table.Td onClick={e => e.stopPropagation()}>
+                                    <Table.Td onClick={(e: React.MouseEvent) => e.stopPropagation()}>
                                         <ActionButtons
                                             onView={() => handleView(project.id)}
                                             onDelete={() => handleDelete(project.id)}

@@ -1,21 +1,17 @@
 'use client';
 
-import { CldUploadWidget } from '@repo/ui/components/cloudinary';
+import { Carousel } from '@mantine/carousel';
 import {
     ActionIcon,
     Avatar,
     Badge,
-    Carousel,
-    IconCheck,
-    IconPlus,
-    IconTrash,
-    IconUpload,
     Image,
     Stack,
-    Text,
-    notifications
-} from '@repo/ui/components/mantine';
-import type { CloudinaryUploadWidgetResults } from 'next-cloudinary';
+    Text
+} from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { IconCheck, IconPlus, IconTrash, IconUpload } from '@tabler/icons-react';
+import { CldUploadWidget, CloudinaryUploadWidgetResults } from 'next-cloudinary';
 import { useEffect, useState } from 'react';
 import { removeAvatar } from '../../_actions/removeAvatar';
 import { saveUploadedAvatar } from '../../_actions/saveUploadedAvatar';
@@ -293,7 +289,7 @@ export function AvatarUploader({
                             }
                         }
                     }}
-                    onUpload={handleCloudinaryUpload}
+                    onPublicId={handleCloudinaryUpload}
                 >
                     {({ open }) => (
                         <div

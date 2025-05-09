@@ -26,7 +26,7 @@ export async function updateProfile(data: Partial<ProfileData>): Promise<ApiResp
         displayName: data.displayName,
         workEmail: data.workEmail,
         tagline: data.tagline,
-        description: data.description,
+        bio: data.bio,
         ...(data.currentAvatarIndex !== undefined && { currentAvatarIndex: data.currentAvatarIndex })
       }
     });

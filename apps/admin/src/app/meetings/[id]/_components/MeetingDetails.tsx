@@ -5,15 +5,17 @@ import {
     Flex,
     Grid,
     Group,
+    Text,
+    Title
+} from '@mantine/core';
+import {
     IconCalendar,
     IconClock,
     IconCoin,
     IconFileDescription,
     IconMail,
-    IconUser,
-    Text,
-    Title
-} from '@repo/ui/components/mantine';
+    IconUser
+} from '@tabler/icons-react';
 import { format } from 'date-fns';
 
 interface MeetingDetailsProps {

@@ -1,6 +1,7 @@
 'use client';
 
-import { TextInput, notifications } from '@repo/ui/components/mantine';
+import { TextInput } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { useCallback, useState } from 'react';
 import type { ProfileData } from '../../_actions/types';
 import { updateProfile } from '../../_actions/updateProfile';

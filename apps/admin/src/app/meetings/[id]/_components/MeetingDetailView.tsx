@@ -1,9 +1,7 @@
 'use client';
 
+import { Card } from '@mantine/core';
 import { MeetingStatus } from '@repo/db/types';
-import {
-    Card
-} from '@repo/ui/components/mantine';
 import { MeetingDetails } from './MeetingDetails';
 import { MeetingHeader } from './MeetingHeader';
 

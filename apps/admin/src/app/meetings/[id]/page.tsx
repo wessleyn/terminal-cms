@@ -1,5 +1,5 @@
+import { Button, Container, Group } from '@mantine/core';
 import { prisma } from '@repo/db';
-import { Button, Container, Group } from '@repo/ui/components/mantine';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import MeetingDetailView from './_components/MeetingDetailView';

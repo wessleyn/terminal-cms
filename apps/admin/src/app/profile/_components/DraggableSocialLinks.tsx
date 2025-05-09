@@ -7,12 +7,11 @@ import {
     Group,
     Stack,
     TextInput,
-    Tooltip,
-    notifications,
-    useDebouncedCallback,
-    useListState
-} from '@repo/ui/components/mantine';
-import { SocialIcon } from '@repo/ui/components/shared';
+    Tooltip
+} from '@mantine/core';
+import { useDebouncedCallback, useListState } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
+import SocialIcon from '@repo/ui/components/shared/SocialIcon';
 import { detectPlatform } from '@repo/ui/utils/socialPlatform';
 import {
     IconGripVertical,

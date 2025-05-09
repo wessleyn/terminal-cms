@@ -1,6 +1,6 @@
 'use client';
 
-import { Alert, Center, Loader } from '@repo/ui/components/mantine';
+import { Alert, Center, Loader } from '@mantine/core';
 import { useState } from 'react';
 import { ProfileData } from '../_actions/types';
 import ProfileEditor from './ProfileEditor';

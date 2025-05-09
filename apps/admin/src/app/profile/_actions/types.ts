@@ -11,6 +11,7 @@ export interface ProfileAvatar {
   url: string;
   publicId: string | null;
   isNew?: boolean;
+  isActive?: boolean;
 }
 
 // Define ProfileData structure for the profile page
@@ -19,7 +20,7 @@ export interface ProfileData {
   name: string;
   greeting: string;
   tagline: string;
-  description: string;
+  bio: string;  // Changed from description to bio to match schema
   workEmail: string;
   displayName?: string; // Computed field (greeting + name)
   avatars: ProfileAvatar[];
@@ -37,7 +38,7 @@ export const DEFAULT_PROFILE = {
   name: "John Doe",
   greeting: "Hello, I am",
   tagline: "Full Stack Developer & Open Source Enthusiast",
-  description: "I build modern web applications with TypeScript, React, and Node.js. Passionate about clean code, performance optimization, and user experience.",
+  bio: "I build modern web applications with TypeScript, React, and Node.js. Passionate about clean code, performance optimization, and user experience.",
   workEmail: "contact@example.com"
 };
 

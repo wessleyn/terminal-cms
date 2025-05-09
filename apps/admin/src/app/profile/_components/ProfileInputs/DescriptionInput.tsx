@@ -1,6 +1,7 @@
 'use client';
 
-import { Textarea, notifications } from '@repo/ui/components/mantine';
+import { Textarea } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { useCallback, useState } from 'react';
 import type { ProfileData } from '../../_actions/types';
 import { updateProfile } from '../../_actions/updateProfile';
@@ -12,36 +13,36 @@ interface DescriptionInputProps {
 }
 
 export function DescriptionInput({ initialValue, className, onUpdate }: DescriptionInputProps) {
-    const [description, setDescription] = useState<string>(initialValue || '');
+    const [bio, setBio] = useState<string>(initialValue || '');
     const [isSaving, setIsSaving] = useState(false);
 
     // Handle description change
     const handleChange = useCallback(async (value: string) => {
-        setDescription(value);
+        setBio(value);
 
         try {
             setIsSaving(true);
 
             // Update local state immediately through parent component
-            onUpdate({ description: value });
+            onUpdate({ bio: value });
 
             // Save to database
             const result = await updateProfile({
-                description: value
+                bio: value
             });
 
             if (!result.success && result.error) {
                 notifications.show({
-                    title: 'Failed to update description',
+                    title: 'Failed to update bio',
                     message: result.error,
                     color: 'red',
                 });
             }
         } catch (error) {
-            console.error('Error updating description:', error);
+            console.error('Error updating bio:', error);
             notifications.show({
                 title: 'Error',
-                message: 'An unexpected error occurred while updating your description',
+                message: 'An unexpected error occurred while updating your bio',
                 color: 'red',
             });
         } finally {
@@ -51,7 +52,7 @@ export function DescriptionInput({ initialValue, className, onUpdate }: Descript
 
     return (
         <Textarea
-            value={description}
+            value={bio}
             onChange={(e) => handleChange(e.currentTarget.value)}
             classNames={{ input: className }}
             variant="unstyled"
@@ -59,7 +60,7 @@ export function DescriptionInput({ initialValue, className, onUpdate }: Descript
             minRows={2}
             c="dimmed"
             size="sm"
-            placeholder="Write a short description about yourself"
+            placeholder="Write a short bio about yourself"
             styles={{ input: { textAlign: 'center' } }}
             disabled={isSaving}
         />

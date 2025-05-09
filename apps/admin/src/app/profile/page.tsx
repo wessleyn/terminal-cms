@@ -1,4 +1,4 @@
-import { Container } from '@repo/ui/components/mantine';
+import { Container } from '@mantine/core';
 import { fetchProfileData } from './_actions/fetchProfileData';
 import ProfileEditorWrapper from './_components/ProfileEditorWrapper';
 

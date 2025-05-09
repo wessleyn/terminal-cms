@@ -31,7 +31,7 @@ export default function ProfileMenu() {
             id: userData.id,
             name: userData.name || null,
             email: userData.email || null,
-            image: userData.image || null,
+            image: 'image' in userData ? userData.image : null,
             role: userData.role
           });
         }

@@ -3,7 +3,7 @@
 import { Tooltip, UnstyledButton } from '@mantine/core';
 import Link from 'next/link';
 import React from 'react';
-import styles from '../styles/Sidebar.module.css';
+import styles from './SideBar.module.css';
 import { IconComponent } from './types';
 
 interface SideBarLinkProps {
@@ -17,8 +17,6 @@ interface SideBarLinkProps {
 }
 
 function SideBarLink({ icon: Icon, label, link, active, onClick, isCollapsed, showLabel = false }: SideBarLinkProps) {
-    console.log(`Rendering SideBarLink: ${label}, isCollapsed: ${isCollapsed}, showLabel: ${showLabel}`);
-    console.log(`is Linka ctive: ${active} `);
     return (
         <Tooltip label={label} position="right" transitionProps={{ duration: 0 }} disabled={!isCollapsed || showLabel}>
             <Link href={link} passHref>
