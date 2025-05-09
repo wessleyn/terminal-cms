@@ -132,9 +132,17 @@ body {
 
 /* Link styling */
 a {
-  color: var(----mantine-color-green-6);
   text-decoration: none;
   transition: all 0.3s ease;
+}
+
+/* Default links in text content should be highlighted */
+p a,
+.navbar a,
+.footer a,
+.terminal-breadcrumb a,
+.btn-link {
+  color: var(----mantine-color-green-6);
 }
 
 a:hover {
@@ -523,4 +531,19 @@ iframe[title*='challenge'],
     flex-direction: column;
     gap: 1rem;
   }
+}
+
+/* Override Bootstrap text classes with Mantine terminal green shades */
+.text-primary {
+  --bs-text-opacity: 1;
+  color: var(--mantine-color-green-4) !important;
+}
+
+.text-secondary {
+  --bs-text-opacity: 1;
+  color: var(--mantine-color-green-6) !important;
+}
+
+.text-primary {
+  color: var(----mantine-color-green-4);
 }

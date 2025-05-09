@@ -11,7 +11,10 @@ export default function GlobalError({
 }) {
     useEffect(() => {
         // Log the error to an error reporting service
-        console.error('Global error:', error);
+        // Only log in client-side environment to avoid build-time errors
+        if (typeof window !== 'undefined') {
+            console.error('Global error:', error);
+        }
     }, [error]);
 
     return (

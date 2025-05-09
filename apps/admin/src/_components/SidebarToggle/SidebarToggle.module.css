@@ -1,3 +1,29 @@
+.toggleContainer {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* When there's a secondary sidebar, position the toggle button differently */
+.withSecondary {
+  margin-left: 220px; /* Move it to the right of the secondary sidebar */
+}
+
+@media (min-width: 768px) {
+  .toggleContainer {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+  }
+
+  .withSecondary {
+    margin-left: 220px;
+  }
+}
+
 .toggleButton {
   display: flex;
   align-items: center;
@@ -7,6 +33,8 @@
   transition: all 0.2s ease;
   border: none;
   box-shadow: none;
+  position: relative;
+  z-index: 1200; /* Higher z-index to ensure it stays on top */
 }
 
 .toggleButton:hover {
@@ -17,4 +45,10 @@
 
 .toggleButton:active {
   transform: scale(0.95);
+}
+
+/* Container with dynamic positioning */
+.toggleWrapper {
+  transition: all 0.3s ease;
+  position: relative;
 }

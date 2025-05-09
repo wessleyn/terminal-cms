@@ -1,0 +1,121 @@
+.carousel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  @mixin hover {
+    .carouselControls {
+      opacity: 1;
+    }
+  }
+}
+
+.carouselControls {
+  z-index: 10;
+  transition: opacity 150ms ease;
+  opacity: 0;
+}
+
+.carouselIndicator {
+  width: 8px;
+  height: 4px;
+  transition: width 250ms ease;
+  background-color: var(--mantine-color-white);
+
+  &[data-active] {
+    width: 16px;
+  }
+}
+
+.imageContainer {
+  position: relative;
+  overflow: hidden;
+  height: 220px;
+  width: 300px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  border-radius: 8px;
+}
+
+.imageContainer:hover {
+  transform: scale(1.01);
+}
+
+.carouselImage {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.imageOverlay {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.imageContainer:hover .imageOverlay {
+  opacity: 1;
+}
+
+.uploadWidget {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.editableField {
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.editableField:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.socialLinkInput {
+  width: 100%;
+}
+
+.savingIndicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--mantine-color-green-6);
+  font-size: 0.875rem;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

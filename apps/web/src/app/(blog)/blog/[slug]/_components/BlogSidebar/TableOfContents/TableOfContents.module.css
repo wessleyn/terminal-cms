@@ -1,0 +1,116 @@
+/* Table of Contents Module Styles */
+.tocContainer {
+  position: sticky;
+  top: 2rem;
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.25rem;
+}
+
+/* Scrollbar */
+.tocContainer::-webkit-scrollbar {
+  width: 6px;
+}
+.tocContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tocContainer::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--bs-primary-rgb), 0.3);
+  border-radius: 3px;
+}
+.tocContainer::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(var(--bs-primary-rgb), 0.5);
+}
+
+/* Reset & Base List */
+.tocList {
+  counter-reset: item;
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem;
+}
+
+/* Shared item & link */
+.tocItem {
+  display: flex;
+  align-items: center;
+  line-height: 1.4;
+  margin-bottom: 0.25rem;
+  transition: background 0.3s ease;
+}
+.tocItem:has(a[data-active='true']) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.tocLink {
+  position: relative;
+  display: inline-block;
+  padding: 2px 4px;
+  margin-left: var(--toc-indent, 0);
+  border-radius: 3px;
+  border-left: 2px solid transparent;
+  text-decoration: none;
+  /* Override the global link color */
+  color: inherit !important;
+  transition: all 0.2s ease-in-out;
+}
+.tocLink:hover {
+  color: var(--mantine-color-green-7) !important;
+  background-color: var(--mantine-color-green-0);
+}
+.tocLink.active {
+  color: var(--mantine-color-green-7) !important;
+  background-color: var(--mantine-color-green-1);
+  font-weight: 600;
+  border-left-color: var(--mantine-color-green-6);
+}
+
+/* Depth-based indenting via custom property */
+.depth1 {
+  --toc-indent: 0;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.depth2 {
+  --toc-indent: 1rem;
+  font-size: 0.95em;
+}
+.depth3 {
+  --toc-indent: 2rem;
+  font-size: 0.9em;
+}
+.depth4 {
+  --toc-indent: 3rem;
+  font-size: 0.85em;
+}
+.depth5 {
+  --toc-indent: 4rem;
+  font-size: 0.8em;
+}
+.depth6 {
+  --toc-indent: 5rem;
+  font-size: 0.8em;
+}
+
+/* Terminal theme */
+.terminalCommand {
+  display: block;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-mono);
+  color: var(--bs-primary);
+  background-color: rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--bs-border-color);
+}
+.terminalPrompt {
+  margin-right: 0.5rem;
+  color: var(--mantine-color-green-6);
+}
+.terminalOutput {
+  padding: 0.5rem;
+}
+
+.terminal-list li:before a {
+  color: var(--mantine-color-default-color);
+}

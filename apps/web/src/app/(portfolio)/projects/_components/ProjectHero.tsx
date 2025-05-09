@@ -1,6 +1,6 @@
 'use client';
 
-import { TypingEffect } from '@repo/ui/components/shared';
+import TypingEffect from '@repo/ui/components/shared/TypingEffect';
 import { useEffect, useState } from 'react';
 
 export default function ProjectHero() {

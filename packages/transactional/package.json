@@ -1,0 +1,29 @@
+{
+    "name": "@repo/transactional",
+    "version": "0.1.0",
+    "private": true,
+    "exports": {
+        ".": "./src/index.ts",
+        "./src/utils": "./src/utils.ts",
+        "./src/lib": "./src/lib.ts"
+    },
+    "scripts": {
+        "dev": "email dev",
+        "build": "email build"
+    },
+    "devDependencies": {
+        "@babel/preset-typescript": "^7.27.1",
+        "@repo/eslint-config": "*",
+        "@repo/typescript-config": "*",
+        "@types/node": "^20.10.5",
+        "next": "*",
+        "react-email": "4.0.11",
+        "typescript": "^5.3.3"
+    },
+    "dependencies": {
+        "@react-email/components": "^0.0.38",
+        "react": "19.1.0",
+        "react-dom": "19.1.0",
+        "resend": "^4.5.0"
+    }
+}

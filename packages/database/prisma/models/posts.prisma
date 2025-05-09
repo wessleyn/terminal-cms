@@ -1,0 +1,107 @@
+// Blog post models
+
+enum PostCategory {
+    SPELLS
+    POTIONS
+    SCROLLS
+    ARTIFACTS
+}
+
+model BlogPost {
+    id          String       @id @default(cuid())
+    title       String
+    slug        String       @unique
+    excerpt     String
+    content     String       @db.Text
+    category    PostCategory
+    imageUrl    String
+    publishedAt DateTime?
+    featured    Boolean      @default(false)
+
+    author   PortfolioProfile @relation(fields: [authorId], references: [id])
+    authorId String
+
+    tags        BlogTag[]        @relation("PostToTag")
+    subscribers PostSubscriber[]
+    comments    BlogComment[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+// // NOTE:Leave this be, for future use, just make sure that this links to the active portfolio profile  
+// model BlogAuthor {
+//     id        String     @id @default(cuid())
+//     name      String
+//     email     String     @unique
+//     bio       String?
+//     avatarUrl String?
+//     posts     BlogPost[]
+//     socialLinks SocialLink[]
+//     createdAt DateTime @default(now())
+//     updatedAt DateTime @updatedAt
+// }
+
+model BlogTag {
+    id    String     @id @default(cuid())
+    name  String     @unique
+    slug  String     @unique
+    color String     @default("blue")
+    posts BlogPost[] @relation("PostToTag")
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model BlogComment {
+    id            String   @id @default(cuid())
+    content       String
+    authorName    String
+    authorProfile String
+    authorEmail   String
+    authorWebsite String?
+    isApproved    Boolean  @default(false)
+    post          BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId        String
+
+    // Self-relation for threaded comments
+    parent   BlogComment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: SetNull)
+    parentId String?
+    replies  BlogComment[] @relation("CommentReplies")
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model PostSubscriber {
+    id    String @id @default(cuid())
+    email String @unique
+
+    subsribedPostId String?
+    post            BlogPost? @relation(fields: [subsribedPostId], references: [id], onDelete: Cascade)
+
+    unsubscribedAt DateTime?
+    subscribedAt   DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt
+}
+
+model BlogSubscriber {
+    id    String @id @default(cuid())
+    email String @unique
+
+    unsubscribedAt DateTime?
+    subscribedAt   DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt
+}
+
+model CategorySubscriber {
+    id       String       @id @default(cuid())
+    email    String
+    category PostCategory
+
+    unsubscribedAt DateTime?
+    subscribedAt   DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt
+
+    @@unique([email, category])
+}

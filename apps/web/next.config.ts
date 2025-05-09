@@ -6,7 +6,7 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'skillicons.dev',
                 port: '',
-                pathname: '/icons/**', // Note: Added leading slash to match exact URL pattern
+                pathname: '/icons/**',
             },
             // google
             {
@@ -18,25 +18,62 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'avatars.githubusercontent.com',
             },
+            {
+                protocol: 'https',
+                hostname: 'images.unsplash.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'res.cloudinary.com',
+            },
         ],
         dangerouslyAllowSVG: true,
         contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     },
     transpilePackages: [
-        "@mantine/core",
-        "@mantine/hooks",
-        "@mantine/dates",
-        "@mantine/carousel",
-        "@mantine/charts",
-        "@mantine/code-highlight",
-        "@mantine/dropzone",
-        "@mantine/form",
-        "@mantine/modals",
-        "@mantine/notifications",
-        "@mantine/nprogress",
-        "@mantine/spotlight",
-        "@mantine/tiptap"
-    ]
-};
+        '@mantine/core',
+        '@mantine/hooks',
+        '@mantine/dates',
+        '@mantine/carousel',
+        '@mantine/charts',
+        '@mantine/code-highlight',
+        '@mantine/dropzone',
+        '@mantine/form',
+        '@mantine/modals',
+        '@mantine/notifications',
+        '@mantine/nprogress',
+        '@mantine/spotlight',
+        '@mantine/tiptap',
+        '@repo/ui',
+        '@repo/ui/components/mantine',
+    ],
+    experimental: {
+        optimizePackageImports: [
+            '@mantine/core',
+            '@mantine/hooks',
+            '@mantine/dates',
+            '@mantine/carousel',
+            '@mantine/charts',
+            '@mantine/code-highlight',
+            '@mantine/dropzone',
+            '@mantine/form',
+            '@mantine/modals',
+            '@mantine/notifications',
+            '@mantine/nprogress',
+            '@mantine/spotlight',
+            '@mantine/tiptap',
+            '@repo/ui',
+            '@repo/ui/components/mantine',
+        ],
+        serverActions: {
+            allowedOrigins: ['localhost:3000'],
+        },
+    },
+}
 
-module.exports = nextConfig;
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+})
+
+export default withBundleAnalyzer(nextConfig)

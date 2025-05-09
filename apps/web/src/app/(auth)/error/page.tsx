@@ -110,7 +110,17 @@ const errorMessages: Record<
 
 
 export default async function ErrorPage({ params }: { params: Promise<{ error: string }> }) {
-    const errorParam = (await params).error;
+    // During build time, params might not exist or be accessible
+    // so we need to safely handle this case
+    let errorParam;
+    try {
+        errorParam = (await params)?.error;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+        // During build, this might fail, so we'll use a fallback
+        console.log('Params not available (likely build time), using fallback error message');
+        errorParam = 'Default';
+    }
 
     // Map custom token errors to our error type
     let error: ErrorType = (errorParam as ErrorType) || 'Default';
@@ -119,8 +129,8 @@ export default async function ErrorPage({ params }: { params: Promise<{ error: s
         error = 'VerificationTokenError';
     }
 
-    // Log error for debugging purposes
-    if (error) {
+    // Log error for debugging purposes (in production, not during build)
+    if (error && process.env.NODE_ENV !== 'production') {
         console.error('Authentication error:', error);
     }
 
@@ -130,6 +140,6 @@ export default async function ErrorPage({ params }: { params: Promise<{ error: s
         <ErrorComp {...errorInfo}>
             <ErrorActionLink url={errorInfo.actionLink!} action={errorInfo.action!} />
             <ErrorActionLink url={'/login'} action={'Log In with a Different Account'} />
-        </ErrorComp >
+        </ErrorComp>
     );
 }

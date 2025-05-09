@@ -6,19 +6,23 @@ import { z } from 'zod';
 
 // Define the schema for form validation
 const formSchema = z.object({
-    name: z.string().min(1, 'Name is required'),
-    email: z.string().email('Valid email is required'),
-    message: z.string().min(1, 'Message is required'),
-    date: z.string().optional(),
+    clientName: z.string().min(1, 'Name is required'),
+    clientEmail: z.string().email('Valid email is required'),
+    projectName: z.string().min(1, 'Project name is required'),
+    projectBudget: z.string().min(1, 'Project budget is required'),
+    projectDescription: z.string().min(1, 'Project description is required'),
+    scheduleMeetingDate: z.string().min(1, 'Meeting date is required'),
     'cf-turnstile-response': z.string().optional(),
 });
 
 export interface HireMeFormState {
     errors?: {
-        name?: string[];
-        email?: string[];
-        message?: string[];
-        date?: string[];
+        clientName?: string[];
+        clientEmail?: string[];
+        projectName?: string[];
+        projectBudget?: string[];
+        projectDescription?: string[];
+        scheduleMeetingDate?: string[];
         _form?: string[];
     };
     message?: string;
@@ -29,10 +33,12 @@ export async function hireMe(prevState: HireMeFormState | undefined, formData: F
     try {
         // Extract data from the FormData object
         const rawData = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            message: formData.get('message'),
-            date: formData.get('date'),
+            clientName: formData.get('clientName'),
+            clientEmail: formData.get('clientEmail'),
+            projectName: formData.get('projectName'),
+            projectBudget: formData.get('projectBudget'),
+            projectDescription: formData.get('projectDescription'),
+            scheduleMeetingDate: formData.get('scheduleMeetingDate'),
             'cf-turnstile-response': formData.get('cf-turnstile-response'),
         };
 
@@ -82,23 +88,12 @@ export async function hireMe(prevState: HireMeFormState | undefined, formData: F
             };
         }
 
-        const { name, email, message, date } = result.data;
 
-        // Log the form data that would be saved to the database
-        console.log('Hire Me Form Submission:', {
-            name,
-            email,
-            message,
-            sc: date || new Date().toISOString().split('T')[0],
-        });
-
-        await prisma.emailHire.create({
-          data: {
-            senderName: name,
-            email,
-            message,
-            scheduleDate: date ? new Date(date) : new Date()
-          },
+        await prisma.scheduledMeeting.create({
+            data: {
+               ...result.data,
+                scheduleMeetingDate: new Date(result.data.scheduleMeetingDate)
+            },
         });
 
         // Revalidate the hireMe page
@@ -106,7 +101,7 @@ export async function hireMe(prevState: HireMeFormState | undefined, formData: F
 
         return {
             success: true,
-            message: 'Form submitted successfully!'
+            message: 'Meeting scheduled successfully!'
         };
     } catch (error) {
         console.error('Error submitting hire me form:', error);

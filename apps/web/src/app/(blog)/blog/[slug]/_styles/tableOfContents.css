@@ -1,0 +1,81 @@
+/* Table of Contents Styles */
+.toc-container {
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.toc-list {
+  margin: 0;
+  padding: 0;
+}
+
+.toc-item {
+  line-height: 1.5;
+  transition: all 0.2s ease;
+}
+
+.toc-link {
+  display: block;
+  padding: 4px 0;
+  transition: all 0.2s ease;
+  border-left: 2px solid transparent;
+  padding-left: 10px;
+  margin-left: -12px;
+}
+
+.toc-link:hover {
+  color: var(----mantine-color-green-4) !important;
+  text-decoration: none;
+  border-left-color: var(----mantine-color-green-4);
+}
+
+.toc-link.active {
+  border-left: 2px solid var(----mantine-color-green-4);
+  color: var(----mantine-color-green-4) !important;
+}
+
+/* Style for different heading depths */
+.toc-item.depth-1 {
+  font-weight: 600;
+}
+
+.toc-item.depth-2 {
+  font-weight: 500;
+}
+
+.toc-item.depth-3 {
+  font-weight: 400;
+}
+
+.toc-item.depth-4,
+.toc-item.depth-5,
+.toc-item.depth-6 {
+  font-weight: 300;
+}
+
+/* Terminal theme styling */
+.terminal-section.toc-container .terminal-command {
+  border-bottom: 1px solid var(--bs-border-color);
+  padding: 0.5rem 1rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  font-family: var(--font-mono);
+  color: var(----mantine-color-green-4);
+}
+
+.terminal-section.toc-container .terminal-output {
+  padding: 1rem;
+}
+
+.terminal-prompt {
+  color: var(----mantine-color-green-4);
+  margin-right: 0.5rem;
+}
+
+/* Style for when TOC is sticky (optional) */
+@media (min-width: 992px) {
+  .toc-sticky {
+    position: sticky;
+    top: 2rem;
+  }
+}

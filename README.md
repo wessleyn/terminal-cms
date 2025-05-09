@@ -15,7 +15,8 @@ A monorepo project containing a terminal-themed portfolio website with integrate
 
 - Next.js (API Routes)
 - Prisma (ORM)
-- PostgreSQL (Storage)
+- Prisma Accelerate (Storage)
+- Cloudinary (Image Hosting)
 - Auth.js (Authentication)
 - Cloudflare Workers (Email Routing to Custom Inbox)
 
@@ -64,7 +65,26 @@ This is a monorepo built with Turborepo containing multiple applications:
    ```
 
 3. Set up environment variables:
-   Create `.env` files in both the `apps/web` and `apps/admin` directories based on the examples below.
+
+   Create `.env` files in both the `apps/web`, `apps/admin`, and `packages/database` directories using the example files provided:
+
+   ```bash
+   # Copy example files for development
+   cp apps/web/.env.example apps/web/.env
+   cp apps/admin/.env.example apps/admin/.env
+   cp packages/database/.env.example packages/database/.env
+   ```
+
+   Then edit each `.env` file to add your specific configuration values. For production environments, use the `.env.production.example` files as templates instead.
+
+   Key environment variables you'll need to configure:
+
+   - **Database**: Set up your local PostgreSQL URL or Prisma Accelerate connection
+   - **Authentication**: Create a secure random secret for AUTH_SECRET
+   - **OAuth**: If using social login, add your GitHub/Google credentials
+   - **API Keys**: Add API keys for services like Resend, Cloudinary, etc.
+
+   Refer to the Environment Variables section below for more details.
 
 4. Generate Prisma client:
 
@@ -193,6 +213,26 @@ npm run lint           # Run linting
 npm run check-types    # Run type checking
 npm run format         # Format code with prettier
 ```
+
+## Script Naming Conventions
+
+We've decisively adopted the `<action>:<scope>` pattern for our scripts (using `dev:admin` instead of `admin:dev`). This isn't just preference - it's a strategic choice that gives us concrete advantages:
+
+### Why We Commit to `<action>:<scope>`
+
+- **Command Control**: We group by action first because it's what you're trying to do. Need all dev environments? Just `npm run dev:*` and you're set.
+- **Instant Recognition**: When scanning our `package.json`, you immediately know what each script does before seeing where it applies.
+- **Team Alignment**: Following established npm patterns means new developers join with zero friction - they already understand our naming structure.
+
+Our actual implementation proves this works:
+
+```
+dev:admin    # One command - admin env running
+dev:web      # One command - web app running
+dev:email    # One command - email service running
+```
+
+This approach isn't theoretical - it's battle-tested across our workflow. The colon isn't just syntax; it's our organizing principle that keeps commands predictable and efficient as the project scales.
 
 ## Certificate Setup for Local HTTPS Development
 

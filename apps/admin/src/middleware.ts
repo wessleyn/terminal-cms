@@ -8,28 +8,20 @@ export const config = {
 
 export default async function middleware(req: NextRequest) {
     try {
-        // Use the centralized auth verification function
         const { authData, hasSession } = await verifySession(req);
 
-        // No session found, redirect to login
         if (!hasSession) {
             return redirectToLogin(req);
         }
 
-        // Check authentication status and admin access
         if (!authData?.authenticated) {
-            console.log("Session invalid or expired:", authData?.reason || "Unknown reason");
             return redirectToLogin(req);
         }
 
-        // Check if the user doesn't have admin role
         if (authData?.role !== "ADMIN") {
             return NextResponse.redirect(new URL(NOT_FOUND_URL, req.nextUrl.origin));
         }
 
-        console.log("Session verified successfully");
-
-        // Valid admin session, proceed
         return NextResponse.next();
     } catch (error) {
         console.error("Middleware error:", error);

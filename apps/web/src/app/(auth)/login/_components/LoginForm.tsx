@@ -10,18 +10,18 @@ import {
     Center,
     Checkbox,
     Divider,
-    GithubIcon,
     Group,
     Paper,
     Skeleton,
     Stack,
     Text,
     TextInput
-} from '@repo/ui/components/mantine';
+} from '@mantine/core';
 import { IconAlertCircle, IconCheck } from '@tabler/icons-react';
 import { useActionState, useEffect, useState } from 'react';
 import { GoogleIcon } from '../../_components/GoogleButton';
 import styles from './LoginForm.module.css';
+import { GithubIcon } from "@mantinex/dev-icons"
 
 // Create a wrapper function for socialSignIn that accepts string | undefined as its parameter
 // This makes it compatible with useActionState's expected signature

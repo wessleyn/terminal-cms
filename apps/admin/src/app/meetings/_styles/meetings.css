@@ -1,0 +1,96 @@
+/* Terminal theme styling for meetings */
+.terminal-section {
+  margin-bottom: 1.5rem;
+}
+
+.terminal-heading {
+  font-family: monospace;
+  color: var(--mantine-color-green-4);
+  border-bottom: 1px solid var(--mantine-color-gray-7);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.terminal-card {
+  background-color: var(--mantine-color-dark-7);
+  border: 1px solid var(--mantine-color-dark-5);
+  height: 100%;
+}
+
+.terminal-paper {
+  background-color: var(--mantine-color-dark-8);
+  border-color: var(--mantine-color-dark-4);
+}
+
+.terminal-info-item {
+  margin-bottom: 0.5rem;
+}
+
+.terminal-label {
+  color: var(--mantine-color-green-4);
+  font-family: monospace;
+}
+
+.terminal-value {
+  color: var(--mantine-color-gray-2);
+  font-family: monospace;
+}
+
+.terminal-value-mono {
+  color: var(--mantine-color-gray-2);
+  font-family: monospace;
+  background-color: var(--mantine-color-dark-9);
+  padding: 0.5rem;
+  border-radius: 4px;
+  border-left: 3px solid var(--mantine-color-green-8);
+}
+
+.terminal-icon {
+  color: var(--mantine-color-green-5);
+}
+
+.terminal-divider {
+  border-color: var(--mantine-color-dark-4);
+  margin: 1rem 0;
+}
+
+.terminal-btn {
+  background-color: var(--mantine-color-dark-6);
+  color: var(--mantine-color-green-4);
+  border: 1px solid var(--mantine-color-green-8);
+}
+
+.terminal-btn:hover {
+  background-color: var(--mantine-color-dark-5);
+}
+
+.terminal-btn-danger {
+  background-color: var(--mantine-color-dark-6);
+  color: var(--mantine-color-red-4);
+  border: 1px solid var(--mantine-color-red-8);
+}
+
+.terminal-btn-danger:hover {
+  background-color: var(--mantine-color-dark-5);
+}
+
+.terminal-link {
+  color: var(--mantine-color-blue-4);
+  text-decoration: underline;
+}
+
+.terminal-badge {
+  font-family: monospace;
+}
+
+.terminal-text {
+  font-family: monospace;
+}
+
+.terminal-textarea {
+  background-color: var(--mantine-color-dark-8);
+  color: var(--mantine-color-green-4);
+  border: 1px solid var(--mantine-color-dark-4);
+  font-family: monospace;
+  resize: vertical;
+}

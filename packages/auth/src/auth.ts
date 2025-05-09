@@ -156,7 +156,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
                 if (callbackParam) {
                     // We have a callbackUrl in the URL parameters, use it directly
-                    console.log('Using callbackUrl parameter:', callbackParam);
                     return callbackParam;
                 }
             } catch (e) {
@@ -165,7 +164,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
             // Check if this is an explicit admin URL
             if (url.includes(process.env.ADMIN_PUBLIC_URL!)) {
-                console.log('Preserving admin URL:', url);
                 return url;
             }
 

@@ -1,0 +1,78 @@
+// PortfolioProfile models
+
+model PortfolioProfile {
+    id String @id @default(cuid())
+
+    displayName String // Combined greeting and name: "Hello, I'm John Doe"
+    workEmail   String // work@domain.com
+    tagline     String // "Full Stack Developer"
+    bio        String // "A brief bio about the profile."
+  
+    avatars     PortfolioProfileAvatar[]
+    socialLinks PortfolioProfileSocialLink[]
+    posts       BlogPost[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model PortfolioProfileAvatar {
+    id       String  @id @default(cuid())
+    url      String
+    publicId String? // Cloudinary public ID for the image
+   
+    isNew    Boolean @default(false) // Flag to indicate newly added avatars
+    isActive Boolean @default(false)
+
+    portfolioProfile PortfolioProfile @relation(fields: [portfolioProfileId], references: [id], onDelete: Cascade)
+    portfolioProfileId String
+    createdAt        DateTime           @default(now())
+    updatedAt        DateTime           @updatedAt
+}
+
+model PortfolioProfileSocialLink {
+    id                 String           @id @default(cuid())
+    platform           String // github, linkedin, twitter, etc.
+    url                String
+    order              Int              @default(0) // Added field for ordering social links
+    portfolioProfile   PortfolioProfile @relation(fields: [portfolioProfileId], references: [id], onDelete: Cascade)
+    portfolioProfileId String
+    createdAt          DateTime         @default(now())
+    updatedAt          DateTime         @updatedAt
+}
+
+enum MeetingStatus {
+    PENDING
+    CONFIRMED
+    COMPLETED
+    CANCELLED
+    RESCHEDULED
+}
+
+model ScheduledMeeting {
+    id String @id @default(uuid())
+
+    clientName  String
+    clientEmail String
+
+    projectName        String
+    projectBudget      String
+    projectDescription String
+
+    meetingNotes ScheduledMeetingNote[]
+    status       MeetingStatus          @default(PENDING)
+
+    scheduleMeetingDate DateTime
+    createdAt           DateTime @default(now())
+    updatedAt           DateTime @updatedAt
+}
+
+model ScheduledMeetingNote {
+    id String @id @default(uuid())
+
+    scheduledMeeting   ScheduledMeeting @relation(fields: [scheduledMeetingId], references: [id], onDelete: Cascade)
+    scheduledMeetingId String
+
+    note      String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}

@@ -1,6 +1,6 @@
 'use client';
 
-import { TypingEffect } from '@repo/ui/components/shared';
+import TypingEffect from '@repo/ui/components/shared/TypingEffect';
 import Script from 'next/script';
 import { startTransition, useActionState, useEffect, useRef, useState } from 'react';
 import { hireMe } from './_actions/hireMe';
@@ -59,7 +59,7 @@ export default function HireMe() {
     };
 
     // Check Turnstile validation before form submission
-    const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsSubmitting(true);
 
@@ -87,8 +87,8 @@ export default function HireMe() {
                         defer
                         strategy="afterInteractive"
                     />
-                    <h2 className="fs-3 fw-bold terminal-cursor">$ ./submit_project.sh</h2>
-                    <p className="mb-4">Tell me about your project and I&apos;ll get back to you as soon as possible.</p>
+                    <h2 className="fs-3 fw-bold terminal-cursor">$ ./schedule_meeting.sh</h2>
+                    <p className="mb-4">Tell me about your project and let&apos;s schedule a meeting to discuss how I can help.</p>
 
                     <div className="row">
                         <div className="col-lg-9">
@@ -109,58 +109,88 @@ export default function HireMe() {
                                     onSubmit={handleSubmit}
                                 >
                                     <div className="mb-3">
-                                        <label htmlFor="name" className="form-label">name</label>
+                                        <label htmlFor="clientName" className="form-label">Your Name</label>
                                         <input
-                                            className={`form-control ${state.errors?.name ? 'is-invalid' : ''}`}
+                                            className={`form-control ${state.errors?.clientName ? 'is-invalid' : ''}`}
                                             type="text"
-                                            id="name"
-                                            name="name"
+                                            id="clientName"
+                                            name="clientName"
                                             required
                                         />
-                                        {state.errors?.name && (
-                                            <div className="invalid-feedback">{state.errors.name.join(', ')}</div>
+                                        {state.errors?.clientName && (
+                                            <div className="invalid-feedback">{state.errors.clientName.join(', ')}</div>
                                         )}
                                     </div>
 
                                     <div className="mb-3">
-                                        <label htmlFor="email" className="form-label">email</label>
+                                        <label htmlFor="clientEmail" className="form-label">Your Email</label>
                                         <input
-                                            className={`form-control ${state.errors?.email ? 'is-invalid' : ''}`}
+                                            className={`form-control ${state.errors?.clientEmail ? 'is-invalid' : ''}`}
                                             type="email"
-                                            id="email"
-                                            name="email"
+                                            id="clientEmail"
+                                            name="clientEmail"
                                             required
                                         />
-                                        {state.errors?.email && (
-                                            <div className="invalid-feedback">{state.errors.email.join(', ')}</div>
+                                        {state.errors?.clientEmail && (
+                                            <div className="invalid-feedback">{state.errors.clientEmail.join(', ')}</div>
                                         )}
                                     </div>
 
                                     <div className="mb-3">
-                                        <label htmlFor="message" className="form-label">Project Details</label>
+                                        <label htmlFor="projectName" className="form-label">Project Name</label>
+                                        <input
+                                            className={`form-control ${state.errors?.projectName ? 'is-invalid' : ''}`}
+                                            type="text"
+                                            id="projectName"
+                                            name="projectName"
+                                            required
+                                        />
+                                        {state.errors?.projectName && (
+                                            <div className="invalid-feedback">{state.errors.projectName.join(', ')}</div>
+                                        )}
+                                    </div>
+
+                                    <div className="mb-3">
+                                        <label htmlFor="projectBudget" className="form-label">Project Budget</label>
+                                        <input
+                                            className={`form-control ${state.errors?.projectBudget ? 'is-invalid' : ''}`}
+                                            type="text"
+                                            id="projectBudget"
+                                            name="projectBudget"
+                                            placeholder="e.g. $1,000-$5,000"
+                                            required
+                                        />
+                                        {state.errors?.projectBudget && (
+                                            <div className="invalid-feedback">{state.errors.projectBudget.join(', ')}</div>
+                                        )}
+                                    </div>
+
+                                    <div className="mb-3">
+                                        <label htmlFor="projectDescription" className="form-label">Project Description</label>
                                         <textarea
-                                            className={`form-control ${state.errors?.message ? 'is-invalid' : ''}`}
-                                            id="message"
-                                            name="message"
+                                            className={`form-control ${state.errors?.projectDescription ? 'is-invalid' : ''}`}
+                                            id="projectDescription"
+                                            name="projectDescription"
                                             required
                                             rows={5}
+                                            placeholder="Please describe your project requirements, timeline, and goals..."
                                         ></textarea>
-                                        {state.errors?.message && (
-                                            <div className="invalid-feedback">{state.errors.message.join(', ')}</div>
+                                        {state.errors?.projectDescription && (
+                                            <div className="invalid-feedback">{state.errors.projectDescription.join(', ')}</div>
                                         )}
                                     </div>
 
                                     <div className="mb-3">
-                                        <label htmlFor="date" className="form-label">date</label>
+                                        <label htmlFor="scheduleMeetingDate" className="form-label">Preferred Meeting Date</label>
                                         <input
-                                            className={`form-control ${state.errors?.date ? 'is-invalid' : ''}`}
-                                            type="date"
-                                            id="date"
-                                            name="date"
+                                            className={`form-control ${state.errors?.scheduleMeetingDate ? 'is-invalid' : ''}`}
+                                            type="datetime-local"
+                                            id="scheduleMeetingDate"
+                                            name="scheduleMeetingDate"
                                             required
                                         />
-                                        {state.errors?.date && (
-                                            <div className="invalid-feedback">{state.errors.date.join(', ')}</div>
+                                        {state.errors?.scheduleMeetingDate && (
+                                            <div className="invalid-feedback">{state.errors.scheduleMeetingDate.join(', ')}</div>
                                         )}
                                     </div>
 
@@ -180,7 +210,7 @@ export default function HireMe() {
                                 <div className="form-success">
                                     <h4>
                                         <TypingEffect
-                                            text="Thank you for your submission! I'll get back to you shortly."
+                                            text="Thank you for scheduling a meeting! I'll get back to you shortly to confirm the details."
                                             typingSpeed={50}
                                             delayBeforeTyping={300}
                                             cursor={true}

@@ -1,8 +1,8 @@
 'use client';
 
+import { Avatar, Button, Center, Flex, Loader, Paper, Text } from "@mantine/core";
 import { getCurrentUser, SignOut } from "@repo/auth/src/utils";
 import { UserRole } from "@repo/db";
-import { Avatar, Button, Center, Flex, Loader, Paper, Text } from "@repo/ui/components/mantine";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -12,7 +12,7 @@ type UserSession = {
   name?: string | null;
   email?: string | null;
   image?: string | null;
-  role: UserRole;
+  role: UserRole | string;
 }
 
 export default function Page() {
@@ -30,8 +30,9 @@ export default function Page() {
             id: userData.id,
             name: userData.name || null,
             email: userData.email || null,
-            image: userData.image || null,
-            role: userData.role as UserRole,
+            // Handle the case where image might not exist
+            image: 'image' in userData ? userData.image || null : null,
+            role: userData.role,
           });
         } else {
           setError("Invalid user data returned");

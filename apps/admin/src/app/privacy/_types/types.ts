@@ -1,5 +1,4 @@
 export enum PrivacyType {
-    FAQ = "FAQ",
     BLOG = "BLOG",
     TERMS = "TERMS",
     PORTFOLIO = "PORTFOLIO"

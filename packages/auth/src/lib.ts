@@ -33,31 +33,25 @@ export async function verifySession(
     cookieName: string;
     hasSession: boolean;
 }> {
-    console.log(`[AUTH] Starting session verification for request to ${req.nextUrl.pathname}`);
     
     // Determine the cookie name based on protocol (HTTP vs HTTPS)
     const isSecureContext = req.nextUrl.protocol === 'https:';
     const cookieName = isSecureContext ? '__Secure-authjs.session-token' : 'authjs.session-token';
-    console.log(`[AUTH] Protocol: ${req.nextUrl.protocol}, using cookie name: ${cookieName}`);
 
     // Get the session cookie if it exists
     const sessionCookie = req.cookies.get(cookieName);
     const hasSession = !!sessionCookie?.value;
-    console.log(`[AUTH] Session cookie present: ${hasSession}`);
 
     // If no session exists, return early
     if (!hasSession) {
-        console.log(`[AUTH] No session cookie found, authentication failed`);
         return { authData: null, cookieName, hasSession };
     }
 
     try {
         // Determine the API endpoint to use for verification
         const authApiUrl = apiEndpoint || `${process.env.WEB_PUBLIC_URL}/api/auth`;
-        console.log(`[AUTH] Using auth API endpoint: ${authApiUrl}`);
 
         // Make the API request to verify the session
-        console.log(`[AUTH] Sending verification request to auth API`);
         const res = await fetch(authApiUrl, {
             method: 'GET',
             headers: {
@@ -66,11 +60,8 @@ export async function verifySession(
             },
         });
         
-        console.log(`[AUTH] Auth API response status: ${res.status}`);
-
         // Parse the response data
         const authData: AuthSessionData = await res.json();
-        console.log(`[AUTH] Authentication ${authData.authenticated ? 'successful' : 'failed'}`);
         
         if (authData.authenticated && authData.user) {
             console.log(`[AUTH] Authenticated user: ${authData.user.email} (${authData.user.id}), role: ${authData.user.role}`);
@@ -86,8 +77,6 @@ export async function verifySession(
     } catch (error) {
         console.error("[AUTH] Session verification error:", error);
 
-        // Return authentication failure on error
-        console.log("[AUTH] Session verification failed due to exception");
         return {
             authData: {
                 authenticated: false,
@@ -107,14 +96,11 @@ export async function verifySession(
  * @returns A NextResponse redirect to the login page with the callback URL
  */
 export function redirectToLogin(req: NextRequest, loginPath?: string): NextResponse {
-    console.log(`[AUTH] Redirecting unauthenticated request from ${req.nextUrl.pathname} to login`);
     
     const LOGIN_PAGE = loginPath || `${process.env.WEB_PUBLIC_URL}/login`;
-    console.log(`[AUTH] Using login path: ${LOGIN_PAGE}`);
     
     const url = new URL(LOGIN_PAGE, req.nextUrl.origin);
     url.searchParams.set('callbackUrl', req.nextUrl.origin + req.nextUrl.pathname);
     
-    console.log(`[AUTH] Redirect URL with callback: ${url.toString()}`);
     return NextResponse.redirect(url);
 }

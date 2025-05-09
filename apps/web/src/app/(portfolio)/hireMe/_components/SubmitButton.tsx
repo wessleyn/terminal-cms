@@ -28,14 +28,14 @@ export function SubmitButton({ pending = false }: SubmitButtonProps) {
             disabled={pending}
             style={{
                 width: '100%',
-                background: 'var(--bs-primary)',
+                background: 'var(----mantine-color-green-4)',
                 position: 'relative',
                 transition: 'background-color 0.2s ease-in-out',
-                border: '1px solid var(--bs-primary)',
+                border: '1px solid var(----mantine-color-green-4)',
                 borderRadius: '4px',
                 padding: '0.5rem 1rem',
                 boxSizing: 'border-box',
-                boxShadow: '0 0 0 1px var(--bs-primary)',
+                boxShadow: '0 0 0 1px var(----mantine-color-green-4)',
             }}
         >
             {pending ? 'Sending...' : 'Submit Project Request'}

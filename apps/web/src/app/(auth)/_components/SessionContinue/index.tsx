@@ -1,7 +1,7 @@
 'use client';
 
+import { Avatar, Button, Group, Skeleton, Text } from '@mantine/core';
 import { checkUserSession } from '@repo/auth/src/utils';
-import { Avatar, Button, Group, Skeleton, Text } from '@repo/ui/components/mantine';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from './SessionContinue.module.css';

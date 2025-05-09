@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Center, Container, Paper, Text, ThemeIcon, Title } from '@repo/ui/components/mantine';
+import { Button, Center, Container, Paper, Text, ThemeIcon, Title } from '@mantine/core';
 import { IconMail, IconMailOpened } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 

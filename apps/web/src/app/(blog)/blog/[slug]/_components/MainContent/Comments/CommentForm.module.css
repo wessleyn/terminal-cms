@@ -1,0 +1,51 @@
+.formInput {
+  border: none;
+  border-bottom: 1px solid var(--mantine-color-gray-3);
+  border-radius: 0;
+  padding: 10px 0;
+  background-color: transparent;
+  transition: border-color 0.2s ease;
+  text-align: center;
+}
+
+.formInput:focus {
+  border-color: var(--mantine-color-green-5);
+  box-shadow: none;
+  outline: none;
+}
+
+.formInput::placeholder {
+  color: var(--mantine-color-gray-5);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.formLabel {
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--mantine-color-gray-7);
+  text-align: center;
+}
+
+.formError {
+  font-size: 0.75rem;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.textarea {
+  composes: formInput;
+  min-height: 90px;
+  padding-top: 10px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.submitButton {
+  transition: background-color 0.2s ease;
+}

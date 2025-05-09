@@ -1,0 +1,56 @@
+/* Button styling */
+
+.btns {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.btn {
+  background-color: var(--bs-dark);
+  color: var(--mantine-color-green-6);
+  border: 1px solid var(--mantine-color-green-6);
+  border-radius: var(--mantine-radius-md);
+  font-family: 'Azeret Mono', monospace;
+  text-align: center;
+  font-weight: 500;
+  padding: 8px 16px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: rgba(74, 246, 38, 0.1);
+  color: var(--mantine-color-green-6);
+  border-color: var(--mantine-color-green-6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(74, 246, 38, 0.2);
+}
+
+.btn:active {
+  background-color: rgba(74, 246, 38, 0.2);
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Skeleton loading animation */
+@keyframes skeletonPulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.skeletonPulse {
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  background-color: rgba(255, 255, 255, 0.1);
+}

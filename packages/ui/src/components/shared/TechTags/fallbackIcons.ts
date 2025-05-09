@@ -5,7 +5,9 @@ export const fallbackIcons: Record<string, string> = {
 };
 
 export function getFallbackIcon(tag: string): string {
-    return fallbackIcons[tag.toLowerCase()] || fallbackIcons.default;
+    // TypeScript can't guarantee that fallbackIcons[tag.toLowerCase()] exists
+    // Use non-null assertion on the default icon since we've defined it above
+    return fallbackIcons[tag.toLowerCase()] ?? fallbackIcons['default']!;
 }
 
 // Convert SVG to data URL

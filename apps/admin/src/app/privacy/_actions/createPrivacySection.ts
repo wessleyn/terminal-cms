@@ -1,8 +1,8 @@
 'use server';
 
-import { prisma } from '@repo/db';
+import { prisma, PrivacyType } from '@repo/db';
 import { revalidatePath } from 'next/cache';
-import { ApiResponse, PrivacySection, PrivacyType } from '../_types/types';
+import { ApiResponse, PrivacySection } from '../_types/types';
 
 export async function createPrivacySection(
     type: PrivacyType = PrivacyType.PORTFOLIO,
