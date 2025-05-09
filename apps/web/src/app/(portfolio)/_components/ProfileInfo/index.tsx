@@ -1,6 +1,6 @@
+import { Image } from '@mantine/core';
 import SocialIcon from '@repo/ui/components/shared/SocialIcon';
 import TypingEffect from '@repo/ui/components/shared/TypingEffect';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ProfileData } from '../../_actions/fetchProfile';
 import HireMeBtn from './HireMeBtn';
@@ -29,7 +29,7 @@ export default function ProfileInfo({ profile }: ProfileInfoProps) {
                         src={avatarUrl}
                         width={300}
                         height={300}
-                        priority
+                        // priority
                     />
                 </Link>
             </div>

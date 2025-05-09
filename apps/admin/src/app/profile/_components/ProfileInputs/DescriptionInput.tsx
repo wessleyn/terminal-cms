@@ -1,8 +1,9 @@
 'use client';
 
 import { Textarea } from '@mantine/core';
+import { useDebouncedCallback } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import type { ProfileData } from '../../_actions/types';
 import { updateProfile } from '../../_actions/updateProfile';
 
@@ -16,10 +17,8 @@ export function DescriptionInput({ initialValue, className, onUpdate }: Descript
     const [bio, setBio] = useState<string>(initialValue || '');
     const [isSaving, setIsSaving] = useState(false);
 
-    // Handle description change
-    const handleChange = useCallback(async (value: string) => {
-        setBio(value);
-
+    // Use debounced callback to avoid triggering update on every keystroke
+    const debouncedHandleChange = useDebouncedCallback(async (value: string) => {
         try {
             setIsSaving(true);
 
@@ -48,7 +47,13 @@ export function DescriptionInput({ initialValue, className, onUpdate }: Descript
         } finally {
             setIsSaving(false);
         }
-    }, [onUpdate]);
+    }, 1000); // 1000ms debounce delay
+
+    // Handle input change immediately for local state
+    const handleChange = (value: string) => {
+        setBio(value);
+        debouncedHandleChange(value);
+    };
 
     return (
         <Textarea

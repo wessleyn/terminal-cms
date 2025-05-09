@@ -39,59 +39,48 @@ export default function ProfileEditor({ profile: initialProfile, onUpdate }: Pro
     }, [profile, onUpdate]);
 
     return (
-        <Card radius="md" withBorder padding="xl" mx="auto">
-            {/* Avatar uploader with horizontal carousel */}
-            <div className="mb-4">
-                <AvatarUploader
-                    avatars={profile.avatars || []}
-                    currentAvatarIndex={profile.currentAvatarIndex || 0}
-                    carouselClassName={classes.carousel}
-                    carouselControlsClassName={classes.carouselControls}
-                    carouselIndicatorClassName={classes.carouselIndicator}
-                    imageContainerClassName={classes.imageContainer}
-                    carouselImageClassName={classes.carouselImage}
-                    imageOverlayClassName={classes.imageOverlay}
-                    uploadWidgetClassName={classes.uploadWidget}
+        <Stack gap="lg">
+            {/* Avatar uploader with card-based carousel design */}
+            <AvatarUploader
+                avatars={profile.avatars || []}
+                currentAvatarIndex={profile.currentAvatarIndex || 0}
+                onUpdate={handleProfileUpdate}
+            />
+
+            {/* Profile information card */}
+            <Card radius="md" withBorder padding="xl" mx="auto">
+                {/* Display name section */}
+                <DisplayNameInput
+                    initialValue={profile.displayName || ''}
+                    className={classes.editableField}
                     onUpdate={handleProfileUpdate}
                 />
-            </div>
 
-            <Card.Section>
-                {/* The carousel is now managed by AvatarUploader */}
-            </Card.Section>
+                {/* Tagline */}
+                <TaglineInput
+                    initialValue={profile.tagline || ''}
+                    className={classes.editableField}
+                    onUpdate={handleProfileUpdate}
+                />
 
-            {/* Display name section */}
-            <DisplayNameInput
-                initialValue={profile.displayName || ''}
-                className={classes.editableField}
-                onUpdate={handleProfileUpdate}
-            />
+                {/* Description */}
+                <DescriptionInput
+                    initialValue={profile.bio || ''}
+                    className={classes.editableField}
+                    onUpdate={handleProfileUpdate}
+                />
 
-            {/* Tagline */}
-            <TaglineInput
-                initialValue={profile.tagline || ''}
-                className={classes.editableField}
-                onUpdate={handleProfileUpdate}
-            />
+                <Divider my="md" />
 
-            {/* Description */}
-            <DescriptionInput
-                initialValue={profile.bio || ''}
-                className={classes.editableField}
-                onUpdate={handleProfileUpdate}
-            />
-
-            <Stack mt="md" gap="xs">
-                <Divider my="sm" />
-
+                {/* Social links section */}
                 <DraggableSocialLinks initialLinks={profile.socialLinks} />
-            </Stack>
 
-            <Group justify="flex-end" mt={24}>
-                {lastSaved && (
-                    <Text size="sm" c="dimmed">Last saved: {lastSaved.toLocaleTimeString()}</Text>
-                )}
-            </Group>
-        </Card>
+                <Group justify="flex-end" mt={24}>
+                    {lastSaved && (
+                        <Text size="sm" c="dimmed">Last saved: {lastSaved.toLocaleTimeString()}</Text>
+                    )}
+                </Group>
+            </Card>
+        </Stack>
     );
 }

@@ -1,8 +1,9 @@
 'use client';
 
 import { TextInput } from '@mantine/core';
+import { useDebouncedCallback } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import type { ProfileData } from '../../_actions/types';
 import { updateProfile } from '../../_actions/updateProfile';
 
@@ -16,10 +17,8 @@ export function DisplayNameInput({ initialValue, className, onUpdate }: DisplayN
     const [displayName, setDisplayName] = useState<string>(initialValue || "Hello, I'm John Doe");
     const [isSaving, setIsSaving] = useState(false);
 
-    // Handle displayName change
-    const handleChange = useCallback(async (value: string) => {
-        setDisplayName(value);
-
+    // Use debounced callback to avoid triggering update on every keystroke
+    const debouncedHandleChange = useDebouncedCallback(async (value: string) => {
         try {
             setIsSaving(true);
 
@@ -48,7 +47,13 @@ export function DisplayNameInput({ initialValue, className, onUpdate }: DisplayN
         } finally {
             setIsSaving(false);
         }
-    }, [onUpdate]);
+    }, 1000); // 1000ms debounce delay
+
+    // Handle input change immediately for local state
+    const handleChange = (value: string) => {
+        setDisplayName(value);
+        debouncedHandleChange(value);
+    };
 
     return (
         <TextInput

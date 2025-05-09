@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import { Image } from '@mantine/core';
 import { FC, useState } from 'react';
 import formatTag from './tagMapper';
 
