@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
 // Import the component directly from its full path
-import TagsSkeleton from '/home/coding/Desktop/terminal-portfolio/apps/web/src/app/(blog)/blog/tags/_components/TagsSkeleton';
+import TagsSkeleton from '../_components/TagsSkeleton';
 
 interface Tag {
     id: string;

@@ -40,8 +40,8 @@ export default function ProfileEditor({ profile: initialProfile, onUpdate }: Pro
 
     return (
         <Card radius="md" withBorder padding="xl" mx="auto">
-            {/* Fixed avatar and carousel */}
-            <div className={classes.topRightAvatar}>
+            {/* Avatar uploader with horizontal carousel */}
+            <div className="mb-4">
                 <AvatarUploader
                     avatars={profile.avatars || []}
                     currentAvatarIndex={profile.currentAvatarIndex || 0}

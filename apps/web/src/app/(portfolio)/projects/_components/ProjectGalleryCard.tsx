@@ -74,11 +74,11 @@ export default function ProjectGalleryCard({
                         className="mb-2"
                     />
                 </div>
-                {/* FIXME: Make these Links responsive to the viewport , like layering on top of each other when space starts to run out  */}
-                <div className="d-flex gap-2 mt-auto">
+                {/* Project links - responsive with flex-wrap */}
+                <div className="d-flex flex-wrap gap-2 mt-auto" style={{ justifyContent: 'center'}}>
                     <Link
                         href={`/projects/${id}`}
-                        className="btn btn-sm btn-outline-primary"
+                        className="btn btn-sm btn-outline-primary flex-grow-1 flex-sm-grow-0"
                     >
                         <i className="bi bi-info-circle me-1"></i> Details
                     </Link>
@@ -87,7 +87,7 @@ export default function ProjectGalleryCard({
                             href={githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="btn btn-sm btn-outline-secondary"
+                            className="btn btn-sm btn-outline-secondary flex-grow-1 flex-sm-grow-0"
                         >
                             <i className="bi bi-github me-1"></i> GitHub
                         </a>
@@ -97,7 +97,7 @@ export default function ProjectGalleryCard({
                             href={liveUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="btn btn-sm btn-primary"
+                            className="btn btn-sm btn-primary flex-grow-1 flex-sm-grow-0"
                         >
                             <i className="bi bi-globe me-1"></i> Live
                         </a>

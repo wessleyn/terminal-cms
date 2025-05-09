@@ -79,6 +79,11 @@ export function AvatarUploader({
         };
     }, []);
 
+    // Update activeIndex when currentAvatarIndex changes from props
+    useEffect(() => {
+        setActiveIndex(currentAvatarIndex);
+    }, [currentAvatarIndex]);
+
     // Use activeIndex for UI display and only sync to server when needed
     const activeAvatarUrl = avatars.length > 0 && avatars[activeIndex]
         ? avatars[activeIndex].url
@@ -86,6 +91,7 @@ export function AvatarUploader({
 
     // Handler for successful Cloudinary upload
     const handleCloudinaryUpload = async (results: CloudinaryUploadWidgetResults) => {
+        console.log('Cloudinary upload results:', results);
         // Early return if not a successful upload or if info is missing
         if (results.event !== 'success' || !results.info) return;
 
@@ -107,6 +113,7 @@ export function AvatarUploader({
 
             // Call the server action to save the upload
             const uploadResult = await saveUploadedAvatar(public_id, secure_url);
+            console.log('Prisma Upload result:', uploadResult);
 
             if (uploadResult.success) {
                 // Mark all existing avatars as not new
@@ -115,7 +122,7 @@ export function AvatarUploader({
                     isNew: false
                 }));
 
-                // Add the new avatar to the list with isNew = true
+                // Add the new avatar to the list with isNew = true and ensure publicId is saved
                 const newAvatar = {
                     id: uploadResult.avatarId || public_id,
                     url: uploadResult.url || secure_url,
@@ -264,13 +271,23 @@ export function AvatarUploader({
         <Carousel.Slide key="dropzone">
             <div className={imageContainerClassName}>
                 <CldUploadWidget
-                    uploadPreset="terminal_portfolio"
+                    uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "terminal_portfolio"}
                     options={{
                         maxFiles: 1,
-                        sources: ['local', 'url', 'camera'],
                         resourceType: 'image',
                         clientAllowedFormats: ['png', 'jpg', 'jpeg', 'webp'],
                         maxFileSize: 3000000, // 3MB
+                        showAdvancedOptions: false,
+                        cropping: true,
+                        multiple: false,
+                        // CORS settings
+                        showSkipCropButton: false,
+                        showPoweredBy: false,
+                        showUploadMoreButton: false,
+                        croppingAspectRatio: 1,
+                        croppingDefaultSelectionRatio: 0.8,
+                        croppingShowDimensions: true,
+                        croppingCoordinatesMode: 'custom',
                         styles: {
                             palette: {
                                 window: '#000000',
@@ -289,7 +306,16 @@ export function AvatarUploader({
                             }
                         }
                     }}
-                    onPublicId={handleCloudinaryUpload}
+                    onSuccess={handleCloudinaryUpload}
+
+                    onError={(error) => {
+                        console.error("Cloudinary upload error:", error);
+                        notifications.show({
+                            title: 'Upload Error',
+                            message: 'Failed to connect to image upload service. Please try again.',
+                            color: 'red'
+                        });
+                    }}
                 >
                     {({ open }) => (
                         <div
@@ -389,16 +415,24 @@ export function AvatarUploader({
                 withIndicators
                 loop
                 slideSize="300px"
-                height={300}
+                height={220}
                 slideGap="md"
-                align="center"
+                align="start"
                 slidesToScroll={1}
+                orientation="horizontal"
+                containScroll="trimSnaps"
                 styles={{
+                    root: {
+                        width: '100%'
+                    },
                     viewport: {
                         display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        overflow: 'visible'
                     },
+                    container: {
+                        display: 'flex',
+                        flexDirection: 'row'
+                    }
                 }}
                 classNames={{
                     root: carouselClassName,
@@ -411,14 +445,25 @@ export function AvatarUploader({
 
             {/* Quick upload button */}
             <CldUploadWidget
-                uploadPreset="terminal_portfolio"
+                uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "terminal_portfolio"}
                 options={{
                     maxFiles: 1,
                     sources: ['local', 'camera'],
                     clientAllowedFormats: ['png', 'jpg', 'jpeg', 'webp'],
-                    maxFileSize: 3000000 // 3MB
+                    maxFileSize: 3000000, // 3MB
+                    showAdvancedOptions: false,
+                    cropping: true,
+                    multiple: false
                 }}
                 onUpload={handleCloudinaryUpload}
+                onError={(error) => {
+                    console.error("Cloudinary upload error:", error);
+                    notifications.show({
+                        title: 'Upload Error',
+                        message: 'Failed to connect to image upload service. Please try again.',
+                        color: 'red'
+                    });
+                }}
             >
                 {({ open }) => (
                     <ActionIcon
@@ -428,6 +473,7 @@ export function AvatarUploader({
                         size="md"
                         radius="xl"
                         disabled={isSaving}
+                        style={{ marginTop: '10px' }}
                     >
                         <IconUpload size={16} />
                     </ActionIcon>

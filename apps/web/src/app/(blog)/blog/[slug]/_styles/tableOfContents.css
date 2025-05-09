@@ -25,14 +25,14 @@
 }
 
 .toc-link:hover {
-  color: var(--bs-primary) !important;
+  color: var(----mantine-color-green-4) !important;
   text-decoration: none;
-  border-left-color: var(--bs-primary);
+  border-left-color: var(----mantine-color-green-4);
 }
 
 .toc-link.active {
-  border-left: 2px solid var(--bs-primary);
-  color: var(--bs-primary) !important;
+  border-left: 2px solid var(----mantine-color-green-4);
+  color: var(----mantine-color-green-4) !important;
 }
 
 /* Style for different heading depths */
@@ -60,7 +60,7 @@
   padding: 0.5rem 1rem;
   background-color: rgba(0, 0, 0, 0.1);
   font-family: var(--font-mono);
-  color: var(--bs-primary);
+  color: var(----mantine-color-green-4);
 }
 
 .terminal-section.toc-container .terminal-output {
@@ -68,7 +68,7 @@
 }
 
 .terminal-prompt {
-  color: var(--bs-primary);
+  color: var(----mantine-color-green-4);
   margin-right: 0.5rem;
 }
 

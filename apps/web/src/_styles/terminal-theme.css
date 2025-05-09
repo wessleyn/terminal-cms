@@ -532,3 +532,18 @@ iframe[title*='challenge'],
     gap: 1rem;
   }
 }
+
+/* Override Bootstrap text classes with Mantine terminal green shades */
+.text-primary {
+  --bs-text-opacity: 1;
+  color: var(--mantine-color-green-4) !important;
+}
+
+.text-secondary {
+  --bs-text-opacity: 1;
+  color: var(--mantine-color-green-6) !important;
+}
+
+.text-primary {
+  color: var(----mantine-color-green-4);
+}

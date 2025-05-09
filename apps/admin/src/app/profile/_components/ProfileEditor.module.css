@@ -1,5 +1,9 @@
 .carousel {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
   @mixin hover {
     .carouselControls {
       opacity: 1;
@@ -8,7 +12,6 @@
 }
 
 .carouselControls {
-  margin-top: -30px;
   z-index: 10;
   transition: opacity 150ms ease;
   opacity: 0;
@@ -29,8 +32,10 @@
   position: relative;
   overflow: hidden;
   height: 220px;
+  width: 300px;
   cursor: pointer;
   transition: transform 0.2s ease;
+  border-radius: 8px;
 }
 
 .imageContainer:hover {
@@ -41,6 +46,7 @@
   object-fit: cover;
   height: 100%;
   width: 100%;
+  border-radius: 8px;
 }
 
 .imageOverlay {
@@ -50,41 +56,34 @@
   display: flex;
   gap: 6px;
   opacity: 0;
-  transition:
-    opacity 0.2s ease,
-    background-color 0.2s ease;
-  border-radius: var(--mantine-radius-md);
+  transition: opacity 0.2s ease;
 }
 
 .imageContainer:hover .imageOverlay {
   opacity: 1;
-  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.uploadWidget {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
 .editableField {
-  border: none;
-  border-radius: 0;
-  padding: 4px;
-  transition: all 0.2s;
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
 }
 
-.editableField:hover:not(:focus) {
-  border-color: var(--mantine-color-dark-0);
-  border-radius: var(--mantine-radius-sm);
-}
-
-.editableField:focus {
-  background-color: light-dark(
-    var(--mantine-color-gray-1),
-    var(--mantine-color-dark-5)
-  ) !important;
-  border-bottom: 1px dashed var(--mantine-color-gray-4) !important;
-}
-
-.editableField::placeholder {
-  color: light-dark(var(--mantine-color-gray-5), var(--mantine-color-dark-3));
-  font-style: italic;
-  opacity: 0.6;
+.editableField:hover {
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .socialLink {
