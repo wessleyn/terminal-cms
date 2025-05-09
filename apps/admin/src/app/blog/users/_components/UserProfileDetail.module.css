@@ -1,0 +1,51 @@
+.profileContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.profileHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 200px;
+}
+
+.avatar {
+  border: 3px solid var(--mantine-color-gray-2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profileDetails {
+  flex: 1;
+  min-width: 300px;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.infoItem {
+  margin-bottom: 16px;
+}
+
+.infoItem > :first-child {
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.infoItem > :last-child {
+  font-size: 1rem;
+}
+
+.subscriptionSection {
+  margin-top: 16px;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+}
