@@ -1,5 +1,6 @@
 'use client';
 
+import { TableHeaderFilter } from '@/app/_components/TableHeaderFilter';
 import { Button, Center, Flex, Pagination, Paper, Table, Text, TextInput } from '@mantine/core';
 import { useInputState } from '@mantine/hooks';
 import { ActivityStatus, HappyIndex, PublishStatus } from '@repo/db';
@@ -47,35 +48,74 @@ export default function ProjectsTable({ initialProjects }: ProjectsTableProps) {
     const router = useRouter();
     const ITEMS_PER_PAGE = 3; // Limit to 3 rows per page
 
+    // Column filters
+    const [publishFilters, setPublishFilters] = useState<PublishStatus[]>([]);
+    const [activityFilters, setActivityFilters] = useState<ActivityStatus[]>([]);
+    const [happyFilters, setHappyFilters] = useState<HappyIndex[]>([]);
+
+    // Filter options
+    const publishStatusOptions = Object.values(PublishStatus).map(status => ({
+        value: status,
+        label: status.charAt(0).toUpperCase() + status.slice(1)
+    }));
+
+    const activityStatusOptions = Object.values(ActivityStatus).map(status => ({
+        value: status,
+        label: status.charAt(0).toUpperCase() + status.slice(1)
+    }));
+
+    const happyIndexOptions = Object.values(HappyIndex).map(status => ({
+        value: status,
+        label: status.charAt(0).toUpperCase() + status.slice(1)
+    }));
+
+    // Apply all filters
+    const applyFilters = useCallback(() => {
+        let filtered = [...projects];
+
+        // Text search filter
+        if (searchQuery.trim()) {
+            filtered = filtered.filter(project =>
+                project.title.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+        }
+
+        // Publish status filter
+        if (publishFilters.length > 0) {
+            filtered = filtered.filter(project =>
+                publishFilters.includes(project.publishStatus)
+            );
+        }
+
+        // Activity status filter
+        if (activityFilters.length > 0) {
+            filtered = filtered.filter(project =>
+                activityFilters.includes(project.activityStatus)
+            );
+        }
+
+        // Happy index filter
+        if (happyFilters.length > 0) {
+            filtered = filtered.filter(project =>
+                happyFilters.includes(project.happyIndex)
+            );
+        }
+
+        setFilteredProjects(filtered);
+        setActivePage(1); // Reset to first page when filters change
+    }, [projects, searchQuery, publishFilters, activityFilters, happyFilters]);
+
+    // Apply filters whenever any filter changes
+    useEffect(() => {
+        applyFilters();
+    }, [searchQuery, publishFilters, activityFilters, happyFilters, applyFilters]);
+
     // Calculate pagination values
     const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
     const paginatedData = filteredProjects.slice(
         (activePage - 1) * ITEMS_PER_PAGE,
         activePage * ITEMS_PER_PAGE
     );
-
-    // Handler for search query updates
-    const handleSearch = useCallback((query: string) => {
-        if (!query.trim()) {
-            setFilteredProjects(projects);
-            return;
-        }
-
-        const filtered = projects.filter(project =>
-            project.title.toLowerCase().includes(query.toLowerCase())
-        );
-        setFilteredProjects(filtered);
-        setActivePage(1); // Reset to first page when searching
-    }, [projects]);
-
-    // Apply search with debounce
-    useEffect(() => {
-        const timeoutId = setTimeout(() => {
-            handleSearch(searchQuery);
-        }, 300);
-
-        return () => clearTimeout(timeoutId);
-    }, [searchQuery, handleSearch]);
 
     // Handler for status changes
     const handleStatusChange = useCallback((id: string, field: UpdateField, newStatus: PublishStatus | ActivityStatus | HappyIndex) => {
@@ -191,9 +231,30 @@ export default function ProjectsTable({ initialProjects }: ProjectsTableProps) {
                         <Table.Thead>
                             <Table.Tr>
                                 <Table.Th>Project</Table.Th>
-                                <Table.Th>Publish Status</Table.Th>
-                                <Table.Th>Activity Status</Table.Th>
-                                <Table.Th>Happy Badge</Table.Th>
+                                <Table.Th>
+                                    <TableHeaderFilter
+                                        title="Publish Status"
+                                        options={publishStatusOptions}
+                                        activeFilters={publishFilters}
+                                        onChange={setPublishFilters}
+                                    />
+                                </Table.Th>
+                                <Table.Th>
+                                    <TableHeaderFilter
+                                        title="Activity Status"
+                                        options={activityStatusOptions}
+                                        activeFilters={activityFilters}
+                                        onChange={setActivityFilters}
+                                    />
+                                </Table.Th>
+                                <Table.Th>
+                                    <TableHeaderFilter
+                                        title="Happy Badge"
+                                        options={happyIndexOptions}
+                                        activeFilters={happyFilters}
+                                        onChange={setHappyFilters}
+                                    />
+                                </Table.Th>
                                 <Table.Th>Engagement</Table.Th>
                                 <Table.Th>Actions</Table.Th>
                             </Table.Tr>
