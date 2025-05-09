@@ -1,15 +1,12 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+const nextConfig = {
     images: {
         remotePatterns: [
             {
                 protocol: 'https',
                 hostname: 'skillicons.dev',
                 port: '',
-                pathname: '/icons/**', // Note: Added leading slash to match exact URL pattern
+                pathname: '/icons/**',
             },
             // google
             {
@@ -68,30 +65,15 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
             '@repo/ui',
             '@repo/ui/components/mantine',
         ],
-        appDir: true,
-        serverActions: true,
+        serverActions: {
+            allowedOrigins: ['localhost:3000'],
+        },
     },
-    serverExternalPackages: [
-        '@mantine',
-        '@mantine/**',
-        '@mantine/core',
-        '@mantine/hooks',
-        '@mantine/dates',
-        '@mantine/carousel',
-        '@mantine/charts',
-        '@mantine/code-highlight',
-        '@mantine/dropzone',
-        '@mantine/form',
-        '@mantine/modals',
-        '@mantine/notifications',
-        '@mantine/nprogress',
-        '@mantine/spotlight',
-        '@mantine/tiptap',
-        '@repo/ui',
-        '@repo/ui/components/mantine',
-    ],
+}
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
 })
 
-module.exports = withBundleAnalyzer(nextConfig)
+export default withBundleAnalyzer(nextConfig)
