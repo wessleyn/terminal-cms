@@ -3,7 +3,6 @@
 import { prisma } from "@repo/db";
 import { redirect } from 'next/navigation';
 import { auth, signIn, signOut } from "./auth";
-
 /**
  * Check if a user with the given email exists in the database
  * @param email Email to check

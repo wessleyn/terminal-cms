@@ -1,260 +1,267 @@
 /* Terminal-themed styles for projects gallery */
 
 .terminal-window {
-    background-color: #2b2b2b;
-    border-radius: 6px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-    margin-bottom: 2rem;
-    border: 1px solid #444;
+  background-color: #2b2b2b;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  margin-bottom: 2rem;
+  border: 1px solid #444;
 }
 
 .terminal-header {
-    background-color: #1a1a1a;
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #444;
+  background-color: #1a1a1a;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #444;
 }
 
 .terminal-buttons {
-    display: flex;
-    gap: 8px;
+  display: flex;
+  gap: 8px;
 }
 
 .terminal-button {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
 .terminal-button.close {
-    background-color: #ff5f56;
+  background-color: #ff5f56;
 }
 
 .terminal-button.minimize {
-    background-color: #ffbd2e;
+  background-color: #ffbd2e;
 }
 
 .terminal-button.maximize {
-    background-color: #27c93f;
+  background-color: #27c93f;
 }
 
 .terminal-title {
-    margin-left: 20px;
-    color: #ddd;
-    font-family: monospace;
-    font-size: 14px;
-    flex-grow: 1;
-    text-align: center;
+  margin-left: 20px;
+  color: #ddd;
+  font-family: monospace;
+  font-size: 14px;
+  flex-grow: 1;
+  text-align: center;
 }
 
 .terminal-content {
-    background-color: #2b2b2b;
-    color: #f8f8f2;
-    font-family: 'Courier New', monospace;
-    padding: 20px;
-    overflow: auto;
+  background-color: #2b2b2b;
+  color: #f8f8f2;
+  font-family: "Courier New", monospace;
+  padding: 20px;
+  overflow: auto;
 }
 
 .terminal-text {
-    color: #50fa7b;
-    font-family: 'Courier New', monospace;
-    margin-bottom: 1rem;
+  color: #50fa7b;
+  font-family: "Courier New", monospace;
+  margin-bottom: 1rem;
 }
 
 .terminal-header-text {
-    color: #bd93f9;
-    font-family: 'Courier New', monospace;
+  color: #4af626;
+  font-family: "Courier New", monospace;
 }
 
 .terminal-hr {
-    border-top: 1px dashed #bd93f9;
-    margin: 1rem 0;
+  border-top: 1px dashed #4af626;
+  margin: 1rem 0;
 }
 
 /* Project card styles */
 .project-card {
-    background-color: #1d1d1d;
-    border-radius: 4px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
+  background-color: #1d1d1d;
+  border-radius: 4px;
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  height: 100%;
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
 .project-details {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7) 60%, transparent);
-    transition: all 0.3s ease;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.7) 60%,
+    transparent
+  );
+  transition: all 0.3s ease;
 }
 
 .project-card:hover .project-details {
-    opacity: 1 !important;
+  opacity: 1 !important;
 }
 
 /* Filter buttons */
 .filter-container .btn-outline-primary {
-    color: #bd93f9;
-    border-color: #bd93f9;
+  color: #bd93f9;
+  border-color: #bd93f9;
 }
 
 .filter-container .btn-outline-primary:hover,
 .filter-container .btn-primary {
-    background-color: #bd93f9;
-    border-color: #bd93f9;
-    color: #282a36;
+  background-color: #bd93f9;
+  border-color: #bd93f9;
+  color: #282a36;
 }
 
 .filter-container .btn {
-    border-radius: 4px;
-    font-size: 0.85rem;
-    transition: all 0.2s ease;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
 }
 
 .filter-container .btn-outline-primary {
-    border-color: var(--bs-primary);
-    color: var(--bs-primary);
+  border-color: var(--bs-primary);
+  color: var(--bs-primary);
 }
 
 .filter-container .btn-outline-primary:hover {
-    background-color: var(--bs-primary);
-    color: #000;
+  background-color: var(--bs-primary);
+  color: #000;
 }
 
 /* Search input */
 .filter-container .form-control {
-    background-color: #282a36;
-    border-color: #44475a;
-    color: #f8f8f2;
+  background-color: #282a36;
+  border-color: #44475a;
+  color: #f8f8f2;
 }
 
 .filter-container .form-control:focus {
-    background-color: #282a36;
-    border-color: #bd93f9;
-    box-shadow: 0 0 0 0.25rem rgba(189, 147, 249, 0.25);
-    color: #f8f8f2;
+  background-color: #282a36;
+  border-color: #4af626;
+  box-shadow: 0 0 0 0.25rem rgba(74, 246, 38, 0.25);
+  color: #f8f8f2;
 }
 
 .filter-container .form-control::placeholder {
-    color: #666;
-    font-style: italic;
-    font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+  font-size: 0.9rem;
 }
 
 /* Project tags */
 .badge.bg-primary {
-    background-color: #ff79c6 !important;
-    color: #282a36;
+  background-color: #ff79c6 !important;
+  color: #282a36;
 }
 
 /* Terminal-style tags */
 .terminal-tag {
-    background-color: #44475a;
-    color: #f8f8f2;
-    border-radius: 3px;
-    padding: 0.25rem 0.5rem;
-    font-family: 'Courier New', monospace;
-    font-size: 0.85rem;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    display: inline-block;
+  background-color: #44475a;
+  color: #f8f8f2;
+  border-radius: 3px;
+  padding: 0.25rem 0.5rem;
+  font-family: "Courier New", monospace;
+  font-size: 0.85rem;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
 }
 
 /* Terminal prompts */
 .terminal-prompt {
-    color: #50fa7b;
-    margin-right: 8px;
-    font-weight: bold;
+  color: #50fa7b;
+  margin-right: 8px;
+  font-weight: bold;
 }
 
 .terminal-command {
-    color: #f8f8f2;
-    font-family: 'Courier New', monospace;
-    margin-bottom: 8px;
-    padding: 5px 0;
+  color: #f8f8f2;
+  font-family: "Courier New", monospace;
+  margin-bottom: 8px;
+  padding: 5px 0;
 }
 
 .terminal-output {
-    padding-left: 15px;
-    border-left: 2px solid #44475a;
-    margin-bottom: 20px;
+  padding-left: 15px;
+  border-left: 2px solid #44475a;
+  margin-bottom: 20px;
 }
 
 .terminal-btn {
-    font-family: 'Courier New', monospace;
-    background-color: #282a36;
-    color: #f8f8f2;
-    border: 1px solid #bd93f9;
+  font-family: "Courier New", monospace;
+  background-color: #282a36;
+  color: #f8f8f2;
+  border: 1px solid #4af626;
 }
 
 .terminal-btn:hover {
-    background-color: #44475a;
-    color: #f8f8f2;
+  background-color: #44475a;
+  color: #f8f8f2;
 }
 
 .terminal-link {
-    color: #8be9fd;
-    text-decoration: none;
-    font-family: 'Courier New', monospace;
-    display: block;
-    margin-bottom: 5px;
+  color: #8be9fd;
+  text-decoration: none;
+  font-family: "Courier New", monospace;
+  display: block;
+  margin-bottom: 5px;
 }
 
 .terminal-link:hover {
-    color: #bd93f9;
-    text-decoration: underline;
+  color: #bd93f9;
+  text-decoration: underline;
 }
 
 .terminal-image-frame {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border: 2px solid #bd93f9;
-    border-radius: 4px;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #4af626;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .terminal-section {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 /* Project navigation styles */
 .project-navigation {
-    border-top: 1px dashed #bd93f9;
-    padding-top: 20px;
-    margin-top: 30px;
+  border-top: 1px dashed #4af626;
+  padding-top: 20px;
+  margin-top: 30px;
 }
 
 .project-navigation .btn {
-    font-family: 'Courier New', monospace;
-    background-color: transparent;
-    border-color: #bd93f9;
-    color: #f8f8f2;
+  font-family: "Courier New", monospace;
+  background-color: transparent;
+  border-color: #4af626;
+  color: #f8f8f2;
 }
 
 .project-navigation .btn:hover {
-    background-color: #bd93f9;
-    color: #282a36;
+  background-color: #4af626;
+  color: #282a36;
 }
 
 /* Project details page */
 .project-detail .btn-outline-primary,
 .project-detail .btn-outline-dark {
-    color: #bd93f9;
-    border-color: #bd93f9;
+  color: #4af626;
+  border-color: #4af626;
 }
 
 .project-detail .btn-outline-primary:hover,
 .project-detail .btn-outline-dark:hover,
 .project-detail .btn-primary {
-    background-color: #bd93f9;
-    border-color: #bd93f9;
-    color: #282a36;
+  background-color: #4af626;
+  border-color: #4af626;
+  color: #282a36;
 }
 
 /* Project Gallery Styles */
@@ -266,7 +273,8 @@
 /* Large project card styling */
 .project-grid .project-item {
   height: 400px;
-  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+  transition:
+    transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
     box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   will-change: transform;
 }
@@ -300,7 +308,7 @@
   .project-grid .project-item {
     height: 300px;
   }
-  
+
   .project-grid .card-img-overlay {
     padding: 1rem;
   }
