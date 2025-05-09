@@ -1,0 +1,17 @@
+.submitButton {
+  width: 100%;
+  background: var(--mantine-color-green-4);
+  position: relative;
+  transition: background-color 0.2s ease-in-out;
+  border: 1px solid var(--mantine-color-green-4);
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+  box-shadow: 0 0 0 1px var(--mantine-color-green-4);
+}
+
+.submitButton:hover {
+  background: var(--mantine-color-green-5);
+  border-color: var(--mantine-color-green-5);
+  box-shadow: 0 0 0 1px var(--mantine-color-green-5);
+}

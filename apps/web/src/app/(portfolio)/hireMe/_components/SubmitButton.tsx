@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef } from 'react';
+import styles from './SubmitButton.module.css';
 
 interface SubmitButtonProps {
     pending?: boolean;
@@ -24,19 +25,8 @@ export function SubmitButton({ pending = false }: SubmitButtonProps) {
         <button
             ref={buttonRef}
             type="submit"
-            className="btn btn-primary btn-block w-100"
+            className={`btn btn-primary btn-block w-100 ${styles.submitButton}`}
             disabled={pending}
-            style={{
-                width: '100%',
-                background: 'var(----mantine-color-green-4)',
-                position: 'relative',
-                transition: 'background-color 0.2s ease-in-out',
-                border: '1px solid var(----mantine-color-green-4)',
-                borderRadius: '4px',
-                padding: '0.5rem 1rem',
-                boxSizing: 'border-box',
-                boxShadow: '0 0 0 1px var(----mantine-color-green-4)',
-            }}
         >
             {pending ? 'Sending...' : 'Submit Project Request'}
         </button>
