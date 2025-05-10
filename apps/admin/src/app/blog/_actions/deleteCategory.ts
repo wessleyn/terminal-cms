@@ -1,14 +1,9 @@
 'use server';
 
-import { prisma } from "@repo/db";
-import { revalidatePath } from "next/cache";
+import { prisma } from '@repo/db';
+import { revalidatePath } from 'next/cache';
 
-interface DeleteCategoryResult {
-    success: boolean;
-    message: string;
-}
-
-export async function deleteCategory(categoryId: string): Promise<DeleteCategoryResult> {
+export async function deleteCategory(categoryId: string) {
     try {
         // First check if the category exists
         const category = await prisma.blogCategory.findUnique({
