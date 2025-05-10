@@ -1,0 +1,48 @@
+.categoryContainer {
+  margin-bottom: 2rem;
+}
+
+.categoryContent {
+  margin-bottom: 1.5rem;
+}
+
+.categoryInfoSection {
+  margin-bottom: 1rem;
+  min-width: 200px;
+}
+
+.colorBadge {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.relatedPostsCard {
+  background-color: var(--mantine-color-body);
+}
+
+.viewAllLink {
+  color: var(--mantine-color-blue-6);
+  text-decoration: none;
+  font-size: var(--mantine-font-size-sm);
+  transition: color 0.2s ease;
+}
+
+.viewAllLink:hover {
+  color: var(--mantine-color-blue-8);
+  text-decoration: underline;
+}
+
+/* Dark mode adjustments */
+:global(.mantine-theme-dark) .relatedPostsCard {
+  background-color: var(--mantine-color-dark-7);
+}
+
+:global(.mantine-theme-dark) .viewAllLink {
+  color: var(--mantine-color-blue-4);
+}
+
+:global(.mantine-theme-dark) .viewAllLink:hover {
+  color: var(--mantine-color-blue-3);
+}

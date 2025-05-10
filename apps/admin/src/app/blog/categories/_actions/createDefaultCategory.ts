@@ -11,6 +11,16 @@ export interface CreateDefaultCategoryResult {
 
 export async function createDefaultCategory(): Promise<CreateDefaultCategoryResult> {
     try {
+        // First check if we already have 4 categories
+        const categoryCount = await prisma.blogCategory.count();
+
+        if (categoryCount >= 4) {
+            return {
+                success: false,
+                error: 'Maximum of 4 categories allowed. Please delete an existing category before creating a new one.'
+            };
+        }
+
         // Generate unique random values for name and slug
         const randomSuffix = randomBytes(4).toString('hex');
         const name = `New Category ${randomSuffix}`;
