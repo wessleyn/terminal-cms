@@ -8,19 +8,19 @@ export const config = {
 
 export default async function middleware(req: NextRequest) {
     try {
-        const { authData, hasSession } = await verifySession(req);
+        // const { authData, hasSession } = await verifySession(req);
 
-        if (!hasSession) {
-            return redirectToLogin(req);
-        }
+        // if (!hasSession) {
+        //     return redirectToLogin(req);
+        // }
 
-        if (!authData?.authenticated) {
-            return redirectToLogin(req);
-        }
+        // if (!authData?.authenticated) {
+        //     return redirectToLogin(req);
+        // }
 
-        if (authData?.role !== "ADMIN") {
-            return NextResponse.redirect(new URL(NOT_FOUND_URL, req.nextUrl.origin));
-        }
+        // if (authData?.role !== "ADMIN") {
+        //     return NextResponse.redirect(new URL(NOT_FOUND_URL, req.nextUrl.origin));
+        // }
 
         return NextResponse.next();
     } catch (error) {

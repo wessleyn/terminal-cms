@@ -1,6 +1,6 @@
 'use client';
 
-import { PostCategory } from '@repo/db';
+import { BlogTag, PostCategory } from '@repo/db';
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
 import BlogPostSkeleton from './BlogPostSkeleton';
@@ -14,15 +14,6 @@ interface BlogPostAuthor {
     socialLinks: Array<{ platform: string; url: string }>;
 }
 
-interface BlogPostTag {
-    id: string;
-    name: string;
-    slug: string;
-    color: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
 interface PostType {
     id: string;
     title: string;
@@ -33,7 +24,7 @@ interface PostType {
     category: PostCategory;
     publishedAt: Date | null;
     author: BlogPostAuthor | null;
-    tags: BlogPostTag[];
+    tags: BlogTag[];
 }
 
 interface RelatedPost {
@@ -44,7 +35,7 @@ interface RelatedPost {
     imageUrl: string;
     category: PostCategory;
     publishedAt: Date | null;
-    tags: Array<{ id: string; color: string }>;
+    tags: BlogTag[];
 }
 
 // Dynamically import the BlogPostClient component with SSR disabled

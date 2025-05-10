@@ -29,14 +29,6 @@ export async function getBlogPostBySlug(slug: string) {
                     }
                 },
                 tags: {
-                    select: {
-                        id: true,
-                        name: true,
-                        slug: true,
-                        color: true,
-                        createdAt: true,
-                        updatedAt: true
-                    },
                     where: {
                         type: BlogTagType.BLOG // Use enum instead of string literal
                     }
