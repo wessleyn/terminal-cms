@@ -1,5 +1,5 @@
 import { Container, Divider, Flex, Group, Paper, Skeleton, Stack, Title } from "@mantine/core";
-import styles from "../_components/UserProfileDetail.module.css";
+import styles from "./_components/UserProfileDetail/UserProfileDetail.module.css";
 
 export default function UserProfileLoading() {
     return (

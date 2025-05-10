@@ -1,12 +1,13 @@
 'use client';
 
-import { Button, Group, Paper, SegmentedControl, TextInput } from '@mantine/core';
+import { Button, Group, Paper, SegmentedControl } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { BlogTagType } from '@repo/db';
-import { IconPlus, IconSearch } from '@tabler/icons-react';
+import { IconPlus } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useSearchStore } from '../../../../_stores/searchStore';
 import { createDefaultTag } from '../_actions/createDefaultTag';
 import { TagWithPostCount } from '../_actions/fetchAllTags';
 import TagsList from './TagsList/index';
@@ -18,9 +19,9 @@ interface TagsPageClientProps {
 
 export default function TagsPageClient({ initialTags }: TagsPageClientProps) {
   const router = useRouter();
+  const query = useSearchStore(state => state.query); // Use Zustand store for query
   const [activeFilter, setActiveFilter] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [debouncedSearch] = useDebouncedValue(searchQuery, 300);
+  const [debouncedSearch] = useDebouncedValue(query, 300);
   const [filteredTags, setFilteredTags] = useState(initialTags);
 
   // Apply filters whenever dependencies change
@@ -74,17 +75,6 @@ export default function TagsPageClient({ initialTags }: TagsPageClientProps) {
 
   return (
     <div className={classes.container}>
-      {/* Enlarged search input in place of header */}
-      <TextInput
-        placeholder="Search tags..."
-        leftSection={<IconSearch size={18} />}
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.currentTarget.value)}
-        className={classes.searchInputLarge}
-        size="md"
-        mb="lg"
-      />
-
       {/* Filter controls and new tag button in the same row */}
       <Group justify="space-between" align="center" mb="lg">
         <SegmentedControl

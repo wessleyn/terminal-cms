@@ -5,7 +5,7 @@ import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IconCheck, IconMail, IconPencil, IconTrash, IconX } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
-import deleteUser from '../_actions/deleteUser';
+import deleteUser from '../../_actions/deleteUser';
 
 interface UserActionsProps {
     userId: string;

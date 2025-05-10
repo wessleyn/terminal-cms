@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { fetchUserDetails } from '../_actions/fetchUserDetails';
-import UserProfileDetail from '../_components/UserProfileDetail';
+import UserProfileDetail from './_components/UserProfileDetail';
 
 interface UserPageProps {
     params: Promise<{

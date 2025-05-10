@@ -2,7 +2,7 @@
 
 import { Anchor, Avatar, Badge, Group, Table, Text } from '@mantine/core';
 import { useRouter } from 'next/navigation';
-import { BlogUser } from '../_actions/fetchUsers';
+import { BlogUser } from '../../_actions/fetchUsers';
 import { UserActions } from './UserActions';
 import styles from './UsersTable.module.css';
 
