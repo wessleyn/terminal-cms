@@ -31,7 +31,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { CommentWithPost } from '../_actions/fetchComments';
-import { CommentAction, bulkUpdateComments, updateCommentStatus } from '../_actions/updateCommentStatus';
+import { CommentAction, updateCommentStatus } from '../_actions/updateCommentStatus';
+import bulkUpdateComments from "../_actions/bulkUpdateComments";
 import { CommentContent } from './CommentContent';
 
 interface CommentsTableProps {

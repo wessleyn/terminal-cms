@@ -1,5 +1,5 @@
-import { fetchAwesomePost } from "./_actions/fetchAwesomePost";
-import fetchAwesomeProj from "./_actions/fetchAwesomeProj";
+import { fetchAwesomePost } from "../_actions/fetchAwesomePost";
+import fetchAwesomeProj from "../_actions/fetchAwesomeProj";
 import AwesomeBlogPosts from "./_components/AwesomeBlogPosts";
 import AwesomeProjects from "./_components/AwesomeProjects";
 

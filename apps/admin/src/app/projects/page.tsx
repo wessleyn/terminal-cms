@@ -2,10 +2,6 @@ import { Container } from '@mantine/core';
 import { Prisma, prisma } from '@repo/db';
 import ProjectsTable, { TableProject } from './_components/ProjectsTable';
 
-// Define the Project type to match what's expected by the ProjectsTable component
-
-export const dynamic = 'force-dynamic';
-
 // Helper function to safely convert JsonValue to expected engagement structure
 function safeParseEngagement(engagement: Prisma.JsonValue | null): { share: number; bookmark: number; like: number; } | null {
     if (!engagement) return null;

@@ -70,14 +70,16 @@ export async function GET(): Promise<Response> {
                 url: postUrl,
                 guid: post.id,
                 categories: post.tags.map(tag => tag.name),
-                author: post.author?.displayName || 'Wessley N',
+                author: `post@wessleyn.me (${post.author?.displayName})`,
                 date: post.publishedAt || new Date(),
                 enclosure: post.imageUrl ? {
                     url: post.imageUrl,
                     type: 'image/jpeg',
                 } : undefined,
                 custom_elements: [
-                    { 'content:encoded': { _cdata: sanitizeHtmlForRss(post.content || '') } },
+                    {
+                        'content:encoded': { _cdata: sanitizeHtmlForRss(post.content || '') }
+                    },
                 ],
             });
         }

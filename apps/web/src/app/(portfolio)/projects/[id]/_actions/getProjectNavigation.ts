@@ -1,10 +1,13 @@
-import { prisma } from "@repo/db";
+import { prisma, PublishStatus } from "@repo/db";
 
 // Helper function to get navigation links for projects
 export async function getProjectNavigation(currentId: string) {
     try {
         // Get all projects ordered by creation date
         const allProjects = await prisma.project.findMany({
+            where: {
+                publishStatus: PublishStatus.PUBLISHED,
+            },
             select: {
                 id: true,
                 title: true,

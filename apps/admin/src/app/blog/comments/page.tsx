@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
-import { fetchComments, getCommentStats } from './_actions/fetchComments';
-import { CommentsHeader } from './_components/CommentsHeader';
+import { fetchComments } from './_actions/fetchComments';
 import { CommentsTable } from './_components/CommentsTable';
 
 export const metadata: Metadata = {
@@ -9,21 +8,8 @@ export const metadata: Metadata = {
 };
 
 export default async function AllCommentsPage() {
-  // Fetch all comments
-  const [comments, stats] = await Promise.all([
-    fetchComments(),
-    getCommentStats(),
-  ]);
+  // Fetch all comments - no need to fetch stats since it's in the layout now
+  const comments = await fetchComments();
 
-  return (
-    <>
-      <CommentsHeader
-        total={stats.total}
-        pending={stats.pending}
-        approved={stats.approved}
-        rejected={stats.rejected}
-      />
-      <CommentsTable comments={comments} emptyMessage="No comments found." />
-    </>
-  );
+  return <CommentsTable comments={comments} emptyMessage="No comments found." />;
 }

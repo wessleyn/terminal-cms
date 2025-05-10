@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, Group, Text } from '@mantine/core';
-import { AwesomePost } from '../../../_actions/fetchAwesomePost';
+import { AwesomePost } from '../../../../_actions/fetchAwesomePost';
 import classes from './ArticleCard.module.css';
 
 interface ArticleCardProps {
@@ -47,13 +47,13 @@ const ArticleCard = ({ post }: ArticleCardProps) => {
 
                         <Group gap="lg">
                             {post.tags && post.tags.length > 0 && post.tags[0] && (
-                                <Text 
-                                    size="xs" 
+                                <Text
+                                    size="xs"
                                     className={classes.bodyText}
-                                    style={{ 
-                                        backgroundColor: post.tags[0].color || 'blue', 
-                                        padding: '2px 8px', 
-                                        borderRadius: '4px' 
+                                    style={{
+                                        backgroundColor: post.tags[0].color || 'blue',
+                                        padding: '2px 8px',
+                                        borderRadius: '4px'
                                     }}
                                 >
                                     {post.tags[0].name}
