@@ -1,6 +1,6 @@
 'use client';
 
-import { BlogTag, PostCategory } from '@repo/db';
+import { BlogTag } from '@repo/db'; // Remove PostCategory import
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
 import BlogPostSkeleton from './BlogPostSkeleton';
@@ -14,15 +14,18 @@ interface BlogPostAuthor {
     socialLinks: Array<{ platform: string; url: string }>;
 }
 
-interface PostType {
+export interface Post {
     id: string;
     title: string;
     slug: string;
-    excerpt: string;
     content: string;
+    excerpt: string;
+    // Update category related fields
+    category: string; // Now the category name
+    categorySlug: string; // The category slug for links
+    categoryColor: string; // The category color
     imageUrl: string;
-    category: PostCategory;
-    publishedAt: Date | null;
+    publishedAt: Date;
     author: BlogPostAuthor | null;
     tags: BlogTag[];
 }
@@ -33,7 +36,10 @@ interface RelatedPost {
     slug: string;
     excerpt: string;
     imageUrl: string;
-    category: PostCategory;
+    // Update category field to use string instead of enum
+    category: string;
+    categorySlug: string;
+    categoryColor: string;
     publishedAt: Date | null;
     tags: BlogTag[];
 }
@@ -45,7 +51,7 @@ const BlogPostClient = dynamic(() => import('./BlogPostClient'), {
 });
 
 interface LazyBlogPostContentProps {
-    post: PostType;
+    post: Post;
     relatedPosts: RelatedPost[];
 }
 

@@ -1,4 +1,3 @@
-
 model PostSubscriber {
     id    String @id @default(cuid())
     email String @unique
@@ -21,13 +20,13 @@ model BlogSubscriber {
 }
 
 model CategorySubscriber {
-    id       String       @id @default(cuid())
-    email    String
-    category PostCategory
+    id        String   @id @default(cuid())
+    email     String
+    createdAt DateTime @default(now())
 
-    unsubscribedAt DateTime?
-    subscribedAt   DateTime  @default(now())
-    updatedAt      DateTime  @updatedAt
+    // Update to reference BlogCategory model instead of enum
+    category   BlogCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    categoryId String
 
-    @@unique([email, category])
+    @@unique([email, categoryId])
 }

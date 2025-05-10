@@ -1,16 +1,31 @@
 'use server';
 
-import { PostCategory, prisma } from '@repo/db';
-import { revalidatePath } from 'next/cache';
+import { prisma } from '@repo/db';
 
 export type FeaturedPost = {
     id: string;
     title: string;
     slug: string;
+    excerpt: string;
+    category: {
+        name: string;
+        slug: string;
+        color: string;
+    };
     imageUrl: string;
-    category: PostCategory;
     publishedAt: Date | null;
-    color: string;
+    featured: boolean;
+    author: {
+        id: string;
+        name: string;
+        avatarUrl: string | null;
+    } | null;
+    tags: {
+        id: string;
+        name: string;
+        slug: string;
+        color: string;
+    }[];
 };
 
 export async function getFeaturedPosts(): Promise<FeaturedPost[]> {
@@ -25,33 +40,53 @@ export async function getFeaturedPosts(): Promise<FeaturedPost[]> {
             id: true,
             title: true,
             slug: true,
+            excerpt: true,
+            category: {
+                select: {
+                    name: true,
+                    slug: true,
+                    color: true
+                }
+            },
             imageUrl: true,
-            category: true,
             publishedAt: true,
+            featured: true,
+            author: {
+                select: {
+                    id: true,
+                    displayName: true,
+                    avatars: {
+                        select: {
+                            url: true,
+                        },
+                        where: {
+                            isActive: true,
+                        },
+                        take: 1,
+                    }
+                },
+            },
             tags: {
                 select: {
+                    id: true,
+                    name: true,
+                    slug: true,
                     color: true,
                 },
-                take: 1,
             },
         },
         orderBy: {
             publishedAt: 'desc',
         },
-        take: 5,
+        take: 6,
     });
 
     return posts.map(post => ({
-        id: post.id,
-        title: post.title,
-        slug: post.slug,
-        imageUrl: post.imageUrl,
-        category: post.category,
-        publishedAt: post.publishedAt,
-        color: post.tags[0]?.color || 'blue',
+        ...post,
+        author: post.author ? {
+            id: post.author.id,
+            name: post.author.displayName,
+            avatarUrl: post.author.avatars[0]?.url || null
+        } : null
     }));
-}
-
-export async function revalidateFeaturedPosts() {
-    revalidatePath('/blog');
 }

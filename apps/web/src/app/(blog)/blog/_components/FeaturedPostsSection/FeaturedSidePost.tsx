@@ -37,7 +37,14 @@ export function FeaturedSidePost({ post, height, isPrimary }: FeaturedSidePostPr
                     justifyContent: 'flex-end'
                 }}
             >
-                <Badge color={post.color} mb="xs" size='md'>{post.category}</Badge>
+                <Badge
+                    mb="xs" size='md'
+                    color={post.category.color}
+                    component={Link}
+                    href={`/blog/category/${post.category.slug}`}>
+                    {post.category.name}
+                </Badge>
+
                 <Text size={isPrimary ? "xl" : "md"} fw={700} c="white">
                     {isPrimary ? post.title : post.title.length > 19 ? post.title.substring(0, 19) + "..." : post.title}
                 </Text>

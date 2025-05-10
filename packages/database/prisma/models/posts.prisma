@@ -1,10 +1,42 @@
-enum PostCategory {
-    SPELLS
-    POTIONS
-    SCROLLS
-    ARTIFACTS
+enum BlogTagType {
+    BLOG
+    INTERNAL
 }
 
+model BlogTag {
+    id   String @id @default(cuid())
+    name String @unique
+
+    description String @default("Short description of the tag")
+    slug        String @unique
+
+    color String      @default("blue")
+    type  BlogTagType @default(BLOG)
+    posts BlogPost[]  @relation("PostToTag")
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model BlogComment {
+    id            String   @id @default(cuid())
+    content       String
+    authorName    String
+    authorProfile String
+    authorEmail   String
+    authorWebsite String?
+    isApproved    Boolean
+    post          BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId        String
+
+    // Self-relation for threaded comments
+    parent   BlogComment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: SetNull)
+    parentId String?
+    replies  BlogComment[] @relation("CommentReplies")
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
 
 model BlogPost {
     id          String       @id @default(cuid())
@@ -12,7 +44,8 @@ model BlogPost {
     slug        String       @unique
     excerpt     String
     content     String       @db.Text
-    category    PostCategory
+    category    BlogCategory @relation(fields: [categoryId], references: [id])
+    categoryId  String
     imageUrl    String
     publishedAt DateTime?
     featured    Boolean      @default(false)
@@ -28,55 +61,15 @@ model BlogPost {
     updatedAt DateTime @updatedAt
 }
 
-// // NOTE:Leave this be, for future use, just make sure that this links to the active portfolio profile  
-// model BlogAuthor {
-//     id        String     @id @default(cuid())
-//     name      String
-//     email     String     @unique
-//     bio       String?
-//     avatarUrl String?
-//     posts     BlogPost[]
-//     socialLinks SocialLink[]
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
-// }
+model BlogCategory {
+    id          String     @id @default(cuid())
+    name        String     @unique
+    slug        String     @unique
+    description String?    @default("Category description")
+    color       String     @default("blue")
+    posts       BlogPost[]
 
-enum BlogTagType {
-    BLOG
-    INTERNAL
-}
-
-model BlogTag {
-    id    String     @id @default(cuid())
-    name  String     @unique 
-    
-    description String @default("Short description of the tag")
-    slug  String     @unique
-    
-    color String     @default("blue")
-    type  BlogTagType @default(BLOG)
-    posts BlogPost[] @relation("PostToTag")
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
-model BlogComment {
-    id            String   @id @default(cuid())
-    content       String
-    authorName    String
-    authorProfile String
-    authorEmail   String
-    authorWebsite String?
-    isApproved    Boolean  
-    post          BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
-    postId        String
-
-    // Self-relation for threaded comments
-    parent   BlogComment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: SetNull)
-    parentId String?
-    replies  BlogComment[] @relation("CommentReplies")
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt          DateTime             @default(now())
+    updatedAt          DateTime             @updatedAt
+    CategorySubscriber CategorySubscriber[]
 }

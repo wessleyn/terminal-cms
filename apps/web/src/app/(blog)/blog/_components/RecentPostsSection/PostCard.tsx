@@ -21,7 +21,8 @@ export function PostCard({ post }: PostCardProps) {
                 </Link>
             </Card.Section>
 
-            <Badge color={post.tags[0]?.color || "blue"} mt="md">{post.category}</Badge>
+
+            <Badge color={post.tags[0]?.color || "blue"} mt="md">{post.category.name}</Badge>
             <Text fw={500} size="lg" mt="md">{post.title}</Text>
 
             <Group mt="xs">

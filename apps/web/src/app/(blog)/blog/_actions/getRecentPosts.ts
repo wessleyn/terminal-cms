@@ -1,6 +1,6 @@
 'use server';
 
-import { PostCategory, prisma } from '@repo/db';
+import { prisma } from '@repo/db'; // Remove PostCategory import
 import { revalidatePath } from 'next/cache';
 
 export type BlogPost = {
@@ -8,7 +8,12 @@ export type BlogPost = {
     title: string;
     slug: string;
     excerpt: string;
-    category: PostCategory;
+    // Update category to use relational structure
+    category: {
+        name: string;
+        slug: string;
+        color: string;
+    };
     imageUrl: string;
     publishedAt: Date | null;
     featured: boolean;
@@ -37,7 +42,14 @@ export async function getRecentPosts(): Promise<BlogPost[]> {
             title: true,
             slug: true,
             excerpt: true,
-            category: true,
+            // Include category relation instead of enum
+            category: {
+                select: {
+                    name: true,
+                    slug: true,
+                    color: true
+                }
+            },
             imageUrl: true,
             publishedAt: true,
             featured: true,
@@ -49,7 +61,7 @@ export async function getRecentPosts(): Promise<BlogPost[]> {
                         select: {
                             url: true,
                         },
-                        where:{
+                        where: {
                             isActive: true,
                         },
                         take: 1,
@@ -71,13 +83,14 @@ export async function getRecentPosts(): Promise<BlogPost[]> {
         take: 6,
     });
 
-    return posts.map((post) => ({
+    // Format the posts with proper structure
+    return posts.map(post => ({
         ...post,
-        author: {
+        author: post.author ? {
             id: post.author.id,
             name: post.author.displayName,
-            avatarUrl: post.author.avatars[0]?.url || null,
-        }
+            avatarUrl: post.author.avatars[0]?.url || null
+        } : null
     }));
 }
 

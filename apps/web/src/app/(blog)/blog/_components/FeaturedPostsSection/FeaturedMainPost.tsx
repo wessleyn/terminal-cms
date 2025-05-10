@@ -37,7 +37,7 @@ export function FeaturedMainPost({ post, height }: FeaturedMainPostProps) {
             >
                 <div style={{ padding: '20px' }}>
                     <Group gap="xs">
-                        <Badge color={post.color}>{post.category}</Badge>
+                        <Badge color={post.category.color} component={Link} href={`/blog/category/${post.category.slug}`}>{post.category.name}</Badge>
                         <Badge color="blue">Featured</Badge>
                     </Group>
                     <Text size="xl" fw={700} c="white" mt="md">{post.title}</Text>

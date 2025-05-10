@@ -1,35 +1,13 @@
 'use client';
 
 import { Container, Group, Pagination, Text } from '@mantine/core';
+import PostGrid from '../../../_components/PostGrid';
 import UniversalNewsletter from '../../../_components/UniversalNewsletter';
+import { LegacyBlogPost } from '../../../_types/types';
 import CategoryHeader from './CategoryHeader';
-import PostGrid from './PostGrid';
-
-interface Author {
-    name: string;
-    avatarUrl: string | null;
-}
-
-interface Tag {
-    id: string;
-    name: string;
-    color: string; // Required in PostGrid
-}
-
-interface Post {
-    id: string;
-    title: string;
-    slug: string;
-    excerpt: string;
-    category: string;
-    imageUrl: string;
-    publishedAt: Date | null;
-    author: Author | null;
-    tags: Tag[];
-}
 
 interface CategoryPageClientProps {
-    posts: Post[];
+    posts: LegacyBlogPost[];
     category: string;
     description: string;
     categorySlug: string;

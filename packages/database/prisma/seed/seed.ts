@@ -4,6 +4,7 @@ import { meetingsData } from './data/meetingsData';
 import { blogPrivacyData, privacyData, termsData } from './data/privacyData';
 import { profileData } from './data/profileData';
 import { projectsData } from './data/projectData';
+import { userData } from './data/userData';
 
 const prisma = new PrismaClient();
 
@@ -14,13 +15,16 @@ async function main() {
     await prisma.project.deleteMany();
     await prisma.portfolioProfileSocialLink.deleteMany(); // Delete social links first
     await prisma.portfolioProfileAvatar.deleteMany(); // Delete avatar links
-    await prisma.blogPost.deleteMany(); // Delete posts before authors
+    await prisma.session.deleteMany(); // Clear sessions before users
+    await prisma.user.deleteMany(); // Clear users
+    await prisma.categorySubscriber.deleteMany(); // Delete category subscribers
+    await prisma.blogPost.deleteMany(); // Delete posts before categories
+    await prisma.blogCategory.deleteMany(); // Delete categories
     await prisma.portfolioProfile.deleteMany(); // Delete profile
     await prisma.privacySection.deleteMany(); // Delete sections first
     await prisma.privacy.deleteMany(); // Then delete privacy records
     await prisma.blogComment.deleteMany(); // Delete comments first
     await prisma.blogTag.deleteMany(); // Delete tags
-    // await prisma.blogAuthor.deleteMany(); // Delete authors last
 
     // Seed projects
     for (const project of projectsData) {
@@ -52,7 +56,6 @@ async function main() {
         });
     }
 
-
     // Add social links
     await prisma.portfolioProfileSocialLink.create({
         data: {
@@ -79,6 +82,23 @@ async function main() {
     });
 
     console.log('Profile data seeded successfully!');
+
+    // Seed users data
+    console.log('Seeding user data...');
+
+    for (const user of userData) {
+        await prisma.user.create({
+            data: {
+                name: user.name,
+                email: user.email,
+                image: user.image,
+                role: user.role || 'USER', // Default to USER role if not specified
+            }
+        });
+        console.log(`Created user: ${user.name}`);
+    }
+
+    console.log('User data seeded successfully!');
 
     // Seed privacy policy
     console.log('Seeding privacy data...');
@@ -146,17 +166,24 @@ async function main() {
     // Seed blog data
     console.log('Seeding blog data...');
 
-    // Create blog authors
-    console.log('Creating blog authors...');
-    const authorMap = new Map();
+    // Create blog categories (replacing the old enum)
+    console.log('Creating blog categories...');
+    const categories = [
+        { name: 'Spells', slug: 'spells', color: 'purple', description: 'Magical incantations and rituals' },
+        { name: 'Potions', slug: 'potions', color: 'green', description: 'Brewed concoctions with magical properties' },
+        { name: 'Scrolls', slug: 'scrolls', color: 'blue', description: 'Written magical texts and documents' },
+        { name: 'Artifacts', slug: 'artifacts', color: 'orange', description: 'Magical items and relics' }
+    ];
 
-    // for (const author of blogAuthors) {
-    //     const createdAuthor = await prisma.blogAuthor.create({
-    //         data: author
-    //     });
-    //     authorMap.set(author.email, createdAuthor);
-    //     console.log(`Created author: ${author.name}`);
-    // }
+    const categoryMap = new Map();
+
+    for (const category of categories) {
+        const createdCategory = await prisma.blogCategory.create({
+            data: category
+        });
+        categoryMap.set(category.slug.toUpperCase(), createdCategory);
+        console.log(`Created category: ${category.name}`);
+    }
 
     // Create blog tags
     console.log('Creating blog tags...');
@@ -174,7 +201,7 @@ async function main() {
     console.log('Creating blog posts...');
     const postMap = new Map();
     for (const post of blogPosts) {
-        const { tags, ...postData } = post;
+        const { tags, category, ...postData } = post;
 
         // Get valid tag IDs before creating the post
         const validTagConnections: { id: string }[] = [];
@@ -187,12 +214,22 @@ async function main() {
             }
         }
 
-        // Create post with author and connect tags
+        // Map the old enum category to the new category model
+        const categoryObj = categoryMap.get(category);
+        if (!categoryObj) {
+            console.warn(`Category '${category}' not found for post: ${post.title}`);
+            continue;
+        }
+
+        // Create post with author, category, and connect tags
         const createdPost = await prisma.blogPost.create({
             data: {
                 ...postData,
                 author: {
                     connect: { id: profile.id }
+                },
+                category: {
+                    connect: { id: categoryObj.id }
                 },
                 tags: {
                     connect: validTagConnections

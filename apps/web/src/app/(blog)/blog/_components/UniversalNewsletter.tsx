@@ -83,7 +83,7 @@ export default function UniversalNewsletter({
             } else {
                 setMessage({
                     type: 'error',
-                    text: result.errors?._form?.[0] || 'Something went wrong. Please try again.'
+                    text: result.errors  ? result.errors[0]!.message : 'Something went wrong. Please try again.'
                 });
             }
             // eslint-disable-next-line @typescript-eslint/no-unused-vars

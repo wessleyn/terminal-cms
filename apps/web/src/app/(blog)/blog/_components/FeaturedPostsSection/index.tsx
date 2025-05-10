@@ -11,11 +11,23 @@ const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - var(--mantine-spa
 // Default post to use if data is missing
 const defaultPost: FeaturedPost = {
     id: '0',
+    featured: true,
+    tags: [],
+    excerpt: "Loading...",
+    author: {
+        id: "0",
+        name: "Loading...",
+        avatarUrl: null,
+
+    },
     title: "Loading...",
-    slug: "",
-    category: "SPELLS" as const,
+    slug: "loading",
+    category: {
+        name: "Loading...",
+        slug: "loading",
+        color: "gray",
+    },
     imageUrl: "/placeholder.jpg",
-    color: "blue",
     publishedAt: null
 };
 

@@ -1,59 +1,103 @@
 'use server';
 
-import { PostCategory, prisma } from '@repo/db';
-import { revalidatePath } from 'next/cache';
+import { prisma } from '@repo/db';
 
-export type FeaturedPost = {
+export type TrendingPost = {
     id: string;
     title: string;
     slug: string;
+    excerpt: string;
+    category: {
+        name: string;
+        slug: string;
+        color: string;
+    };
     imageUrl: string;
-    category: PostCategory;
     publishedAt: Date | null;
-    color: string;
+    author: {
+        id: string;
+        name: string;
+        avatarUrl: string | null;
+    } | null;
+    tags: {
+        id: string;
+        name: string;
+        slug: string;
+        color: string;
+    }[];
 };
 
-export async function getTrendingPosts(): Promise<FeaturedPost[]> {
-    // In a real app, you might determine trending posts based on views, likes, etc.
-    // Here we're just getting some published posts
+export async function getTrendingPosts(): Promise<TrendingPost[]> {
+    // Fetch posts with comment counts for trending calculation
     const posts = await prisma.blogPost.findMany({
         where: {
             publishedAt: {
                 not: null,
             },
         },
-        select: {
-            id: true,
-            title: true,
-            slug: true,
-            imageUrl: true,
-            category: true,
-            publishedAt: true,
+        include: {
+            category: {
+                select: {
+                    name: true,
+                    slug: true,
+                    color: true
+                }
+            },
+            author: {
+                select: {
+                    id: true,
+                    displayName: true,
+                    avatars: {
+                        select: {
+                            url: true,
+                        },
+                        where: {
+                            isActive: true,
+                        },
+                        take: 1,
+                    }
+                },
+            },
             tags: {
                 select: {
+                    id: true,
+                    name: true,
+                    slug: true,
                     color: true,
                 },
-                take: 1,
             },
+            _count: {
+                select: {
+                    comments: true
+                }
+            }
         },
-        orderBy: {
-            publishedAt: 'desc',
-        },
-        skip: 5, // Skip featured posts
+        // Use a more Prisma-friendly way for ordering
+        orderBy: [
+            { comments: { _count: 'desc' } },
+            { publishedAt: 'desc' }
+        ],
         take: 4,
     });
 
+    // Format the posts with proper structure
     return posts.map(post => ({
         id: post.id,
         title: post.title,
         slug: post.slug,
-        imageUrl: post.imageUrl,
+        excerpt: post.excerpt,
         category: post.category,
+        imageUrl: post.imageUrl,
         publishedAt: post.publishedAt,
-        color: post.tags[0]?.color || 'blue',
+        author: post.author ? {
+            id: post.author.id,
+            name: post.author.displayName,
+            avatarUrl: post.author.avatars[0]?.url || null
+        } : null,
+        tags: post.tags
     }));
 }
 
-export async function revalidateTrendingPosts() {
-    revalidatePath('/blog');
-}
+// Export this type alias for backward compatibility with any components
+// that might be importing FeaturedPost
+export type { TrendingPost as FeaturedPost };
