@@ -1,12 +1,12 @@
 'use client';
 
 import { TableHeaderFilter } from '@/app/_components/TableHeaderFilter';
-import { Button, Center, Flex, Pagination, Paper, Table, Text, TextInput } from '@mantine/core';
-import { useInputState } from '@mantine/hooks';
+import { Button, Center, Flex, Pagination, Paper, Table, Text } from '@mantine/core';
 import { ActivityStatus, HappyIndex, PublishStatus } from '@repo/db';
-import { IconPlus, IconSearch } from '@tabler/icons-react';
+import { IconPlus } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+import { useSearchStore } from '../../../../_stores/searchStore';
 import { createProject } from '../../_actions/createProject';
 import { deleteProject, UpdateField, updateProjectStatus } from '../../_actions/updateProject';
 import ActionButtons from '../ActionButtons';
@@ -42,9 +42,9 @@ interface ProjectsTableProps {
 
 export default function ProjectsTable({ initialProjects }: ProjectsTableProps) {
     const [projects, setProjects] = useState<TableProject[]>(initialProjects);
+    const { query } = useSearchStore(); // Use global search query
     const [filteredProjects, setFilteredProjects] = useState<TableProject[]>(initialProjects);
     const [activePage, setActivePage] = useState(1);
-    const [searchQuery, setSearchQuery] = useInputState('');
     const router = useRouter();
     const ITEMS_PER_PAGE = 3; // Limit to 3 rows per page
 
@@ -73,10 +73,10 @@ export default function ProjectsTable({ initialProjects }: ProjectsTableProps) {
     const applyFilters = useCallback(() => {
         let filtered = [...projects];
 
-        // Text search filter
-        if (searchQuery.trim()) {
+        // Text search filter - now using the global query
+        if (query.trim()) {
             filtered = filtered.filter(project =>
-                project.title.toLowerCase().includes(searchQuery.toLowerCase())
+                project.title.toLowerCase().includes(query.toLowerCase())
             );
         }
 
@@ -103,12 +103,12 @@ export default function ProjectsTable({ initialProjects }: ProjectsTableProps) {
 
         setFilteredProjects(filtered);
         setActivePage(1); // Reset to first page when filters change
-    }, [projects, searchQuery, publishFilters, activityFilters, happyFilters]);
+    }, [projects, query, publishFilters, activityFilters, happyFilters]); // Update dependencies
 
     // Apply filters whenever any filter changes
     useEffect(() => {
         applyFilters();
-    }, [searchQuery, publishFilters, activityFilters, happyFilters, applyFilters]);
+    }, [query, publishFilters, activityFilters, happyFilters, applyFilters]);
 
     // Calculate pagination values
     const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
@@ -198,16 +198,9 @@ export default function ProjectsTable({ initialProjects }: ProjectsTableProps) {
 
     return (
         <div className={classes.projectsContainer}>
-            {/* Search bar and New Project button */}
+            {/* Remove local search bar and keep the New Project button */}
             <div className={classes.searchContainer}>
-                <Flex gap="md" className={classes.topControls}>
-                    <TextInput
-                        placeholder="Search projects..."
-                        value={searchQuery}
-                        onChange={setSearchQuery}
-                        leftSection={<IconSearch size={16} />}
-                        className={classes.search}
-                    />
+                <Flex justify="flex-end" className={classes.topControls}>
                     <Button
                         leftSection={<IconPlus size={16} />}
                         variant="filled"

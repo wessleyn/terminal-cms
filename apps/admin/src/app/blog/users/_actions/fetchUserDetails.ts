@@ -1,3 +1,5 @@
+'use server'
+
 import { prisma } from "@repo/db";
 import { format, formatDistanceToNow } from "date-fns";
 

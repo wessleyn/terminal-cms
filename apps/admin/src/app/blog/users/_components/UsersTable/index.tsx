@@ -1,11 +1,14 @@
 'use client'
 import { TableHeaderFilter } from '@/app/_components/TableHeaderFilter';
-import { Container, Paper, Table } from '@mantine/core';
-import { useInputState } from '@mantine/hooks';
+import { Button, Container, Paper, Table } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { IconPlus } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-import { BlogUser } from '../_actions/fetchUsers';
-import { EmptyState } from './EmptyState';
-import { SearchBar } from './SearchBar';
+import { useSearchStore } from '../../../../../_stores/searchStore';
+import createUser from '../../_actions/createUser';
+import { BlogUser } from '../../_actions/fetchUsers';
+import { EmptyState } from '../EmptyState';
 import { UserRow } from './UserRow';
 import styles from './UsersTable.module.css';
 
@@ -14,8 +17,9 @@ interface UsersTableProps {
 }
 
 export function UsersTable({ users }: UsersTableProps) {
+    const router = useRouter();
     const [filteredUsers, setFilteredUsers] = useState<BlogUser[]>(users || []);
-    const [searchQuery, setSearchQuery] = useInputState('');
+    const searchQuery = useSearchStore(state => state.query);
 
     // Column filters
     const [roleFilters, setRoleFilters] = useState<string[]>([]);
@@ -87,6 +91,23 @@ export function UsersTable({ users }: UsersTableProps) {
         setFilteredUsers(users || []);
     }, [users]);
 
+    const handleCreateUser = async () => {
+        const result = await createUser({
+            name: 'New User',
+            email: `user_${Date.now()}@example.com`,
+        });
+
+        if (result.success && result.userId) {
+            router.push(`/blog/users/${result.userId}?edit=true`);
+            router.refresh();
+        } else {
+            notifications.show({
+                title: 'Error',
+                message: result.message || 'Failed to create user',
+                color: 'red',
+            });
+        }
+    };
     // Handle user deletion
     const handleUserDelete = useCallback((userId: string) => {
         setFilteredUsers(prev => prev.filter(user => user.id !== userId));
@@ -94,9 +115,6 @@ export function UsersTable({ users }: UsersTableProps) {
 
     return (
         <Container fluid px="md" pt="md">
-            {/* Search bar */}
-            <SearchBar value={searchQuery} onChange={setSearchQuery} />
-
             {/* Users Table */}
             <Paper shadow="xs" radius="md" withBorder className={styles.tableContainer}>
                 <div className={styles.tableWrapper}>
@@ -121,7 +139,13 @@ export function UsersTable({ users }: UsersTableProps) {
                                         onChange={setLastActiveFilters}
                                     />
                                 </Table.Th>
-                                <Table.Th className={styles.actionsColumn} />
+                                <Table.Th className={styles.actionsColumn}>
+                                    <Button
+                                     onClick={handleCreateUser}
+                                        leftSection={<IconPlus size={16} />}
+                                    >
+                                        New User
+                                    </Button>                                </Table.Th>
                             </Table.Tr>
                         </Table.Thead>
                         <Table.Tbody className={styles.tableBody}>

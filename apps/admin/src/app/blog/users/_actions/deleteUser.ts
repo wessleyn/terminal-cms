@@ -1,3 +1,5 @@
+'use server'
+
 import { prisma } from "@repo/db";
 
 export default async function deleteUser(userId: string) {

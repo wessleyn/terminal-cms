@@ -6,9 +6,9 @@ import { notifications } from "@mantine/notifications";
 import { IconCheck, IconEdit, IconTrash, IconX } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import deleteUser from "../_actions/deleteUser";
-import { UserDetail } from "../_actions/fetchUserDetails";
-import { updateUser } from "../_actions/updateUser";
+import deleteUser from "../../../_actions/deleteUser";
+import { UserDetail } from "../../../_actions/fetchUserDetails";
+import { updateUser } from "../../../_actions/updateUser";
 import styles from "./UserProfileDetail.module.css";
 
 interface UserProfileDetailProps {

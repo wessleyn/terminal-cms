@@ -3,6 +3,7 @@ import "@mantine/notifications/styles.css";
 import CustomProvider from "@repo/ui/components/shared/CustomProvider";
 import DashboardThemeToggler from "../_components/DashboardThemeToggler";
 import EmailsMenu from "../_components/EmailsMenu";
+import GlobalSearch from "../_components/GlobalSearch";
 import HeaderTitle from "../_components/HeaderTitle";
 import NotificationsMenu from "../_components/NotificationsMenu";
 import ProfileMenu from "../_components/ProfileMenu";
@@ -17,7 +18,6 @@ export default function DashboardLayout({
   children
 }: { children: React.ReactNode }) {
   return (
-
     <CustomProvider>
       <div className="dashboard-layout">
         <div className="sidebar-container">
@@ -30,6 +30,9 @@ export default function DashboardLayout({
                 <SidebarToggle />
               </div>
               <HeaderTitle />
+            </div>
+            <div className="d-flex gap-2">
+              <GlobalSearch />
             </div>
             <div className="header-right">
               <DashboardThemeToggler />
