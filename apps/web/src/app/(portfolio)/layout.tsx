@@ -1,7 +1,6 @@
-import "../globals.css";
 import { fetchProfile } from './_actions/fetchProfile';
 import Footer from './_components/Footer';
-import ProfileInfo from './_components/ProfileInfo';
+import ProfileInfoWrapper from './_components/ProfileInfo/ProfileInfoWrapper';
 
 export default async function PortfolioLayout({ children }: { children: React.ReactNode }) {
     // Fetch profile data from the database
@@ -13,7 +12,7 @@ export default async function PortfolioLayout({ children }: { children: React.Re
                 <div className="container">
                     <div className="row">
                         <div className="col-md-3 mb-4 portfolio-container">
-                            <ProfileInfo profile={profileData} />
+                            <ProfileInfoWrapper profile={profileData} />
                         </div>
                         {children}
                     </div>

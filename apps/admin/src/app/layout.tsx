@@ -10,6 +10,9 @@ import SideBar from "../_components/SideBar";
 import SidebarToggle from "../_components/SidebarToggle";
 import "./_styles/dashboard.css";
 
+// Make the entire admin app dynamic
+export const dynamic = 'force-dynamic';
+
 export default function DashboardLayout({
   children
 }: { children: React.ReactNode }) {

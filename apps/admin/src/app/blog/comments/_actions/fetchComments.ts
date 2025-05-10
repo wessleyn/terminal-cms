@@ -1,3 +1,5 @@
+'use server'
+
 import { prisma } from "@repo/db";
 
 export type CommentStatus = 'pending' | 'approved' | 'rejected' | null;
@@ -45,7 +47,7 @@ export async function fetchComments(status: CommentStatus = null, searchQuery?: 
           break;
         case 'pending':
           // For pending, we need to handle undefined/null values in a boolean field
-          whereClause.isApproved = { equals: undefined };
+          whereClause.isApproved = { equals: null };
           break;
       }
     }
@@ -98,27 +100,4 @@ export async function fetchComments(status: CommentStatus = null, searchQuery?: 
   }
 }
 
-export async function getCommentStats() {
-  try {
-    const [total, approved, rejected] = await Promise.all([
-      prisma.blogComment.count(),
-      prisma.blogComment.count({ where: { isApproved: true } }),
-      prisma.blogComment.count({ where: { isApproved: false } }),
-    ]);
 
-    // For pending, count where isApproved is undefined
-    const pending = await prisma.blogComment.count({
-      where: { isApproved: { equals: undefined } }
-    });
-
-    return {
-      total,
-      approved,
-      pending,
-      rejected,
-    };
-  } catch (error) {
-    console.error("Error fetching comment stats:", error);
-    throw new Error("Failed to fetch comment statistics");
-  }
-}

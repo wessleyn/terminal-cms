@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
-import { fetchComments, getCommentStats } from '../_actions/fetchComments';
-import { CommentsHeader } from '../_components/CommentsHeader';
+import { fetchComments } from '../_actions/fetchComments';
 import { CommentsTable } from '../_components/CommentsTable';
 
 export const metadata: Metadata = {
@@ -9,24 +8,13 @@ export const metadata: Metadata = {
 };
 
 export default async function ApprovedCommentsPage() {
-  // Fetch approved comments
-  const [comments, stats] = await Promise.all([
-    fetchComments('approved'),
-    getCommentStats(),
-  ]);
+  // Just fetch comments - header with stats is in the layout
+  const comments = await fetchComments('approved');
 
   return (
-    <>
-      <CommentsHeader
-        total={stats.total}
-        pending={stats.pending}
-        approved={stats.approved}
-        rejected={stats.rejected}
-      />
-      <CommentsTable
-        comments={comments}
-        emptyMessage="No approved comments found."
-      />
-    </>
+    <CommentsTable
+      comments={comments}
+      emptyMessage="No approved comments found."
+    />
   );
 }

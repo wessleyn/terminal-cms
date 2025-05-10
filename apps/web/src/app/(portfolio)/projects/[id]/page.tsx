@@ -1,11 +1,23 @@
 import { notFound } from 'next/navigation';
 import '../_styles/projectGallery.css';
+import { fetchFeaturedProjectIds } from './_actions/fetchFeaturedProjectIds';
 import { fetchProjectById } from './_actions/fetchProject';
+import { getProjectNavigation } from './_actions/getProjectNavigation';
 import ProjectDetail from './_components/ProjectDetail';
-import { getProjectNavigation } from './_utils/projectNavigation';
 
 // Add revalidation to refresh content every 60 seconds
 export const revalidate = 60;
+
+// Generate static params for the most important projects to be prerendered
+export async function generateStaticParams() {
+    // Fetch IDs of featured or important projects that should be prerendered
+    const featuredIds = await fetchFeaturedProjectIds();
+
+    // Return an array of params objects that will be prerendered
+    return featuredIds.map((id) => ({
+        id: id,
+    }));
+}
 
 interface ProjectPageProps {
     params: Promise<{

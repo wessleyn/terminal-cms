@@ -1,20 +1,19 @@
-import { Image } from '@mantine/core';
 import SocialIcon from '@repo/ui/components/shared/SocialIcon';
 import TypingEffect from '@repo/ui/components/shared/TypingEffect';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ProfileData } from '../../_actions/fetchProfile';
 import HireMeBtn from './HireMeBtn';
 import classes from './ProfileInfo.module.css';
-import ProfileInfoSkeleton from './ProfileInfoSkeleton';
 
 interface ProfileInfoProps {
     profile: ProfileData | null;
 }
 
 export default function ProfileInfo({ profile }: ProfileInfoProps) {
-    // Show skeleton if profile data is not available
+    // ProfileInfoSkeleton is now handled by the dynamic import wrapper
     if (!profile) {
-        return <ProfileInfoSkeleton />;
+        return null;
     }
 
     const { displayName, workEmail, tagline, avatarUrl, socialLinks, bio } = profile;
@@ -29,7 +28,7 @@ export default function ProfileInfo({ profile }: ProfileInfoProps) {
                         src={avatarUrl}
                         width={300}
                         height={300}
-                        // priority
+                        priority
                     />
                 </Link>
             </div>

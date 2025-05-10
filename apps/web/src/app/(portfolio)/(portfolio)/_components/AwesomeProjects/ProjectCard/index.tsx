@@ -5,11 +5,12 @@ import {
     Card,
     Center,
     Group,
-    Image as MantineImage,
     Text,
     Tooltip,
     useMantineTheme
 } from '@mantine/core';
+
+import Image from 'next/image';
 
 import { Project } from '@repo/db';
 import TechTags from '@repo/ui/components/shared/TechTags';
@@ -75,9 +76,11 @@ const ProjectCard = ({ project }: { project: Project }) => {
         <Card withBorder radius="md" className={classes.card} component="article">
             <Card.Section>
                 <Link {...linkProps}>
-                    <MantineImage alt={project.title}
+                    <Image alt={project.title}
                         src={project.imageUrl || 'https://images.unsplash.com/photo-1601758123927-1c2f8b3a4d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60'}
-                        height={180} />
+                        height={180} 
+                        layout="responsive"
+                    />
                 </Link>
             </Card.Section>
 
