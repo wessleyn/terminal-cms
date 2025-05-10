@@ -258,7 +258,6 @@ const SideBar = () => {
                         if (storeIsMobile) {
                             setSecondarySidebar(false);
                         }
-                        // Handle navigation
                     }}
                 >
                     <div className={classes.secondaryLinkMain}>
@@ -289,7 +288,7 @@ const SideBar = () => {
     };
 
     return (
-        <>
+        <div className='d-flex flex-row gap-0'>
             {/* Backdrop for mobile overlay - remove onClick handler as useClickOutside will handle it */}
             {storeIsMobile && mobileOpen && (
                 <div className={classes.backdrop} />
@@ -408,7 +407,7 @@ const SideBar = () => {
 
             {/* Render secondary sidebar if needed */}
             {renderSecondarySidebar()}
-        </>
+        </div>
     );
 };
 
