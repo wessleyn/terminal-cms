@@ -1,44 +1,43 @@
 'use client';
 
-import { Container, Paper, SimpleGrid, Title } from '@mantine/core';
-import { FeaturedPost } from '../../_actions/getTrendingPosts';
-import { TrendingMainPost } from './TrendingMainPost';
-import { TrendingSidePosts } from './TrendingSidePosts';
+import { Grid } from '@mantine/core';
+import { TrendingPost } from '../../_actions/getTrendingPosts';
+import TrendingMainPost from './TrendingMainPost';
+import TrendingSidePosts from './TrendingSidePosts';
+
+// Make sure we're correctly importing and using these components
+import './TrendingMainPost';
+import './TrendingSidePosts';
 
 interface TrendingPostsSectionProps {
-    posts: FeaturedPost[];
+    posts: TrendingPost[];
 }
 
-export function TrendingPostsSection({ posts }: TrendingPostsSectionProps) {
-    // Ensure we have at least 4 posts
-    const trendingPosts = [...posts];
-    const defaultPost: FeaturedPost = {
-        id: '0',
-        title: "Loading...",
-        slug: "",
-        category: "SPELLS" as const,
-        imageUrl: "/placeholder.jpg",
-        color: "blue",
-        publishedAt: null
-    };
-
-    while (trendingPosts.length < 4) {
-        trendingPosts.push({ ...defaultPost, id: `default-${trendingPosts.length}` });
+export default function TrendingPostsSection({ posts }: TrendingPostsSectionProps) {
+    if (!posts || posts.length === 0) {
+        return null;
     }
 
-    // Create a safe reference to the first post
-    const mainPost = trendingPosts[0] || defaultPost;
+    // Ensure we have at least 4 posts for the section
+    const allPosts = [...posts];
+
+    // The first post is the main featured post
+    const mainPost = allPosts.length > 0 ? allPosts[0] : null;
+
+    // The remaining posts are shown in the side section
+    const sidePosts = allPosts.slice(1);
+
+    if (!mainPost) return null;
 
     return (
-        <Paper shadow="md" p="md" radius="md" mt="xl" bg="var(--mantine-color-gray-9)" style={{ marginBottom: '3rem' }}>
-            <Container size="xl" py="xl">
-                <Title order={2} mb="xl">Trending Now</Title>
+        <Grid gutter="lg">
+            <Grid.Col span={{ base: 12, md: 6 }}>
+                <TrendingMainPost post={mainPost} />
+            </Grid.Col>
 
-                <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl">
-                    <TrendingMainPost post={mainPost} />
-                    <TrendingSidePosts posts={trendingPosts.slice(1)} />
-                </SimpleGrid>
-            </Container>
-        </Paper>
+            <Grid.Col span={{ base: 12, md: 6 }}>
+                <TrendingSidePosts posts={sidePosts} />
+            </Grid.Col>
+        </Grid>
     );
 }

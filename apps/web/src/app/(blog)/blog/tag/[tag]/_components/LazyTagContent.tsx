@@ -3,30 +3,8 @@
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
 // Import the component directly from its full path
+import { LegacyBlogPost } from '../../../_types/types';
 import TagSkeleton from '../_components/TagSkeleton';
-
-interface Author {
-    name: string;
-    avatarUrl: string | null;
-}
-
-interface Tag {
-    id: string;
-    name: string;
-    color: string;
-}
-
-interface Post {
-    id: string;
-    title: string;
-    slug: string;
-    excerpt: string;
-    category: string;
-    imageUrl: string;
-    publishedAt: Date | null;
-    author: Author | null;
-    tags: Tag[];
-}
 
 // Dynamically import the TagPageClient component with SSR disabled
 const TagPageClient = dynamic(
@@ -36,7 +14,7 @@ const TagPageClient = dynamic(
 });
 
 interface LazyTagContentProps {
-    posts: Post[];
+    posts: LegacyBlogPost[];
     tag: string;
     color: string;
     description: string;

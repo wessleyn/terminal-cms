@@ -53,20 +53,38 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         notFound();
     }
 
-    // Fetch related posts
+    // Include category in relatedPosts query
     const relatedPosts = await prisma.blogPost.findMany({
         where: {
-            category: post.category,
+            categoryId: post.categoryId,
             id: { not: post.id },
             publishedAt: { not: null }
         },
         include: {
-            tags: true
+            tags: true,
+            category: true // Include category relation
         },
         take: 4
     });
 
-    return <LazyBlogPostContent post={post} relatedPosts={relatedPosts} />;
+    // Format post data for the component
+    return <LazyBlogPostContent
+        post={{
+            ...post,
+            // Use category properties from the relation
+            category: post.category.name,
+            categorySlug: post.category.slug,
+            categoryColor: post.category.color,
+            // Ensure publishedAt is never null for component use
+            publishedAt: post.publishedAt || new Date()
+        }}
+        relatedPosts={relatedPosts.map(rPost => ({
+            ...rPost,
+            category: rPost.category.name,
+            categorySlug: rPost.category.slug,
+            categoryColor: rPost.category.color
+        }))}
+    />;
 }
 
 export async function generateStaticParams() {

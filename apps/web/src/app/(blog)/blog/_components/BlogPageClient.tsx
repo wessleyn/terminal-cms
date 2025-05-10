@@ -2,16 +2,17 @@
 
 import { FeaturedPost } from '../_actions/getFeaturedPosts';
 import { BlogPost as RecentBlogPost } from '../_actions/getRecentPosts';
+import { TrendingPost } from '../_actions/getTrendingPosts';
 import { FeaturedPostsSection } from './FeaturedPostsSection';
 import { RecentPostsSection } from './RecentPostsSection';
-import { TrendingPostsSection } from './TrendingPostsSection';
+import TrendingPostsSection from './TrendingPostsSection';
 import UniversalNewsletter from './UniversalNewsletter';
 
 // Define the props interface based on what the blog page needs
 interface BlogPageClientProps {
     featuredPosts: FeaturedPost[];
     recentPosts: RecentBlogPost[];
-    trendingPosts: FeaturedPost[];
+    trendingPosts: TrendingPost[];
 }
 
 export default function BlogPageClient({

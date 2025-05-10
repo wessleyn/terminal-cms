@@ -1,7 +1,7 @@
 'use client';
 
 import { Avatar, Button, Group, Stack, Text, Title } from '@mantine/core';
-import { BlogTag, PostCategory } from '@repo/db';
+import { BlogTag } from '@repo/db';
 import SocialIcon from '@repo/ui/components/shared/SocialIcon';
 import Link from 'next/link';
 import UniversalNewsletter from '../../_components/UniversalNewsletter';
@@ -26,7 +26,7 @@ interface PostType {
     excerpt: string;
     content: string;
     imageUrl: string;
-    category: PostCategory;
+    category: string; // Changed from PostCategory to string
     publishedAt: Date | null;
     author: BlogPostAuthor | null;
     tags: BlogTag[];
@@ -38,7 +38,7 @@ interface RelatedPost {
     slug: string;
     excerpt: string;
     imageUrl: string;
-    category: PostCategory;
+    category: string; // Changed from PostCategory to string
     publishedAt: Date | null;
     tags: BlogTag[];
 }

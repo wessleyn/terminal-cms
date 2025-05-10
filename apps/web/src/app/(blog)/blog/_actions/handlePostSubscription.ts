@@ -46,9 +46,7 @@ export async function handlePostSubscription(email: string, postId: string): Pro
         console.error('[handlePostSubscription] Error:', error);
         return {
             success: false,
-            errors: {
-                _form: ['Failed to process post subscription. Please try again.']
-            }
+            message: 'Failed to process subscription. Please try again.'
         };
     }
 }

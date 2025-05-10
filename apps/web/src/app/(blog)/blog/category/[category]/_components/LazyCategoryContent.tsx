@@ -1,47 +1,29 @@
 'use client';
 
+import { Text } from '@mantine/core'; // Import Text component from Mantine
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
+import { LazyDynamicSegProps } from '../../../_types/types';
 import CategorySkeleton from './CategorySkeleton';
 
-interface Author {
-    name: string;
-    avatarUrl: string | null;
-}
 
-interface Tag {
-    id: string;
-    name: string;
-    color: string;
-}
-
-interface Post {
-    id: string;
-    title: string;
-    slug: string;
-    excerpt: string;
-    category: string;
-    imageUrl: string;
-    publishedAt: Date | null;
-    author: Author | null;
-    tags: Tag[];
-}
-
-// Dynamically import the CategoryPageClient component with SSR disabled
-const CategoryPageClient = dynamic(() => import('./CategoryPageClient'), {
-    loading: () => <CategorySkeleton />,
-    ssr: false // Only disable SSR here in a client component
-});
-
-interface LazyCategoryContentProps {
-    posts: Post[];
+// Define props for CategoryPageClient explicitly to match expected props
+interface CategoryPageClientProps {
+    posts: LazyDynamicSegProps['posts'];
     category: string;
     description: string;
     categorySlug: string;
     currentPage: number;
     totalPages: number;
-    error?: boolean;
+    // Make sure this component also accepts color prop
+    color?: string;
 }
+
+// Dynamically import the CategoryPageClient component with SSR disabled
+const CategoryPageClient = dynamic<CategoryPageClientProps>(() => import('./CategoryPageClient'), {
+    loading: () => <CategorySkeleton />,
+    ssr: false
+});
 
 export default function LazyCategoryContent({
     posts,
@@ -50,8 +32,9 @@ export default function LazyCategoryContent({
     categorySlug,
     currentPage,
     totalPages,
+    color = 'blue', // Default color if not provided
     error = false
-}: LazyCategoryContentProps) {
+}: LazyDynamicSegProps) {
     const [isClient, setIsClient] = useState(false);
 
     // Ensure hydration doesn't cause mismatches
@@ -63,6 +46,14 @@ export default function LazyCategoryContent({
         return <CategorySkeleton />;
     }
 
+    if (error) {
+        return (
+            <div className="container">
+                <Text>Sorry, there was an error loading this category. Please try again later.</Text>
+            </div>
+        );
+    }
+
     return (
         <Suspense fallback={<CategorySkeleton />}>
             <CategoryPageClient
@@ -72,7 +63,7 @@ export default function LazyCategoryContent({
                 categorySlug={categorySlug}
                 currentPage={currentPage}
                 totalPages={totalPages}
-                error={error}
+                color={color}
             />
         </Suspense>
     );

@@ -69,23 +69,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.6,
     }));
 
-    // Fetch categories from enum (using posts to get all used categories)
-    const categories = await prisma.blogPost.findMany({
-        where: {
-            publishedAt: {
-                not: null,
-            },
-        },
-        distinct: ['category'],
+    // Fetch categories - updated to use model instead of enum
+    const categories = await prisma.blogCategory.findMany({
         select: {
-            category: true,
+            slug: true,
+            updatedAt: true,
         },
     });
 
     // Generate sitemap entries for category pages
-    const categoryEntries = categories.map((item) => ({
-        url: `${blogUrl}/category/${item.category.toLowerCase()}`,
-        lastModified: new Date(),
+    const categoryEntries = categories.map((category) => ({
+        url: `${blogUrl}/category/${category.slug}`,
+        lastModified: category.updatedAt || new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.6,
     }));

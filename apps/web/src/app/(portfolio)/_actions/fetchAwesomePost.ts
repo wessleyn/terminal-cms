@@ -1,6 +1,6 @@
 'use server';
 
-import { PostCategory, prisma } from '@repo/db';
+import { prisma } from '@repo/db';
 import { cache } from 'react';
 
 // Define the type for blog post data
@@ -12,7 +12,6 @@ export interface AwesomePost {
     date: string;
     readTime?: string;
     slug: string;
-    category: PostCategory;
     tags?: {
         id: string;
         name: string;
@@ -79,7 +78,6 @@ export const fetchAwesomePost = cache(
                 date: post.publishedAt?.toISOString() || new Date().toISOString(),
                 readTime: '5 min', // You could calculate this based on content length
                 slug: post.slug,
-                category: post.category,
                 tags: post.tags
             }));
         } catch (error) {

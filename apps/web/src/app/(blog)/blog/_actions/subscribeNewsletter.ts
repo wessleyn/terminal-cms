@@ -38,80 +38,88 @@ export async function subscribeNewsletter(formData: FormData): Promise<Newslette
             console.log('[subscribeNewsletter] Missing CAPTCHA token');
             return {
                 success: false,
-                errors: {
-                    _form: ['Please complete the CAPTCHA verification.']
-                }
+                message: 'Please complete the CAPTCHA verification.'
             };
         }
 
-        // Validate turnstile token
-        const turnstileResult = await validateTurnstile(turnstileToken);
-        console.log('[subscribeNewsletter] Turnstile validation result:', turnstileResult);
+        // Skip Turnstile validation in development environment
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[subscribeNewsletter] Skipping CAPTCHA validation in development');
+        } else {
+            // Validate the token
+            console.log('[subscribeNewsletter] Validating CAPTCHA token');
+            const turnstileResult = await validateTurnstile(turnstileToken);
 
-        if (!turnstileResult.success) {
-            return {
-                success: false,
-                errors: {
-                    _form: [turnstileResult.errorMessage || 'CAPTCHA verification failed. Please try again.']
-                }
-            };
-        }
-
-        // If CAPTCHA is valid, then proceed with form validation
-        console.log('[subscribeNewsletter] Validating form data with Zod');
-        const validationResult = await subscribeSchema.safeParseAsync(rawData);
-        console.log('[subscribeNewsletter] Form validation result success:', validationResult.success);
-
-        if (!validationResult.success) {
-            const formattedErrors = validationResult.error.format();
-            console.log('[subscribeNewsletter] Form validation errors:', formattedErrors);
-
-            return {
-                success: false,
-                errors: {
-                    ...validationResult.error.flatten().fieldErrors,
-                    _form: ['Please provide all required information for the selected subscription type.']
-                }
-            };
-        }
-
-        const { email, type } = validationResult.data;
-        console.log(`[subscribeNewsletter] Processing ${type} subscription for ${email}`);
-
-        // Handle different subscription types
-        switch (type) {
-            case 'post': {
-                const postId = validationResult.data.postId;
-                console.log(`[subscribeNewsletter] Handling post subscription with ID: ${postId}`);
-                return await handlePostSubscription(email, postId);
-            }
-
-            case 'category': {
-                const category = validationResult.data.category;
-                console.log(`[subscribeNewsletter] Handling category subscription for: ${category}`);
-                return await handleCategorySubscription(email, category);
-            }
-
-            case 'blog':
-                console.log('[subscribeNewsletter] Handling blog subscription');
-                return await handleBlogSubscription(email);
-
-            default:
-                console.log('[subscribeNewsletter] Invalid subscription type:', type);
+            if (!turnstileResult.success) {
+                console.log('[subscribeNewsletter] CAPTCHA validation failed:', turnstileResult.errorMessage);
                 return {
                     success: false,
-                    errors: {
-                        _form: ['Invalid subscription type.']
-                    }
+                    message: 'CAPTCHA validation failed. Please try again.'
+                };
+            }
+        }
+
+        // Validate the form data against our schema
+        console.log('[subscribeNewsletter] Validating form data against schema');
+        const validationResult = subscribeSchema.safeParse(rawData);
+
+        if (!validationResult.success) {
+            console.log('[subscribeNewsletter] Form validation failed:', validationResult.error);
+            return {
+                success: false,
+                message: 'Please correct the errors below.',
+                errors: validationResult.error.errors.map(err => ({
+                    path: err.path.join('.'),
+                    message: err.message
+                }))
+            };
+        }
+
+        // Validated data
+        const validatedData = validationResult.data;
+        console.log('[subscribeNewsletter] Form data validated successfully');
+
+        // Based on the subscription type, handle accordingly
+        switch (validatedData.type) {
+            case 'blog':
+                console.log('[subscribeNewsletter] Handling blog subscription');
+                return await handleBlogSubscription(validatedData.email);
+
+            case 'post':
+                if (!validatedData.postId) {
+                    console.log('[subscribeNewsletter] Post ID is required for post subscriptions');
+                    return {
+                        success: false,
+                        message: 'Post ID is required for post subscriptions.'
+                    };
+                }
+                console.log('[subscribeNewsletter] Handling post subscription');
+                return await handlePostSubscription(validatedData.email, validatedData.postId);
+
+            case 'category':
+                if (!validatedData.category) {
+                    console.log('[subscribeNewsletter] Category is required for category subscriptions');
+                    return {
+                        success: false,
+                        message: 'Category is required for category subscriptions.'
+                    };
+                }
+                console.log('[subscribeNewsletter] Handling category subscription');
+                // Now passing the category slug string instead of an enum value
+                return await handleCategorySubscription(validatedData.email, validatedData.category);
+
+            default:
+                console.log('[subscribeNewsletter] Unknown subscription type');
+                return {
+                    success: false,
+                    message: 'Invalid subscription type.'
                 };
         }
     } catch (error) {
-        console.error('[subscribeNewsletter] Error processing subscription:', error);
+        console.error('[subscribeNewsletter] Error:', error);
         return {
             success: false,
-            errors: {
-                _form: ['There was an error subscribing you. Please try again.']
-            }
+            message: 'An error occurred while processing your subscription. Please try again.'
         };
     }
 }

@@ -2,45 +2,13 @@
 
 import { Avatar, Badge, Button, Card, Grid, Group, Image, Text, Title } from '@mantine/core';
 import Link from 'next/link';
-
-interface Author {
-    name: string;
-    avatarUrl: string | null;
-}
-
-interface Tag {
-    id: string;
-    name: string;
-    color: string;
-}
-
-interface Post {
-    id: string;
-    title: string;
-    slug: string;
-    excerpt: string;
-    category: string;
-    imageUrl: string;
-    publishedAt: Date | null;
-    author: Author | null;
-    tags: Tag[];
-}
+import { LegacyBlogPost } from '../_types/types';
 
 interface PostGridProps {
-    posts: Post[];
+    posts: LegacyBlogPost[];
 }
 
 export default function PostGrid({ posts }: PostGridProps) {
-    const getCategoryColor = (category: string) => {
-        switch (category.toLowerCase()) {
-            case 'spells': return 'blue';
-            case 'potions': return 'green';
-            case 'scrolls': return 'orange';
-            case 'artifacts': return 'violet';
-            default: return 'gray';
-        }
-    };
-
     if (!posts || posts.length === 0) {
         return (
             <Text ta="center" py="xl">No posts found in this category.</Text>
@@ -64,7 +32,7 @@ export default function PostGrid({ posts }: PostGridProps) {
 
                         <div style={{ padding: '1rem' }}>
                             <Badge
-                                color={getCategoryColor(post.category)}
+                                color={post.categoryColor}
                                 mb="xs"
                             >
                                 {post.category}

@@ -27,14 +27,15 @@ export async function generateMetadata({ params }: { params: TagPageProps['param
 export default async function TagPage({ params, searchParams }: TagPageProps) {
     const tagSlug = (await params).tag.toLowerCase();
     const currentPage = Number((await searchParams).page) || 1;
-    const postsPerPage = 9;
+    //   TODO: Fetch this  metric from the database
+        const postsPerPage = 9;
 
     try {
         // Get the tag by slug with proper enum type
         const tag = await prisma.blogTag.findFirst({
             where: {
                 slug: tagSlug,
-                type: BlogTagType.BLOG, // Use enum instead of string literal
+                type: BlogTagType.BLOG,
             }
         });
 
@@ -42,13 +43,13 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
             notFound();
         }
 
-        // Get posts by tag
+        // Get posts by tag - include category in the query
         const posts = await prisma.blogPost.findMany({
             where: {
                 tags: {
                     some: {
                         slug: tagSlug,
-                    }
+                    },
                 },
                 publishedAt: {
                     not: null,
@@ -69,6 +70,13 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
                         }
                     }
                 },
+                category: {
+                    select: {
+                        name: true,
+                        slug: true,
+                        color: true
+                    }
+                },
                 tags: true,
             },
             orderBy: {
@@ -78,33 +86,21 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
             take: postsPerPage,
         });
 
-        // Get total count for pagination
-        const totalPosts = await prisma.blogPost.count({
-            where: {
-                tags: {
-                    some: {
-                        slug: tagSlug,
-                    }
-                },
-                publishedAt: {
-                    not: null,
-                }
-            },
-        });
-
-        const totalPages = Math.ceil(totalPosts / postsPerPage);
-
-        if (posts.length === 0 && currentPage === 1) {
+        const totalPosts = posts.length
+        if (totalPosts === 0 && currentPage === 1) {
             notFound();
         }
+        const totalPages = Math.ceil(totalPosts / postsPerPage);
 
-        // Map the Prisma records to the Post type expected by PostGrid
+        // Map the Prisma records to the Post type
         const formattedPosts = posts.map(post => ({
             id: post.id,
             title: post.title,
             slug: post.slug,
             excerpt: post.excerpt,
-            category: post.category.toString(),
+            category: post.category.name,
+            categorySlug: post.category.slug,
+            categoryColor: post.category.color,
             imageUrl: post.imageUrl,
             publishedAt: post.publishedAt,
             author: {
@@ -114,7 +110,7 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
             tags: post.tags.map(tag => ({
                 id: tag.id,
                 name: tag.name,
-                color: tag.color || 'gray' // Ensure color is always defined
+                color: tag.color || 'gray'
             }))
         }));
 
