@@ -1,11 +1,10 @@
-// Blog post models
-
 enum PostCategory {
     SPELLS
     POTIONS
     SCROLLS
     ARTIFACTS
 }
+
 
 model BlogPost {
     id          String       @id @default(cuid())
@@ -42,11 +41,18 @@ model BlogPost {
 //     updatedAt DateTime @updatedAt
 // }
 
+enum BlogTagType {
+    BLOG
+    INTERNAL
+}
+
 model BlogTag {
     id    String     @id @default(cuid())
     name  String     @unique
     slug  String     @unique
+    
     color String     @default("blue")
+    type  BlogTagType @default(BLOG)
     posts BlogPost[] @relation("PostToTag")
 
     createdAt DateTime @default(now())
@@ -71,37 +77,4 @@ model BlogComment {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-}
-
-model PostSubscriber {
-    id    String @id @default(cuid())
-    email String @unique
-
-    subsribedPostId String?
-    post            BlogPost? @relation(fields: [subsribedPostId], references: [id], onDelete: Cascade)
-
-    unsubscribedAt DateTime?
-    subscribedAt   DateTime  @default(now())
-    updatedAt      DateTime  @updatedAt
-}
-
-model BlogSubscriber {
-    id    String @id @default(cuid())
-    email String @unique
-
-    unsubscribedAt DateTime?
-    subscribedAt   DateTime  @default(now())
-    updatedAt      DateTime  @updatedAt
-}
-
-model CategorySubscriber {
-    id       String       @id @default(cuid())
-    email    String
-    category PostCategory
-
-    unsubscribedAt DateTime?
-    subscribedAt   DateTime  @default(now())
-    updatedAt      DateTime  @updatedAt
-
-    @@unique([email, category])
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { Avatar, Button, Group, Stack, Text, Title } from '@mantine/core';
-import { PostCategory } from '@repo/db';
+import { BlogTagType, PostCategory } from '@repo/db';
 import SocialIcon from '@repo/ui/components/shared/SocialIcon';
 import Link from 'next/link';
 import UniversalNewsletter from '../../_components/UniversalNewsletter';
@@ -24,6 +24,7 @@ interface BlogPostTag {
     name: string;
     slug: string;
     color: string;
+    type: BlogTagType; // Add the missing type field
     createdAt: Date;
     updatedAt: Date;
 }

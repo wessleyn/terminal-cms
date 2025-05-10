@@ -1,5 +1,3 @@
-// PortfolioProfile models
-
 model PortfolioProfile {
     id String @id @default(cuid())
 
@@ -38,41 +36,4 @@ model PortfolioProfileSocialLink {
     portfolioProfileId String
     createdAt          DateTime         @default(now())
     updatedAt          DateTime         @updatedAt
-}
-
-enum MeetingStatus {
-    PENDING
-    CONFIRMED
-    COMPLETED
-    CANCELLED
-    RESCHEDULED
-}
-
-model ScheduledMeeting {
-    id String @id @default(uuid())
-
-    clientName  String
-    clientEmail String
-
-    projectName        String
-    projectBudget      String
-    projectDescription String
-
-    meetingNotes ScheduledMeetingNote[]
-    status       MeetingStatus          @default(PENDING)
-
-    scheduleMeetingDate DateTime
-    createdAt           DateTime @default(now())
-    updatedAt           DateTime @updatedAt
-}
-
-model ScheduledMeetingNote {
-    id String @id @default(uuid())
-
-    scheduledMeeting   ScheduledMeeting @relation(fields: [scheduledMeetingId], references: [id], onDelete: Cascade)
-    scheduledMeetingId String
-
-    note      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
 }

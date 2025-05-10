@@ -1,6 +1,6 @@
 'use server';
 
-import { prisma } from '@repo/db';
+import { BlogTagType, prisma } from '@repo/db';
 import { revalidatePath } from 'next/cache';
 
 export async function getBlogPostBySlug(slug: string) {
@@ -28,7 +28,19 @@ export async function getBlogPostBySlug(slug: string) {
                         }
                     }
                 },
-                tags: true,
+                tags: {
+                    select: {
+                        id: true,
+                        name: true,
+                        slug: true,
+                        color: true,
+                        createdAt: true,
+                        updatedAt: true
+                    },
+                    where: {
+                        type: BlogTagType.BLOG // Use enum instead of string literal
+                    }
+                },
                 comments: {
                     where: {
                         isApproved: true,
