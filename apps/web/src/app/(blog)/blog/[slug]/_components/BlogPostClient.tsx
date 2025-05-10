@@ -1,7 +1,7 @@
 'use client';
 
 import { Avatar, Button, Group, Stack, Text, Title } from '@mantine/core';
-import { BlogTagType, PostCategory } from '@repo/db';
+import { BlogTag, PostCategory } from '@repo/db';
 import SocialIcon from '@repo/ui/components/shared/SocialIcon';
 import Link from 'next/link';
 import UniversalNewsletter from '../../_components/UniversalNewsletter';
@@ -19,16 +19,6 @@ interface BlogPostAuthor {
     socialLinks: Array<{ platform: string; url: string }>;
 }
 
-interface BlogPostTag {
-    id: string;
-    name: string;
-    slug: string;
-    color: string;
-    type: BlogTagType; // Add the missing type field
-    createdAt: Date;
-    updatedAt: Date;
-}
-
 interface PostType {
     id: string;
     title: string;
@@ -39,7 +29,7 @@ interface PostType {
     category: PostCategory;
     publishedAt: Date | null;
     author: BlogPostAuthor | null;
-    tags: BlogPostTag[];
+    tags: BlogTag[];
 }
 
 interface RelatedPost {
@@ -50,7 +40,7 @@ interface RelatedPost {
     imageUrl: string;
     category: PostCategory;
     publishedAt: Date | null;
-    tags: Array<{ id: string; color: string }>;
+    tags: BlogTag[];
 }
 
 interface BlogPostClientProps {

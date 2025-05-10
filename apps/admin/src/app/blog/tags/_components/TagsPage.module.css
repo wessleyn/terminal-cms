@@ -1,0 +1,26 @@
+.container {
+  padding: 0 1rem;
+}
+
+.searchInput {
+  flex: 1;
+  max-width: 400px;
+}
+
+.searchInputLarge {
+  flex: 1;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.searchInputLarge input {
+  font-size: 1.1rem;
+  height: 3rem;
+}
+
+.listContainer {
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  padding: 1rem;
+}

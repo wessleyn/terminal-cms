@@ -98,9 +98,6 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
             notFound();
         }
 
-        // Get description for this tag or use default
-        const description = `Explore our collection of articles related to ${tag.name}.`;
-
         // Map the Prisma records to the Post type expected by PostGrid
         const formattedPosts = posts.map(post => ({
             id: post.id,
@@ -126,7 +123,7 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
                 posts={formattedPosts}
                 tag={tag.name}
                 color={tag.color}
-                description={description}
+                description={tag.description}
                 tagSlug={tagSlug}
                 currentPage={currentPage}
                 totalPages={totalPages}

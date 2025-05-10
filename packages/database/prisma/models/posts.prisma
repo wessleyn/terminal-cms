@@ -48,7 +48,9 @@ enum BlogTagType {
 
 model BlogTag {
     id    String     @id @default(cuid())
-    name  String     @unique
+    name  String     @unique 
+    
+    description String @default("Short description of the tag")
     slug  String     @unique
     
     color String     @default("blue")
