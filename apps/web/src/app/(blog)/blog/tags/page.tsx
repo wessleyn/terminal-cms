@@ -1,4 +1,4 @@
-import { prisma } from '@repo/db';
+import { BlogTagType, prisma } from '@repo/db';
 import { Metadata } from 'next';
 import LazyTagsContent from './_components/LazyTagsContent';
 
@@ -10,9 +10,10 @@ export const metadata: Metadata = {
 };
 
 export default async function TagsPage() {
-    // Get all tags with post count
+    // Get all tags with post count - add filter for BLOG type tags only
     const tags = await prisma.blogTag.findMany({
         where: {
+            type: BlogTagType.BLOG, // Use enum instead of string literal
             posts: {
                 some: {
                     publishedAt: {

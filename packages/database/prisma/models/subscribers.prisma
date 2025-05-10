@@ -1,0 +1,33 @@
+
+model PostSubscriber {
+    id    String @id @default(cuid())
+    email String @unique
+
+    subsribedPostId String?
+    post            BlogPost? @relation(fields: [subsribedPostId], references: [id], onDelete: Cascade)
+
+    unsubscribedAt DateTime?
+    subscribedAt   DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt
+}
+
+model BlogSubscriber {
+    id    String @id @default(cuid())
+    email String @unique
+
+    unsubscribedAt DateTime?
+    subscribedAt   DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt
+}
+
+model CategorySubscriber {
+    id       String       @id @default(cuid())
+    email    String
+    category PostCategory
+
+    unsubscribedAt DateTime?
+    subscribedAt   DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt
+
+    @@unique([email, category])
+}

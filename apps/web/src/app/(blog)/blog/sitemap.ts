@@ -1,4 +1,4 @@
-import { prisma } from '@repo/db';
+import { BlogTagType, prisma } from '@repo/db';
 import { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -50,8 +50,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
     }));
 
-    // Fetch all tags (both for individual tag pages and for the tags index page)
+    // Fetch all tags - add filter for BLOG type
     const tags = await prisma.blogTag.findMany({
+        where: {
+            type: BlogTagType.BLOG, // Use enum instead of string literal
+        },
         select: {
             slug: true,
             updatedAt: true,

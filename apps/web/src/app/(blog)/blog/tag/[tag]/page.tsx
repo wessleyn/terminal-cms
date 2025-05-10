@@ -1,4 +1,4 @@
-import { prisma } from '@repo/db';
+import { BlogTagType, prisma } from '@repo/db';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import LazyTagContent from './_components/LazyTagContent';
@@ -30,10 +30,11 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
     const postsPerPage = 9;
 
     try {
-        // Get the tag by slug
+        // Get the tag by slug with proper enum type
         const tag = await prisma.blogTag.findFirst({
             where: {
                 slug: tagSlug,
+                type: BlogTagType.BLOG, // Use enum instead of string literal
             }
         });
 
@@ -152,6 +153,7 @@ export async function generateStaticParams() {
     // Get all tags that have at least one published post
     const tags = await prisma.blogTag.findMany({
         where: {
+            type: BlogTagType.BLOG, // Use enum instead of string literal
             posts: {
                 some: {
                     publishedAt: {
