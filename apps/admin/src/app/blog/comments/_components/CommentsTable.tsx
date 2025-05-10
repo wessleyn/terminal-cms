@@ -29,10 +29,11 @@ import {
 import { format } from 'date-fns';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useSearchStore } from '../../../../_stores/searchStore';
+import bulkUpdateComments from "../_actions/bulkUpdateComments";
 import { CommentWithPost } from '../_actions/fetchComments';
 import { CommentAction, updateCommentStatus } from '../_actions/updateCommentStatus';
-import bulkUpdateComments from "../_actions/bulkUpdateComments";
 import { CommentContent } from './CommentContent';
 
 interface CommentsTableProps {
@@ -42,8 +43,38 @@ interface CommentsTableProps {
 
 export function CommentsTable({ comments, emptyMessage = 'No comments found' }: CommentsTableProps) {
   const router = useRouter();
+  const searchQuery = useSearchStore(state => state.query);
   const [selectedComments, setSelectedComments] = useState<string[]>([]);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [filteredComments, setFilteredComments] = useState<CommentWithPost[]>(comments);
+
+  // Filter comments based on search query
+  const applySearchFilter = useCallback(() => {
+    if (!searchQuery.trim()) {
+      setFilteredComments(comments);
+      return;
+    }
+
+    const query = searchQuery.toLowerCase();
+    const filtered = comments.filter(comment =>
+      comment.content.toLowerCase().includes(query) ||
+      comment.authorName.toLowerCase().includes(query) ||
+      comment.authorEmail.toLowerCase().includes(query) ||
+      comment.post?.title?.toLowerCase().includes(query)
+    );
+
+    setFilteredComments(filtered);
+  }, [comments, searchQuery]);
+
+  // Apply search filter when query changes
+  useEffect(() => {
+    applySearchFilter();
+  }, [applySearchFilter, searchQuery]);
+
+  // Reset selection when filtered comments change
+  useEffect(() => {
+    setSelectedComments([]);
+  }, [filteredComments]);
 
   const handleSelectComment = (commentId: string) => {
     setSelectedComments((current) => {
@@ -56,10 +87,10 @@ export function CommentsTable({ comments, emptyMessage = 'No comments found' }: 
   };
 
   const handleSelectAll = () => {
-    if (selectedComments.length === comments.length) {
+    if (selectedComments.length === filteredComments.length) {
       setSelectedComments([]);
     } else {
-      setSelectedComments(comments.map((comment) => comment.id));
+      setSelectedComments(filteredComments.map((comment) => comment.id));
     }
   };
 
@@ -200,10 +231,12 @@ export function CommentsTable({ comments, emptyMessage = 'No comments found' }: 
     }
   };
 
-  if (comments.length === 0) {
+  if (filteredComments.length === 0) {
     return (
       <Paper p="xl" radius="md" withBorder style={{ textAlign: 'center' }}>
-        <Text c="dimmed">{emptyMessage}</Text>
+        <Text c="dimmed">
+          {searchQuery ? `No comments matching "${searchQuery}"` : emptyMessage}
+        </Text>
       </Paper>
     );
   }
@@ -258,8 +291,8 @@ export function CommentsTable({ comments, emptyMessage = 'No comments found' }: 
             <Table.Tr>
               <Table.Th style={{ width: 40 }}>
                 <Checkbox
-                  checked={selectedComments.length === comments.length && comments.length > 0}
-                  indeterminate={selectedComments.length > 0 && selectedComments.length < comments.length}
+                  checked={selectedComments.length === filteredComments.length && filteredComments.length > 0}
+                  indeterminate={selectedComments.length > 0 && selectedComments.length < filteredComments.length}
                   onChange={handleSelectAll}
                 />
               </Table.Th>
@@ -271,7 +304,7 @@ export function CommentsTable({ comments, emptyMessage = 'No comments found' }: 
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {comments.map((comment) => (
+            {filteredComments.map((comment) => (
               <Table.Tr key={comment.id}>
                 <Table.Td>
                   <Checkbox
