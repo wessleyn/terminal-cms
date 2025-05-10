@@ -234,9 +234,9 @@
 
 /* Secondary Sidebar Styles */
 .secondarySidebar {
-  position: fixed;
+  /* position: fixed;
   left: 80px;
-  top: 0;
+  top: 0; */
   width: 220px;
   height: 100vh;
   background-color: light-dark(
