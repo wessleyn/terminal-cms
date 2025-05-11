@@ -1,0 +1,249 @@
+.secondarySidebar {
+  width: 220px;
+  height: 100vh;
+  background-color: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-6)
+  );
+  border-right: 1px solid
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  padding: var(--mantine-spacing-md);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  z-index: 99;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease,
+    left 0.3s ease,
+    width 0.3s ease;
+  scrollbar-width: none;
+}
+
+.secondarySidebar::-webkit-scrollbar {
+  display: none;
+}
+
+/* For mobile, when hidden, move it off-screen */
+.secondarySidebarHidden {
+  transform: translateX(-100%);
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* For desktop, collapsed state - icon-only view */
+.secondarySidebarCollapsed {
+  width: 70px;
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-xs);
+}
+
+/* Header styles with root icon */
+.secondarySidebarHeader {
+  padding-bottom: var(--mantine-spacing-md);
+  margin-bottom: var(--mantine-spacing-md);
+  border-bottom: 1px solid
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  display: flex;
+  align-items: center;
+}
+
+.secondarySidebarHeader .headerContent {
+  flex: 1;
+}
+
+.rootIcon {
+  margin-right: var(--mantine-spacing-xs);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* In collapsed mode, keep only the icon and hide the title */
+.secondarySidebarCollapsed .secondarySidebarHeader {
+  justify-content: center;
+  border-bottom: none;
+  display: flex;
+}
+
+.secondarySidebarCollapsed .secondarySidebarHeader .headerContent {
+  display: none;
+}
+
+.secondarySidebarCollapsed .rootIcon {
+  margin-right: 0;
+}
+
+/* Wrapper for non-section items */
+.nonSectionItems {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+}
+
+/* Section styles with improved spacing and centering */
+.secondarySidebarSection {
+  margin-top: var(--mantine-spacing-xl);
+  margin-bottom: var(--mantine-spacing-md);
+  position: relative;
+}
+
+/* Hide section title in collapsed mode */
+.secondarySidebarCollapsed .secondarySidebarSectionTitle {
+  display: none;
+}
+
+/* Section title styles */
+.secondarySidebarSectionTitle {
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-green-4);
+  font-weight: 600;
+  margin-bottom: var(--mantine-spacing-xs);
+  text-align: center;
+  padding: 0 var(--mantine-spacing-xs);
+}
+
+/* Improved section divider for collapsed state */
+.secondarySidebarCollapsed .secondarySidebarSection {
+  position: relative;
+  height: 1px; /* Thinner height for the divider itself */
+  margin: var(--mantine-spacing-xl) 0; /* More space around the divider */
+  background-color: light-dark(
+    var(--mantine-color-gray-3),
+    var(--mantine-color-dark-4)
+  );
+  border: none;
+  padding: 0;
+  overflow: visible;
+}
+
+/* Remove the ::before pseudo-element since we're making the section itself the divider */
+.secondarySidebarCollapsed .secondarySidebarSection::before {
+  content: none;
+}
+
+.sectionItems {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+}
+
+/* Ensure proper spacing in collapsed mode */
+.secondarySidebarCollapsed .sectionItems {
+  margin-top: var(--mantine-spacing-md);
+}
+
+/* Secondary link styles */
+.secondaryLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
+  padding: var(--mantine-spacing-xs);
+  border-radius: var(--mantine-radius-sm);
+  font-size: var(--mantine-font-size-sm);
+  margin-bottom: 0; /* Remove margin bottom to match collapsed spacing */
+  font-weight: 500;
+  transition: all 0.2s ease;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Secondary link collapsed style - icon only */
+.secondaryLinkCollapsed {
+  justify-content: center;
+  padding: var(--mantine-spacing-xs) 0;
+}
+
+.secondaryLinkCollapsed .secondaryLinkMain {
+  justify-content: center;
+}
+
+.secondaryLink:hover {
+  background-color: light-dark(
+    var(--mantine-color-gray-1),
+    var(--mantine-color-dark-5)
+  );
+}
+
+.secondaryLinkMain {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.secondaryLinkIcon {
+  margin-right: var(--mantine-spacing-sm);
+  width: 20px;
+  height: 20px;
+}
+
+.secondaryLinkCollapsed .secondaryLinkIcon {
+  margin-right: 0;
+}
+
+.secondaryLinkBadge {
+  background-color: light-dark(
+    var(--mantine-color-blue-1),
+    var(--mantine-color-blue-9)
+  );
+  color: light-dark(var(--mantine-color-blue-9), var(--mantine-color-blue-1));
+  font-size: var(--mantine-font-size-xs);
+  border-radius: var(--mantine-radius-xl);
+  padding: 2px 8px;
+  font-weight: 600;
+}
+
+.statusIndicator {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--mantine-color-green-6);
+  border: 2px solid
+    light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+}
+
+/* Backdrop for secondary sidebar on mobile */
+.secondarySidebarBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 98;
+}
+
+/* Avatar status positioning */
+.avatarStatus {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .secondarySidebar {
+    left: 80px;
+  }
+}
+
+/* Mobile secondary sidebar */
+@media (max-width: 768px) {
+  .secondarySidebar {
+    left: 0;
+    width: 280px;
+    transform: translateX(-100%);
+  }
+
+  .secondarySidebarVisible {
+    transform: translateX(0);
+  }
+}

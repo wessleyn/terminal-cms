@@ -3,7 +3,7 @@
 import { TextInput } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons-react';
-import { useSearchRouteHandler, useSearchStore } from '../_stores/searchStore';
+import { useSearchRouteHandler, useSearchStore } from '../../_stores/searchStore';
 
 export default function GlobalSearch() {
   const { query, isSearchVisible, setQuery, hideSearch, showSearch } = useSearchStore();

@@ -1,8 +1,7 @@
 import {
+  IconBrandBlogger,
   IconBrandTabler,
   IconBriefcase,
-  IconBuildingSkyscraper,
-  IconCalculator,
   IconCalendarTime,
   IconCategory,
   IconFileBroken as IconDraft,
@@ -12,9 +11,7 @@ import {
   IconLicense,
   IconLogout,
   IconMailCode,
-  IconPhoneRinging as IconMegaphone,
   IconMessage2,
-  IconMessagePlus,
   IconPhoto,
   IconSend,
   IconSettings,
@@ -25,7 +22,7 @@ import {
   IconTags,
   IconTrash,
   IconUsers,
-  IconUserScan,
+  IconUserScan
 } from "@tabler/icons-react";
 import { SidebarTabs } from "./types";
 
@@ -47,22 +44,13 @@ export const sideBarTabs: SidebarTabs = {
         { link: "/emails/trash", label: "Trash", icon: IconTrash },
         { link: "/emails/spam", label: "Spam", icon: IconSpam },
         {
-          section: "MESSAGE CATEGORIES",
+          section: "", // FIXME:not very visual friendly in uncollapsed steps
           items: [
-            { link: "/emails/my-works", label: "My works", icon: IconBriefcase, color: "yellow" },
-            { link: "/emails/accountant", label: "Accountant", icon: IconCalculator, color: "blue", count: 45 },
-            { link: "/emails/works", label: "Works", icon: IconBuildingSkyscraper, color: "red", count: 87 },
-            { link: "/emails/marketing", label: "Marketing", icon: IconMegaphone, color: "teal", count: 197 },
+            { link: "/emails/blog", label: "Blog", icon: IconBrandBlogger, color: "blue", count: 45 },
+            { link: "/emails/works", label: "Work Mails", icon: IconBriefcase, color: "yellow" },
+            { link: "/emails/jobs", label: "Applications", icon: IconFileCv, color: "red", count: 87 },
           ]
         },
-        {
-          section: "RECENT CHATS",
-          items: [
-            { link: "/emails/new-chat", label: "Start New Chat", icon: IconMessagePlus, special: "new" },
-            { link: "/emails/chat/david", label: "David Jankowski", avatar: "/images/avatars/david.jpg", status: "online" },
-            { link: "/emails/chat/anna", label: "Anna Zorko", avatar: "/images/avatars/anna.jpg", count: 1 },
-          ]
-        }
       ]
     },
     { link: "/privacy", label: "Privacy", icon: IconSpyOff },
@@ -74,7 +62,8 @@ export const sideBarTabs: SidebarTabs = {
     { link: "/blog/posts", label: "Posts", icon: IconLicense },
     { link: "/blog/categories", label: "Categories", icon: IconCategory },
     { link: "/blog/tags", label: "Tags", icon: IconTags },
-    { link: "/blog/media", label: "Media", icon: IconPhoto },
+    {
+      link: "/blog/media", label: "Media", icon: IconPhoto, secondary: []},
     { link: "/blog/comments", label: "Comments", icon: IconMessage2 },
     { link: "/blog/users", label: "Users", icon: IconUsers },
   ],
