@@ -6,7 +6,7 @@
     "./components/*": "./src/components/*/index.tsx",
     "./hooks/*": "./src/hooks/*/index.ts",
     "./utils/*": "./src/utils/*/index.ts"
-    },
+  },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "clean": "rm -rf dist && rm -rf node_modules",
@@ -48,6 +48,7 @@
     "@tiptap/pm": "^2.2.0",
     "@tiptap/react": "^2.2.0",
     "@tiptap/starter-kit": "^2.2.0",
+    "cloudinary": "^2.6.1",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.10",
     "embla-carousel-react": "^8.0.0",
