@@ -4,33 +4,16 @@
 
 ## Project Showcase
 
-<div align="center">
-  <h3>Portfolio & Admin Dashboard</h3>
-  <p>Swipe/scroll through screenshots of the portfolio and admin CMS</p>
+### Portfolio & Admin Dashboard
 
-  <table>
-    <tr>
-      <td align="center">
-        <img src="./assets/screenshots/portfolio-home.png" alt="Portfolio Homepage" width="100%"/>
-        <p>Portfolio Homepage</p>
-      </td>
-      <td align="center">
-        <img src="./assets/screenshots/admin-dashboard.png" alt="Admin Dashboard" width="100%"/>
-        <p>Admin CMS Dashboard</p>
-      </td>
-    </tr>
-    <tr>
-      <td align="center">
-        <img src="./assets/screenshots/portfolio-blog.png" alt="Blog Section" width="100%"/>
-        <p>Blog Section</p>
-      </td>
-      <td align="center">
-        <img src="./assets/screenshots/admin-blog-editor.png" alt="Blog Editor" width="100%"/>
-        <p>Admin Blog Editor</p>
-      </td>
-    </tr>
-  </table>
-</div>
+Swipe/scroll through screenshots of the portfolio and admin CMS
+
+|                                                                |                                                              |
+| :------------------------------------------------------------: | :----------------------------------------------------------: |
+| ![Portfolio Homepage](./assets/screenshots/portfolio-home.png) | ![Admin Dashboard](./assets/screenshots/admin-dashboard.png) |
+|                       Portfolio Homepage                       |                     Admin CMS Dashboard                      |
+|    ![Blog Section](./assets/screenshots/portfolio-blog.png)    |  ![Blog Editor](./assets/screenshots/admin-blog-editor.png)  |
+|                          Blog Section                          |                      Admin Blog Editor                       |
 
 ## Tech Stack
 
