@@ -1,6 +1,36 @@
 # Terminal Portfolio + Blog + CMS
 
-A monorepo project containing a terminal-themed portfolio website with integrated blog and content management system.
+![hacktime](https://hackatime-badge.hackclub.com/U08RWLFGRKN/terminal-portfolio)
+
+## Project Showcase
+
+<div align="center">
+  <h3>Portfolio & Admin Dashboard</h3>
+  <p>Swipe/scroll through screenshots of the portfolio and admin CMS</p>
+
+  <table>
+    <tr>
+      <td align="center">
+        <img src="./assets/screenshots/portfolio-home.png" alt="Portfolio Homepage" width="100%"/>
+        <p>Portfolio Homepage</p>
+      </td>
+      <td align="center">
+        <img src="./assets/screenshots/admin-dashboard.png" alt="Admin Dashboard" width="100%"/>
+        <p>Admin CMS Dashboard</p>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="./assets/screenshots/portfolio-blog.png" alt="Blog Section" width="100%"/>
+        <p>Blog Section</p>
+      </td>
+      <td align="center">
+        <img src="./assets/screenshots/admin-blog-editor.png" alt="Blog Editor" width="100%"/>
+        <p>Admin Blog Editor</p>
+      </td>
+    </tr>
+  </table>
+</div>
 
 ## Tech Stack
 
@@ -53,18 +83,28 @@ This is a monorepo built with Turborepo containing multiple applications:
 
 1. Clone the repository:
 
-   ```
+   ```bash
    git clone https://github.com/wessleyn/terminal-portfolio.git
    cd terminal-portfolio
    ```
 
 2. Install dependencies:
 
-   ```
+   ```bash
    npm install
    ```
 
-3. Set up environment variables:
+3. Setup Prisma locally
+
+   - Run the following command to create a local PostgreSQL database:
+
+   ```bash
+   npx prisma dev
+   ```
+
+   ![alt text](./assets/localPrisma.png)
+
+4. Set up environment variables:
 
    Create `.env` files in both the `apps/web`, `apps/admin`, and `packages/database` directories using the example files provided:
 
@@ -86,58 +126,61 @@ This is a monorepo built with Turborepo containing multiple applications:
 
    Refer to the Environment Variables section below for more details.
 
-4. Generate Prisma client:
+5. Generate Prisma client:
 
-   ```
+   ```bash
    npm run db:generate
    ```
 
-5. Run database migrations:
-   ```
+6. Run database migrations:
+
+   ```bash
    npm run db:migrate
    ```
+
+7. **⚠️ ⚠️ Make sure to change your user account to admin after signing up , otherwise you wont't access the cms!!**
 
 ### Development Environment
 
 Run the development server for all applications:
 
-```
+````bash
 npm run dev
-```
+```bash
 
 To run only specific apps:
 
-```
+```bash
 npm run dev:web     # Run only web app
 npm run dev:admin   # Run only admin app
-```
+```bash
 
 For local HTTPS development (with self-signed certificates):
 
-```
+```bash
 npm run devStart    # Uses Next.js experimental HTTPS
-```
+```bash
 
 ### Production Environment
 
 Build all applications:
 
-```
+```bash
 npm run build
-```
+```bash
 
 Start all applications in production mode:
 
-```
+```bash
 npm run start:web     # Start web app in production mode
 npm run start:admin   # Start admin app in production mode
-```
+```bash
 
 ## Environment Variables
 
 ### Web App (apps/web/.env)
 
-```
+```bash
 # App URLs
 WEB_PUBLIC_URL=https://yourdomain.com
 ADMIN_PUBLIC_URL=https://admin.yourdomain.com
@@ -159,11 +202,11 @@ AUTH_GOOGLE_SECRET=your_google_oauth_secret
 # Email Service
 RESEND_API_KEY=your_resend_api_key
 RESEND_MAILING_ADDRESS=noreply@yourdomain.com
-```
+```bash
 
 ### Admin App (apps/admin/.env)
 
-```
+```bash
 # App URLs
 WEB_PUBLIC_URL=https://yourdomain.com
 ADMIN_PUBLIC_URL=https://admin.yourdomain.com
@@ -175,7 +218,7 @@ DATABASE_URL=postgresql://username:password@localhost:5432/terminal_portfolio
 AUTH_SECRET=your_auth_secret_key
 AUTH_TRUST_HOST=true
 PUBLIC_DOMAIN=yourdomain.com
-```
+```bash
 
 ## Deployment Notes
 
@@ -191,7 +234,7 @@ For production builds, the project is configured to use Prisma's `--no-engine` f
 
 ## Commands Reference
 
-```
+```bash
 # Development
 npm run dev            # Start all apps in dev mode
 npm run dev:web        # Start web app in dev mode
@@ -212,7 +255,7 @@ npm run db:deploy      # Deploy database changes to production
 npm run lint           # Run linting
 npm run check-types    # Run type checking
 npm run format         # Format code with prettier
-```
+```bash
 
 ## Script Naming Conventions
 
@@ -226,11 +269,11 @@ We've decisively adopted the `<action>:<scope>` pattern for our scripts (using `
 
 Our actual implementation proves this works:
 
-```
+```bash
 dev:admin    # One command - admin env running
 dev:web      # One command - web app running
 dev:email    # One command - email service running
-```
+```bash
 
 This approach isn't theoretical - it's battle-tested across our workflow. The colon isn't just syntax; it's our organizing principle that keeps commands predictable and efficient as the project scales.
 
@@ -238,10 +281,10 @@ This approach isn't theoretical - it's battle-tested across our workflow. The co
 
 The project includes self-signed certificates for local HTTPS development. If you need to generate new ones:
 
-```
+```bash
 npx mkcert create-ca
 npx mkcert create-cert --domains localhost
-```
+```bash
 
 Move the generated certificates to:
 
@@ -251,3 +294,4 @@ Move the generated certificates to:
 ## License
 
 [MIT License](LICENSE)
+````

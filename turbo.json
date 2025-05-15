@@ -19,6 +19,7 @@
       ],
       "dependsOn": [
         "^build",
+        "^db:deploy",
         "^db:generate:prod"
       ],
       "inputs": [
@@ -77,7 +78,8 @@
     },
     "dev": {
       "dependsOn": [
-        "^db:generate"
+        "^db:generate",
+        "^db:dev"
       ],
       "cache": false,
       "persistent": true
@@ -86,6 +88,10 @@
       "dependsOn": [
         "^db:generate"
       ],
+      "cache": false,
+      "persistent": true
+    },
+    "db:dev": {
       "cache": false,
       "persistent": true
     },

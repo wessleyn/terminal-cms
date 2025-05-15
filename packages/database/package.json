@@ -11,8 +11,9 @@
     "seed": "tsx ./prisma/seed/seed.ts"
   },
   "scripts": {
+    "db:dev": "prisma dev",
     "db:generate": "prisma generate",
-    "db:generate:prod": "prisma generate",
+    "db:generate:prod": "prisma generate --no-engine",
     "db:migrate": "prisma migrate dev --skip-generate",
     "db:deploy": "prisma migrate deploy",
     "db:prebuild": "npm run db:generate:prod",
@@ -26,10 +27,10 @@
   },
   "devDependencies": {
     "@types/node": "^22.15.2",
-    "prisma": "^6.7.0",
+    "prisma": "^6.8.1",
     "tsx": "^4.19.3"
   },
   "dependencies": {
-    "@prisma/client": "^6.7.0"
+    "@prisma/client": "^6.8.1"
   }
 }
