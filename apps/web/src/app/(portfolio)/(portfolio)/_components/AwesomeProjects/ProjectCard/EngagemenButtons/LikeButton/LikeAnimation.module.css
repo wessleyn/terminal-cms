@@ -1,0 +1,86 @@
+.heartAnimationContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.heartAnimation {
+  position: absolute;
+  color: #ff0033;
+  opacity: 0;
+  transform: scale(0.1);
+  animation: heartBeat 1.5s forwards;
+  filter: drop-shadow(0 0 20px rgba(255, 0, 51, 0.9));
+}
+
+/* Add multiple hearts with different sizes and animations */
+.heartAnimation::before,
+.heartAnimation::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ff0033;
+  border-radius: 50%;
+  opacity: 0;
+  z-index: -1;
+  animation: pulse 1.5s forwards;
+}
+
+.heartAnimation::before {
+  animation-delay: 0.2s;
+}
+
+.heartAnimation::after {
+  animation-delay: 0.4s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.1);
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes heartBeat {
+  0% {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+  20% {
+    opacity: 0.8;
+    transform: scale(2.5);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(2);
+  }
+  60% {
+    opacity: 0.8;
+    transform: scale(3);
+  }
+  80% {
+    opacity: 0.6;
+    transform: scale(3.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(4);
+  }
+}
