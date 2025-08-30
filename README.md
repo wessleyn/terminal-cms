@@ -8,12 +8,12 @@
 
 Swipe/scroll through screenshots of the portfolio and admin CMS
 
-|                                                                |                                                              |
-| :------------------------------------------------------------: | :----------------------------------------------------------: |
-| ![Portfolio Homepage](./assets/screenshots/portfolio-home.png) | ![Admin Dashboard](./assets/screenshots/admin-dashboard.png) |
-|                       Portfolio Homepage                       |                     Admin CMS Dashboard                      |
-|    ![Blog Section](./assets/screenshots/portfolio-blog.png)    |  ![Blog Editor](./assets/screenshots/admin-blog-editor.png)  |
-|                          Blog Section                          |                      Admin Blog Editor                       |
+|                                                                |                                                        |
+| :------------------------------------------------------------: | :----------------------------------------------------: |
+| ![Portfolio Homepage](./assets/screenshots/portfolio-home.jpg) | ![Blog Section](./assets/screenshots/portfolio-blog.png) |
+|                       Portfolio Homepage                       |                     Blog Section                      |
+| ![Admin Dashboard](./assets/screenshots/admin-dashboard.png) | ![Blog Editor](./assets/screenshots/admin-blog-editor.png) |
+|                       Portfolio Dashboard                      |                  Admin Blog Editor                    |
 
 ## Tech Stack
 
@@ -123,26 +123,34 @@ This is a monorepo built with Turborepo containing multiple applications:
 
 7. **⚠️ ⚠️ Make sure to change your user account to admin after signing up , otherwise you wont't access the cms!!**
 
-### Development Environment
+## Development Environment
 
 Run the development server for all applications:
 
-````bash
-npm run dev
 ```bash
+npm run dev
+```
 
 To run only specific apps:
 
 ```bash
 npm run dev:web     # Run only web app
 npm run dev:admin   # Run only admin app
-```bash
+```
 
 For local HTTPS development (with self-signed certificates):
 
 ```bash
 npm run devStart    # Uses Next.js experimental HTTPS
+npm run dev:web     # Run only web app
+npm run dev:admin   # Run only admin app
+```
+
+For local HTTPS development (with self-signed certificates):
+
 ```bash
+npm run devStart    # Uses Next.js experimental HTTPS
+```
 
 ### Production Environment
 
@@ -150,14 +158,14 @@ Build all applications:
 
 ```bash
 npm run build
-```bash
+```
 
 Start all applications in production mode:
 
 ```bash
 npm run start:web     # Start web app in production mode
 npm run start:admin   # Start admin app in production mode
-```bash
+```
 
 ## Environment Variables
 
@@ -185,7 +193,7 @@ AUTH_GOOGLE_SECRET=your_google_oauth_secret
 # Email Service
 RESEND_API_KEY=your_resend_api_key
 RESEND_MAILING_ADDRESS=noreply@yourdomain.com
-```bash
+```
 
 ### Admin App (apps/admin/.env)
 
@@ -201,7 +209,7 @@ DATABASE_URL=postgresql://username:password@localhost:5432/terminal_portfolio
 AUTH_SECRET=your_auth_secret_key
 AUTH_TRUST_HOST=true
 PUBLIC_DOMAIN=yourdomain.com
-```bash
+```
 
 ## Deployment Notes
 
@@ -238,27 +246,7 @@ npm run db:deploy      # Deploy database changes to production
 npm run lint           # Run linting
 npm run check-types    # Run type checking
 npm run format         # Format code with prettier
-```bash
-
-## Script Naming Conventions
-
-We've decisively adopted the `<action>:<scope>` pattern for our scripts (using `dev:admin` instead of `admin:dev`). This isn't just preference - it's a strategic choice that gives us concrete advantages:
-
-### Why We Commit to `<action>:<scope>`
-
-- **Command Control**: We group by action first because it's what you're trying to do. Need all dev environments? Just `npm run dev:*` and you're set.
-- **Instant Recognition**: When scanning our `package.json`, you immediately know what each script does before seeing where it applies.
-- **Team Alignment**: Following established npm patterns means new developers join with zero friction - they already understand our naming structure.
-
-Our actual implementation proves this works:
-
-```bash
-dev:admin    # One command - admin env running
-dev:web      # One command - web app running
-dev:email    # One command - email service running
-```bash
-
-This approach isn't theoretical - it's battle-tested across our workflow. The colon isn't just syntax; it's our organizing principle that keeps commands predictable and efficient as the project scales.
+```
 
 ## Certificate Setup for Local HTTPS Development
 
@@ -267,7 +255,7 @@ The project includes self-signed certificates for local HTTPS development. If yo
 ```bash
 npx mkcert create-ca
 npx mkcert create-cert --domains localhost
-```bash
+```
 
 Move the generated certificates to:
 
@@ -277,4 +265,3 @@ Move the generated certificates to:
 ## License
 
 [MIT License](LICENSE)
-````
