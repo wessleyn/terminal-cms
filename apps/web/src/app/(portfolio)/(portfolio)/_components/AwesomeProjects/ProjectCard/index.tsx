@@ -14,10 +14,10 @@ import TechTags from '@repo/ui/components/shared/TechTags';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import engageAwesomeProj, { projectEngagement } from '../../../../_actions/engageAwesomeProj';
-import classes from './ProjectCard.module.css';
-import ShareButton from './EngagemenButtons/ShareButton';
-import LikeButton from './EngagemenButtons/LikeButton';
 import BookmarkButton from './EngagemenButtons/BookmarkButton';
+import LikeButton from './EngagemenButtons/LikeButton';
+import ShareButton from './EngagemenButtons/ShareButton';
+import classes from './ProjectCard.module.css';
 
 // Define type for our project with engagement data
 type ProjectWithEngagement = Project & {

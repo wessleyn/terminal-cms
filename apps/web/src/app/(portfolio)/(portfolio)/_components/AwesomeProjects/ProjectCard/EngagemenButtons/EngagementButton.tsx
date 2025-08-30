@@ -42,6 +42,7 @@ const EngagementButton = ({
                 size={48}
                 radius="md"
                 variant="light"
+                bg="transparent"
                 color={color}
                 style={largeIconStyle}
             >
