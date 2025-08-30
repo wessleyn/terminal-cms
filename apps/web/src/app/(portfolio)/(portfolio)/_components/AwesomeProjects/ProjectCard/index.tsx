@@ -16,16 +16,13 @@ import { Project } from '@repo/db';
 import TechTags from '@repo/ui/components/shared/TechTags';
 import { IconBookmark, IconHeart, IconShare } from '@tabler/icons-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import engageAwesomeProj, { projectEngagement } from '../../../../_actions/engageAwesomeProj';
 import classes from './ProjectCard.module.css';
 
 // Define type for our project with engagement data
 type ProjectWithEngagement = Project & {
-    projectEngagement?: {
-        shares: number;
-        bookmarks: number;
-        likes: number
-    }
+    projectEngagement?: projectEngagement
 };
 
 const ProjectCard = ({ project }: { project: ProjectWithEngagement }) => {
@@ -46,12 +43,11 @@ const ProjectCard = ({ project }: { project: ProjectWithEngagement }) => {
     const [hoverBookmark, setHoverBookmark] = useState(false);
     const [hoverShare, setHoverShare] = useState(false);
 
-    // Get engagement counts with fallbacks from the projectEngagement relation
-    const likeCount = project.projectEngagement?.likes ?? 0;
-    const bookmarkCount = project.projectEngagement?.bookmarks ?? 0;
-    const shareCount = project.projectEngagement?.shares ?? 0;
+    // State for counts
+    const [likeCount, setLikeCount] = useState(project.projectEngagement?.likes ?? 0);
+    const [bookmarkCount, setBookmarkCount] = useState(project.projectEngagement?.bookmarks ?? 0);
+    const [shareCount, setShareCount] = useState(project.projectEngagement?.shares ?? 0);
 
-    // Define larger icon style to override any CSS constraints
     const largeIconStyle = {
         minWidth: '42px',
         minHeight: '42px',
@@ -62,13 +58,27 @@ const ProjectCard = ({ project }: { project: ProjectWithEngagement }) => {
         justifyContent: 'center',
     };
 
+
+    useEffect(() => {
+        engageAwesomeProj(
+            {
+                likes: likeCount,
+                bookmarks: bookmarkCount,
+                shares: shareCount
+            },
+            project.id
+        );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [likeCount, bookmarkCount, shareCount]);
+
     return (
         <Card withBorder radius="md" className={classes.card} component="article">
             <Card.Section>
                 <Link {...linkProps}>
                     <Image alt={project.title}
                         src={project.imageUrl || 'https://images.unsplash.com/photo-1601758123927-1c2f8b3a4d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60'}
-                        height={180} 
+                        height={100}
+                        width={100}
                         layout="responsive"
                     />
                 </Link>
@@ -99,7 +109,11 @@ const ProjectCard = ({ project }: { project: ProjectWithEngagement }) => {
                     <Tooltip label={liked ? "Unlike" : "Like"} withArrow position="top">
                         <ActionIcon
                             className={`${classes.action} d-flex gap-2`}
-                            onClick={() => setLiked(!liked)}
+                            onClick={() => {
+                                const newLiked = !liked;
+                                setLiked(newLiked);
+                                setLikeCount(prev => newLiked ? prev + 1 : prev - 1);
+                            }}
                             onMouseEnter={() => setHoverHeart(true)}
                             onMouseLeave={() => setHoverHeart(false)}
                             size={48}
@@ -120,7 +134,11 @@ const ProjectCard = ({ project }: { project: ProjectWithEngagement }) => {
                     <Tooltip label={bookmarked ? "Remove bookmark" : "Bookmark"} withArrow position="top">
                         <ActionIcon
                             className={classes.action}
-                            onClick={() => setBookmarked(!bookmarked)}
+                            onClick={() => {
+                                const newBookmarked = !bookmarked;
+                                setBookmarked(newBookmarked);
+                                setBookmarkCount(prev => newBookmarked ? prev + 1 : prev - 1);
+                            }}
                             onMouseEnter={() => setHoverBookmark(true)}
                             onMouseLeave={() => setHoverBookmark(false)}
                             size={48}
@@ -142,7 +160,11 @@ const ProjectCard = ({ project }: { project: ProjectWithEngagement }) => {
                     <Tooltip label="Share" withArrow position="top">
                         <ActionIcon
                             className={classes.action}
-                            onClick={() => setShared(!shared)}
+                            onClick={() => {
+                                const newShared = !shared;
+                                setShared(newShared);
+                                setShareCount(prev => newShared ? prev + 1 : prev - 1);
+                            }}
                             onMouseEnter={() => setHoverShare(true)}
                             onMouseLeave={() => setHoverShare(false)}
                             size={48}
