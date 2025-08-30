@@ -1,24 +1,23 @@
 'use client'
 import {
-    ActionIcon,
     Badge,
     Card,
     Center,
     Group,
-    Text,
-    Tooltip,
-    useMantineTheme
+    Text
 } from '@mantine/core';
 
 import Image from 'next/image';
 
 import { Project } from '@repo/db';
 import TechTags from '@repo/ui/components/shared/TechTags';
-import { IconBookmark, IconHeart, IconShare } from '@tabler/icons-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import engageAwesomeProj, { projectEngagement } from '../../../../_actions/engageAwesomeProj';
 import classes from './ProjectCard.module.css';
+import ShareButton from './EngagemenButtons/ShareButton';
+import LikeButton from './EngagemenButtons/LikeButton';
+import BookmarkButton from './EngagemenButtons/BookmarkButton';
 
 // Define type for our project with engagement data
 type ProjectWithEngagement = Project & {
@@ -26,37 +25,16 @@ type ProjectWithEngagement = Project & {
 };
 
 const ProjectCard = ({ project }: { project: ProjectWithEngagement }) => {
-    const theme = useMantineTheme();
     const isLive = !!project.liveUrl
     const linkProps = {
         href: project.liveUrl ?? `\\projects\\${project.id}`,
         target: isLive ? '_blank' : ''
     };
 
-    // State for tracking liked, bookmarked, and shared status
-    const [liked, setLiked] = useState(false);
-    const [bookmarked, setBookmarked] = useState(false);
-    const [shared, setShared] = useState(false);
-
-    // State for hover effects
-    const [hoverHeart, setHoverHeart] = useState(false);
-    const [hoverBookmark, setHoverBookmark] = useState(false);
-    const [hoverShare, setHoverShare] = useState(false);
-
     // State for counts
     const [likeCount, setLikeCount] = useState(project.projectEngagement?.likes ?? 0);
     const [bookmarkCount, setBookmarkCount] = useState(project.projectEngagement?.bookmarks ?? 0);
     const [shareCount, setShareCount] = useState(project.projectEngagement?.shares ?? 0);
-
-    const largeIconStyle = {
-        minWidth: '42px',
-        minHeight: '42px',
-        width: '42px',
-        height: '42px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    };
 
 
     useEffect(() => {
@@ -106,82 +84,23 @@ const ProjectCard = ({ project }: { project: ProjectWithEngagement }) => {
                 </Center>
 
                 <Group gap={16} mr={0}>
-                    <Tooltip label={liked ? "Unlike" : "Like"} withArrow position="top">
-                        <ActionIcon
-                            className={`${classes.action} d-flex gap-2`}
-                            onClick={() => {
-                                const newLiked = !liked;
-                                setLiked(newLiked);
-                                setLikeCount(prev => newLiked ? prev + 1 : prev - 1);
-                            }}
-                            onMouseEnter={() => setHoverHeart(true)}
-                            onMouseLeave={() => setHoverHeart(false)}
-                            size={48}
-                            radius="md"
-                            variant="light"
-                            color="red"
-                            style={largeIconStyle}
-                        >
-                            <IconHeart
-                                color={theme.colors.red[6]}
-                                fill={liked || hoverHeart ? theme.colors.red[6] : 'transparent'}
-                                style={{ transition: 'fill 200ms ease' }}
-                            />
-                            <Text size='md'>{likeCount}</Text>
-                        </ActionIcon>
-                    </Tooltip>
+                    <LikeButton
+                        initialLiked={false}
+                        initialCount={project.projectEngagement?.likes ?? 0}
+                        onLikeChange={(newCount) => setLikeCount(newCount)}
+                    />
 
-                    <Tooltip label={bookmarked ? "Remove bookmark" : "Bookmark"} withArrow position="top">
-                        <ActionIcon
-                            className={classes.action}
-                            onClick={() => {
-                                const newBookmarked = !bookmarked;
-                                setBookmarked(newBookmarked);
-                                setBookmarkCount(prev => newBookmarked ? prev + 1 : prev - 1);
-                            }}
-                            onMouseEnter={() => setHoverBookmark(true)}
-                            onMouseLeave={() => setHoverBookmark(false)}
-                            size={48}
-                            radius="md"
-                            variant="light"
-                            color="yellow"
-                            style={largeIconStyle}
-                        >
-                            <IconBookmark
-                                size={40}
-                                color={theme.colors.yellow[7]}
-                                fill={bookmarked || hoverBookmark ? theme.colors.yellow[7] : 'transparent'}
-                                style={{ transition: 'fill 200ms ease' }}
-                            />
-                            <Text size='md'>{bookmarkCount}</Text>
-                        </ActionIcon>
-                    </Tooltip>
+                    <BookmarkButton
+                        initialBookmarked={false}
+                        initialCount={project.projectEngagement?.bookmarks ?? 0}
+                        onBookmarkChange={(newCount) => setBookmarkCount(newCount)}
+                    />
 
-                    <Tooltip label="Share" withArrow position="top">
-                        <ActionIcon
-                            className={classes.action}
-                            onClick={() => {
-                                const newShared = !shared;
-                                setShared(newShared);
-                                setShareCount(prev => newShared ? prev + 1 : prev - 1);
-                            }}
-                            onMouseEnter={() => setHoverShare(true)}
-                            onMouseLeave={() => setHoverShare(false)}
-                            size={48}
-                            radius="md"
-                            variant="light"
-                            color="blue"
-                            style={largeIconStyle}
-                        >
-                            <IconShare
-                                size={40}
-                                color={theme.colors.blue[6]}
-                                fill={shared || hoverShare ? theme.colors.blue[6] : 'transparent'}
-                                style={{ transition: 'fill 200ms ease' }}
-                            />
-                            <Text size='md'>{shareCount}</Text>
-                        </ActionIcon>
-                    </Tooltip>
+                    <ShareButton
+                        initialShared={false}
+                        initialCount={project.projectEngagement?.shares ?? 0}
+                        onShareChange={(newCount) => setShareCount(newCount)}
+                    />
                 </Group>
             </Group>
         </Card>
