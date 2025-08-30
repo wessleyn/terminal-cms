@@ -1,19 +1,27 @@
 model Project {
-    id             String         @id @default(uuid())
-    title          String
-    description    String         @db.Text
-    imageUrl       String
-    githubUrl      String?
-    liveUrl        String?
-    tags           String[] // Technologies used
-    featured       Boolean        @default(false)
-    publishStatus  PublishStatus  @default(DRAFT)
-    activityStatus ActivityStatus @default(NOT_STARTED)
-    projectType ProjectType @default(SOLO)
-    happyIndex     HappyIndex @default(NEUTRAL)
-    engagement     Json? // { share: number, bookmark: number, like: number }
-    createdAt      DateTime       @default(now())
-    updatedAt      DateTime       @updatedAt
+    id                String            @id
+    title             String
+    description       String            @db.Text
+    imageUrl          String
+    githubUrl         String?
+    liveUrl           String?
+    tags              String[] // Technologies used
+    featured          Boolean           @default(false)
+    publishStatus     PublishStatus     @default(DRAFT)
+    activityStatus    ActivityStatus    @default(NOT_STARTED)
+    projectType       ProjectType       @default(SOLO)
+    happyIndex        HappyIndex        @default(NEUTRAL)
+    projectEngagement ProjectEngagement @relation(fields: [id], references: [id])
+    createdAt         DateTime          @default(now())
+    updatedAt         DateTime          @updatedAt
+}
+
+model ProjectEngagement {
+    id        String   @id @default(uuid())
+    shares    Int
+    bookmarks Int
+    likes     Int
+    project   Project?
 }
 
 enum PublishStatus {

@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "db": "turbo run db:dev",
     "dev:admin": "turbo run dev --filter=admin",
     "dev:web": "turbo run dev --filter=web",
     "dev:email": "turbo run dev --filter=email",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@types/webpack": "^5.28.5",
+    "concurrently": "^9.2.1",
     "prettier": "^3.5.3",
     "turbo": "^2.5.3",
     "typescript": "5.8.2"

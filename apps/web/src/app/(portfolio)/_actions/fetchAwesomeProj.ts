@@ -2,7 +2,7 @@
 
 import { HappyIndex, prisma, Project, PublishStatus } from "@repo/db";
 
-export default async function fetchAwesomeProj(): Promise<Project[]> {
+export default async function fetchAwesomeProj(): Promise<(Project & { projectEngagement: { shares: number; bookmarks: number; likes: number } })[]> {
     try {
         // Count awesome projects to determine randomization strategy
         const awesomeProjectCount = await prisma.project.count({
@@ -22,6 +22,9 @@ export default async function fetchAwesomeProj(): Promise<Project[]> {
                     publishStatus: PublishStatus.PUBLISHED,
                     happyIndex: HappyIndex.AWESOME,
                 },
+                include: {
+                    projectEngagement: true
+                },
                 orderBy: {
                     id: 'asc', // Basic ordering that will be randomized by skip
                 },
@@ -34,6 +37,9 @@ export default async function fetchAwesomeProj(): Promise<Project[]> {
                 where: {
                     publishStatus: PublishStatus.PUBLISHED,
                     happyIndex: HappyIndex.AWESOME,
+                },
+                include: {
+                    projectEngagement: true
                 },
                 take: 2
             });

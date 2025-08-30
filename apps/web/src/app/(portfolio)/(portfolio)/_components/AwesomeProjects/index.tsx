@@ -5,13 +5,21 @@ import dynamic from 'next/dynamic'
 import TitleCommand from "../../../_components/TitleCommand"
 import ProjectSkeleton from "./ProjectSkeleton"
 
+type ProjectWithEngagement = Project & {
+    projectEngagement?: {
+        shares: number;
+        bookmarks: number;
+        likes: number
+    }
+};
+
 // Dynamically import the ProjectCard component
 const ProjectCard = dynamic(() => import('./ProjectCard'), {
     loading: () => <ProjectSkeleton />,
     ssr: false
 })
 
-const AwesomeProjects = ({ awesomeProjects }: { awesomeProjects: Project[] }) => {
+const AwesomeProjects = ({ awesomeProjects }: { awesomeProjects: ProjectWithEngagement[] }) => {
     return (
         <div className="col">
             <TitleCommand

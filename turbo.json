@@ -83,8 +83,7 @@
     },
     "dev": {
       "dependsOn": [
-        "^db:generate",
-        "^db:dev"
+        "^db:generate"
       ],
       "cache": false,
       "persistent": true

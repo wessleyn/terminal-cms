@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { PrismaClient } from '../../generated/prisma';
 import { blogComments, blogPosts, blogTags } from './data/blogData';
 import { meetingsData } from './data/meetingsData';
@@ -28,8 +29,28 @@ async function main() {
 
     // Seed projects
     for (const project of projectsData) {
+        const { engagement, ...projectData } = project;
+
+        // Generate a UUID for both Project and ProjectEngagement
+        const projectId = crypto.randomUUID();
+
+        // Create ProjectEngagement first
+        await prisma.projectEngagement.create({
+            data: {
+                id: projectId,
+                shares: engagement.share || 0,
+                bookmarks: engagement.bookmark || 0,
+                likes: engagement.like || 0,
+            }
+        });
+
+        // Then create Project with same ID to maintain relationship
         await prisma.project.create({
-            data: project,
+            data: {
+                id: projectId,
+                ...projectData,
+                projectType: projectData.featured ? 'FEATURED' : 'SOLO' // Map featured flag to projectType enum
+            },
         });
     }
 
@@ -104,7 +125,7 @@ async function main() {
     console.log('Seeding privacy data...');
 
     // Create the portfolio privacy document with all sections
-    const privacy = await prisma.privacy.create({
+    await prisma.privacy.create({
         data: {
             type: privacyData.type,
             descPhrase: privacyData.descPhrase,
@@ -118,7 +139,7 @@ async function main() {
     console.log(`Created privacy policy with ${privacyData.sections.length} sections.`);
 
     // Create the blog privacy document
-    const blogPrivacy = await prisma.privacy.create({
+    await prisma.privacy.create({
         data: {
             type: blogPrivacyData.type,
             descPhrase: blogPrivacyData.descPhrase,
@@ -132,7 +153,7 @@ async function main() {
     console.log(`Created blog privacy policy with ${blogPrivacyData.sections.length} sections.`);
 
     // Create the terms of service document
-    const terms = await prisma.privacy.create({
+    await prisma.privacy.create({
         data: {
             type: termsData.type,
             descPhrase: termsData.descPhrase,
