@@ -33,7 +33,7 @@ const ProjectCard = ({ project }: { project: ProjectWithEngagement }) => {
 
     // State for counts
     const [likeCount, setLikeCount] = useState(project.projectEngagement?.likes ?? 0);
-    const [bookmarkCount, setBookmarkCount] = useState(project.projectEngagement?.bookmarks ?? 0);
+    const [bookmarkCount] = useState(project.projectEngagement?.bookmarks ?? 0);
     const [shareCount, setShareCount] = useState(project.projectEngagement?.shares ?? 0);
 
 
@@ -47,7 +47,7 @@ const ProjectCard = ({ project }: { project: ProjectWithEngagement }) => {
             project.id
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [likeCount, bookmarkCount, shareCount]);
+    }, [likeCount, shareCount]);
 
     return (
         <Card withBorder radius="md" className={classes.card} component="article">
@@ -91,9 +91,8 @@ const ProjectCard = ({ project }: { project: ProjectWithEngagement }) => {
                     />
 
                     <BookmarkButton
-                        initialBookmarked={false}
                         initialCount={project.projectEngagement?.bookmarks ?? 0}
-                        onBookmarkChange={(newCount) => setBookmarkCount(newCount)}
+                        projectId={project.id}
                     />
 
                     <ShareButton
