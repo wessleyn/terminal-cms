@@ -1,6 +1,6 @@
 # Terminal Portfolio + Blog + CMS
 
-![hacktime](https://hackatime-badge.hackclub.com/U08RWLFGRKN/terminal-portfolio)
+![hacktime](https://hackatime-badge.hackclub.com/U08RWLFGRKN/master)
 
 ## Project Showcase
 

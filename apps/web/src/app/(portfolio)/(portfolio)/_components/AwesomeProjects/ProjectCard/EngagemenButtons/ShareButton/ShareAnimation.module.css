@@ -1,0 +1,175 @@
+.shareAnimationContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.shareAnimation {
+  position: absolute;
+  color: #228be6;
+  opacity: 0;
+  transform: scale(0.1);
+  animation: shareReveal 1.5s forwards;
+  filter: drop-shadow(0 0 20px rgba(34, 139, 230, 0.9));
+}
+
+/* Add multiple share icons with different sizes and animations */
+.shareAnimation::before,
+.shareAnimation::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #228be6;
+  border-radius: 50%;
+  opacity: 0;
+  z-index: -1;
+  animation: pulse 1.5s forwards;
+}
+
+.shareAnimation::before {
+  animation-delay: 0.2s;
+}
+
+.shareAnimation::after {
+  animation-delay: 0.4s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.1);
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes shareReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+  20% {
+    opacity: 0.8;
+    transform: scale(2.5) rotate(0deg);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(2) rotate(15deg);
+  }
+  60% {
+    opacity: 0.8;
+    transform: scale(2.5) rotate(-15deg);
+  }
+  80% {
+    opacity: 0.6;
+    transform: scale(3) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3.5);
+  }
+}
+
+/* Particles effect */
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #228be6;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.particle:nth-child(1) {
+  animation: particle1 1.5s ease-out forwards;
+}
+
+.particle:nth-child(2) {
+  animation: particle2 1.5s ease-out forwards;
+}
+
+.particle:nth-child(3) {
+  animation: particle3 1.5s ease-out forwards;
+}
+
+.particle:nth-child(4) {
+  animation: particle4 1.5s ease-out forwards;
+}
+
+@keyframes particle1 {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-100px, -100px);
+    opacity: 0;
+  }
+}
+
+@keyframes particle2 {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(100px, -100px);
+    opacity: 0;
+  }
+}
+
+@keyframes particle3 {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-100px, 100px);
+    opacity: 0;
+  }
+}
+
+@keyframes particle4 {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(100px, 100px);
+    opacity: 0;
+  }
+}

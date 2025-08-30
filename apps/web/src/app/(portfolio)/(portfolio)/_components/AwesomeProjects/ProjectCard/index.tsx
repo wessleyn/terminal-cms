@@ -99,6 +99,9 @@ const ProjectCard = ({ project }: { project: ProjectWithEngagement }) => {
                         initialShared={false}
                         initialCount={project.projectEngagement?.shares ?? 0}
                         onShareChange={(newCount) => setShareCount(newCount)}
+                        projectTitle={project.title}
+                        projectDescription={project.description}
+                        projectUrl={project.liveUrl ?? `${typeof window !== 'undefined' ? window.location.origin : ''}/projects/${project.id}`}
                     />
                 </Group>
             </Group>
