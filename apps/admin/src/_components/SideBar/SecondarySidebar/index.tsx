@@ -82,6 +82,7 @@ const SecondarySidebar = ({ activeTabWithSecondary }: SecondarySidebarProps) => 
         const isActive = pathname === item.link;
 
         // Custom wrapper component for avatar items
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const AvatarIcon = (props: any) => (
             <div className={styles.avatarStatus}>
                 <Avatar

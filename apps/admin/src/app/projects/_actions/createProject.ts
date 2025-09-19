@@ -14,7 +14,7 @@ interface CreateProjectResult {
 
 export async function createProject(): Promise<CreateProjectResult> {
     try {
-        // Create a new project with default values
+        // Create a new project with default values and associated engagement
         const newProject = await prisma.project.create({
             data: {
                 title: 'New Project',
@@ -24,11 +24,13 @@ export async function createProject(): Promise<CreateProjectResult> {
                 featured: false,
                 publishStatus: PublishStatus.DRAFT,
                 activityStatus: ActivityStatus.NOT_STARTED,
-                engagement: {
-                    share: 0,
-                    bookmark: 0,
-                    like: 0,
-                },
+                projectEngagement: {
+                    create: {
+                        shares: 0,
+                        bookmarks: 0,
+                        likes: 0,
+                    }
+                }
             },
         });
 
