@@ -48,7 +48,7 @@ export default function ProfileEditor({ profile: initialProfile, onUpdate }: Pro
             />
 
             {/* Profile information card */}
-            <Card radius="md" withBorder padding="xl" mx="auto">
+            <Card radius="md" withBorder padding="xl" mx="auto" style={{ width: '100%', maxWidth: '900px' }}>
                 {/* Display name section */}
                 <DisplayNameInput
                     initialValue={profile.displayName || ''}

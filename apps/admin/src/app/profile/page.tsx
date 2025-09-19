@@ -1,7 +1,7 @@
 import { Container } from '@mantine/core';
+import { Metadata } from 'next';
 import { fetchProfileData } from './_actions/fetchProfileData';
 import ProfileEditorWrapper from './_components/ProfileEditorWrapper';
-import { Metadata } from 'next';
 
 
 export const metadata: Metadata = {
