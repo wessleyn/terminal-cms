@@ -213,15 +213,6 @@ export function DragNDrop({ initialData }: DragNDropProps) {
 
     return (
         <>
-            <Button
-                color="green.8"
-                variant="filled"
-                onClick={handleAddNewSection}
-                mb="md"
-                leftSection={<span>+</span>}
-            >
-                Add New Section
-            </Button>
 
             <DragDropContext
                 onDragEnd={({ destination, source }) => {
@@ -272,6 +263,18 @@ export function DragNDrop({ initialData }: DragNDropProps) {
                     )}
                 </Droppable>
             </DragDropContext>
+
+            <Group justify="flex-end" w="100%">
+                <Button
+                    color="green.8"
+                    variant="filled"
+                    onClick={handleAddNewSection}
+                    mt="md"
+                    leftSection={<span>+</span>}
+                >
+                    Add New Section
+                </Button>
+            </Group>
         </>
     );
 }

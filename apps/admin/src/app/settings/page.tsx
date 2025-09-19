@@ -1,3 +1,9 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Settings ",
+  description: "Manage settings here.",
+};
 
 function page() {
   return (

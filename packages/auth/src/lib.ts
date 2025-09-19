@@ -33,10 +33,12 @@ export async function verifySession(
     cookieName: string;
     hasSession: boolean;
 }> {
+    console.log(`[AUTH] Starting session verification for request to ${req.nextUrl.pathname}`);
     
     // Determine the cookie name based on protocol (HTTP vs HTTPS)
     const isSecureContext = req.nextUrl.protocol === 'https:';
     const cookieName = isSecureContext ? '__Secure-authjs.session-token' : 'authjs.session-token';
+    console.log(`[AUTH] Using cookie name: ${cookieName} (Secure context: ${isSecureContext})`);
 
     // Get the session cookie if it exists
     const sessionCookie = req.cookies.get(cookieName);
@@ -44,12 +46,14 @@ export async function verifySession(
 
     // If no session exists, return early
     if (!hasSession) {
+        console.log('[AUTH] No session cookie found, authentication skipped');
         return { authData: null, cookieName, hasSession };
     }
 
     try {
         // Determine the API endpoint to use for verification
         const authApiUrl = apiEndpoint || `${process.env.WEB_PUBLIC_URL}/api/auth`;
+        console.log(`[AUTH] Verifying session against API endpoint: ${authApiUrl}`);
 
         // Make the API request to verify the session
         const res = await fetch(authApiUrl, {
@@ -59,6 +63,8 @@ export async function verifySession(
                 'Authorization': `Bearer ${sessionCookie.value}`,
             },
         });
+        
+        console.log(`[AUTH] Received API response with status: ${res.status}`);
         
         // Parse the response data
         const authData: AuthSessionData = await res.json();
@@ -101,6 +107,8 @@ export function redirectToLogin(req: NextRequest, loginPath?: string): NextRespo
     
     const url = new URL(LOGIN_PAGE, req.nextUrl.origin);
     url.searchParams.set('callbackUrl', req.nextUrl.origin + req.nextUrl.pathname);
+    
+    console.log(`[AUTH] Redirecting to login page: ${url.toString()}`);
     
     return NextResponse.redirect(url);
 }

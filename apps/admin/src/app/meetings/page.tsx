@@ -8,6 +8,13 @@ import {
 } from '@mantine/core';
 import { prisma } from '@repo/db';
 import MeetingsTimeline from './_components/MeetingsTimeline';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: "Meetings",
+    description: "Manage your project meetings.",
+};
+
 
 export default async function ProjectMeetingsPage() {
     // Fetch all scheduled meetings from the database

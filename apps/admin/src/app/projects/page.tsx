@@ -2,6 +2,13 @@ import { Container } from '@mantine/core';
 import { prisma } from '@repo/db';
 import ProjectsTable, { TableProject } from './_components/ProjectsTable';
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Projects ",
+    description: "Manage your software development projects.",
+};
+
 export default async function ProjectsPage() {
     let projects: TableProject[] = []
 

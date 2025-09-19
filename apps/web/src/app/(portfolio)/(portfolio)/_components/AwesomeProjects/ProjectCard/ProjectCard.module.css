@@ -1,29 +1,28 @@
 .card {
-    position: relative;
-    background-color: var(--mantine-color-body);
+  position: relative;
 }
 
 .rating {
-    position: absolute;
-    top: var(--mantine-spacing-xs);
-    right: 12px;
-    pointer-events: none;
+  position: absolute;
+  top: var(--mantine-spacing-xs);
+  right: 12px;
+  pointer-events: none;
 }
 
 .title {
-    display: block;
-    margin-top: var(--mantine-spacing-md);
-    margin-bottom: 5px;
+  display: block;
+  margin-top: var(--mantine-spacing-md);
+  margin-bottom: 5px;
 }
 
 .action {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .action:hover {
-    background-color: var(--mantine-color-body);
+  background-color: var(--mantine-color-body);
 }
 
 .footer {
-    margin-top: var(--mantine-spacing-md);
+  margin-top: var(--mantine-spacing-md);
 }

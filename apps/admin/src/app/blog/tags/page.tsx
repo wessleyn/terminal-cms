@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     description: 'Manage blog tags',
 };
 
+
 export default async function TagsPage() {
     // Fetch all tags with post counts
     const tags = await fetchAllTags();

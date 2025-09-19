@@ -50,15 +50,16 @@ const ProjectCard = ({ project }: { project: ProjectWithEngagement }) => {
     }, [likeCount, shareCount]);
 
     return (
-        <Card withBorder radius="md" className={classes.card} component="article">
+        <Card radius="md" className={classes.card} component="article" style={{ height: '100%', display: 'flex', flexDirection: 'column', backgroundColor: 'transparent', boxShadow: 'none' }}>
             <Card.Section>
                 <Link {...linkProps}>
-                    <Image alt={project.title}
-                        src={project.imageUrl || 'https://images.unsplash.com/photo-1601758123927-1c2f8b3a4d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60'}
-                        height={100}
-                        width={100}
-                        layout="responsive"
-                    />
+                    <div style={{ height: '200px', position: 'relative' }}>
+                        <Image alt={project.title}
+                            src={project.imageUrl || 'https://images.unsplash.com/photo-1601758123927-1c2f8b3a4d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60'}
+                            fill
+                            style={{ objectFit: 'cover' }}
+                        />
+                    </div>
                 </Link>
             </Card.Section>
 
@@ -66,11 +67,11 @@ const ProjectCard = ({ project }: { project: ProjectWithEngagement }) => {
                 {project.projectType}
             </Badge>
 
-            <Text className={classes.title} fw={500} component="a" {...linkProps}>
+            <Text className={classes.title} fw={500} component="a" {...linkProps} lineClamp={1}>
                 {project.title}
             </Text>
 
-            <Text fz="sm" c="dimmed" lineClamp={4}>
+            <Text fz="sm" c="dimmed" lineClamp={3} className={classes.description}>
                 {project.description}
             </Text>
 

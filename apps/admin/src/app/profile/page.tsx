@@ -1,6 +1,13 @@
 import { Container } from '@mantine/core';
 import { fetchProfileData } from './_actions/fetchProfileData';
 import ProfileEditorWrapper from './_components/ProfileEditorWrapper';
+import { Metadata } from 'next';
+
+
+export const metadata: Metadata = {
+  title: "Profile",
+  description: "Manage your user profile and account settings.",
+};
 
 export default async function ProfilePage() {
   // Fetch profile data on the server

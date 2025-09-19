@@ -1,5 +1,6 @@
 import { Container, Paper } from '@mantine/core';
 import { prisma } from '@repo/db';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ProjectDetail from './_components/ProjectDetail';
 
@@ -7,6 +8,29 @@ interface ProjectParams {
     params: Promise<{
         id: string;
     }>;
+}
+
+export async function generateMetadata({ params }: ProjectParams): Promise<Metadata> {
+    // Properly await the params object before accessing its properties
+    const { id } = await params;
+
+    // Fetch project data for metadata
+    const project = await prisma.project.findUnique({
+        where: { id },
+        select: { title: true, description: true }
+    });
+
+    if (!project) {
+        return {
+            title: "Project Not Found",
+            description: "The requested project could not be found.",
+        };
+    }
+
+    return {
+        title: `Project: ${project.title}`,
+        description: project.description.substring(0, 160), // Truncate description for meta tag
+    };
 }
 
 export default async function ProjectPage({ params }: ProjectParams) {
