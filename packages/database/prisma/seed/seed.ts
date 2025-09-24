@@ -1,40 +1,38 @@
-import crypto from 'crypto';
 import { PrismaClient } from '../../generated/prisma';
 import { blogComments, blogPosts, blogTags } from './data/blogData';
-import { meetingsData } from './data/meetingsData';
-import { blogPrivacyData, privacyData, termsData } from './data/privacyData';
+import { blogPrivacyData, privacyData } from './data/privacyData';
 import { profileData } from './data/profileData';
 import { projectsData } from './data/projectData';
 import { userData } from './data/userData';
+import { meetingsData } from './data/meetingsData';
+import { termsData } from './data/privacyData';
 
 const prisma = new PrismaClient();
 
 async function main() {
-    // Clear existing data - delete child records before parent records to avoid foreign key constraint violations
-    await prisma.scheduledMeetingNote.deleteMany(); // Clear existing meeting notes first
-    await prisma.scheduledMeeting.deleteMany(); // Then clear meetings
+    // Clear existing data
+    await prisma.scheduledMeetingNote.deleteMany();
+    await prisma.scheduledMeeting.deleteMany();
     await prisma.project.deleteMany();
-    await prisma.portfolioProfileSocialLink.deleteMany(); // Delete social links first
-    await prisma.portfolioProfileAvatar.deleteMany(); // Delete avatar links
-    await prisma.session.deleteMany(); // Clear sessions before users
-    await prisma.user.deleteMany(); // Clear users
-    await prisma.categorySubscriber.deleteMany(); // Delete category subscribers
-    await prisma.blogPost.deleteMany(); // Delete posts before categories
-    await prisma.blogCategory.deleteMany(); // Delete categories
-    await prisma.portfolioProfile.deleteMany(); // Delete profile
-    await prisma.privacySection.deleteMany(); // Delete sections first
-    await prisma.privacy.deleteMany(); // Then delete privacy records
-    await prisma.blogComment.deleteMany(); // Delete comments first
-    await prisma.blogTag.deleteMany(); // Delete tags
+    await prisma.portfolioProfileSocialLink.deleteMany(); 
+    await prisma.portfolioProfileAvatar.deleteMany(); 
+    await prisma.session.deleteMany(); 
+    await prisma.user.deleteMany(); 
+    await prisma.categorySubscriber.deleteMany(); 
+    await prisma.blogPost.deleteMany(); 
+    await prisma.blogCategory.deleteMany(); 
+    await prisma.portfolioProfile.deleteMany();
+    await prisma.privacySection.deleteMany();
+    await prisma.privacy.deleteMany();
+    await prisma.blogComment.deleteMany();
+    await prisma.blogTag.deleteMany();
 
     // Seed projects
     for (const project of projectsData) {
         const { engagement, ...projectData } = project;
 
-        // Generate a UUID for both Project and ProjectEngagement
         const projectId = crypto.randomUUID();
 
-        // Create ProjectEngagement first
         await prisma.projectEngagement.create({
             data: {
                 id: projectId,
@@ -44,12 +42,11 @@ async function main() {
             }
         });
 
-        // Then create Project with same ID to maintain relationship
         await prisma.project.create({
             data: {
                 id: projectId,
                 ...projectData,
-                projectType: projectData.featured ? 'FEATURED' : 'SOLO' // Map featured flag to projectType enum
+                projectType: projectData.featured ? 'FEATURED' : 'SOLO'
             },
         });
     }
@@ -66,13 +63,12 @@ async function main() {
         }
     });
 
-    // Add profile avatars
     for (const avatar of profileData.avatars) {
         await prisma.portfolioProfileAvatar.create({
             data: {
                 url: avatar,
                 portfolioProfileId: profile.id,
-                isActive: avatar === profileData.avatars[0] // Set the first avatar as active
+                isActive: avatar === profileData.avatars[0]
             }
         });
     }
@@ -113,7 +109,7 @@ async function main() {
                 name: user.name,
                 email: user.email,
                 image: user.image,
-                role: user.role || 'USER', // Default to USER role if not specified
+                role: user.role || 'USER',
             }
         });
         console.log(`Created user: ${user.name}`);
@@ -124,12 +120,10 @@ async function main() {
     // Seed privacy policy
     console.log('Seeding privacy data...');
 
-    // Create the portfolio privacy document with all sections
     await prisma.privacy.create({
         data: {
             type: privacyData.type,
             descPhrase: privacyData.descPhrase,
-            // Create all the sections
             sections: {
                 create: privacyData.sections
             }
@@ -143,7 +137,6 @@ async function main() {
         data: {
             type: blogPrivacyData.type,
             descPhrase: blogPrivacyData.descPhrase,
-            // Create all the sections
             sections: {
                 create: blogPrivacyData.sections
             }
@@ -157,7 +150,6 @@ async function main() {
         data: {
             type: termsData.type,
             descPhrase: termsData.descPhrase,
-            // Create all the sections
             sections: {
                 create: termsData.sections
             }
@@ -187,7 +179,6 @@ async function main() {
     // Seed blog data
     console.log('Seeding blog data...');
 
-    // Create blog categories (replacing the old enum)
     console.log('Creating blog categories...');
     const categories = [
         { name: 'Spells', slug: 'spells', color: 'purple', description: 'Magical incantations and rituals' },
@@ -224,7 +215,6 @@ async function main() {
     for (const post of blogPosts) {
         const { tags, category, ...postData } = post;
 
-        // Get valid tag IDs before creating the post
         const validTagConnections: { id: string }[] = [];
         for (const tagName of tags) {
             const tag = tagMap.get(tagName);
@@ -235,19 +225,17 @@ async function main() {
             }
         }
 
-        // Map the old enum category to the new category model
         const categoryObj = categoryMap.get(category);
         if (!categoryObj) {
             console.warn(`Category '${category}' not found for post: ${post.title}`);
             continue;
         }
-
         // Create post with author, category, and connect tags
         const createdPost = await prisma.blogPost.create({
             data: {
                 ...postData,
                 author: {
-                    connect: { id: profile.id }
+                    connect: { id: profile!.id }
                 },
                 category: {
                     connect: { id: categoryObj.id }
@@ -270,7 +258,6 @@ async function main() {
     for (const comment of blogComments) {
         const { replies, postId, ...commentData } = comment;
 
-        // Find the post by slug
         const post = postMap.get(postId);
 
         if (!post) {
@@ -278,19 +265,17 @@ async function main() {
             continue;
         }
 
-        // Create the parent comment
         const createdComment = await prisma.blogComment.create({
             data: {
                 ...commentData,
                 postId: post.id,
                 parentId: null,
-                authorProfile: "default" // Adding the required authorProfile field
+                authorProfile: "default"
             }
         });
 
         console.log(`Created comment: ${comment.id}`);
 
-        // Create replies if any
         if (replies && replies.length > 0) {
             for (const reply of replies) {
                 await prisma.blogComment.create({
@@ -298,7 +283,7 @@ async function main() {
                         ...reply,
                         postId: post.id,
                         parentId: createdComment.id,
-                        authorProfile: "default" // Adding the required authorProfile field
+                        authorProfile: "default"
                     }
                 });
                 console.log(`Created reply to comment: ${comment.id}`);
