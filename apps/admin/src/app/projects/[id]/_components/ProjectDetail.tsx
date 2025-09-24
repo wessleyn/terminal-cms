@@ -1,12 +1,16 @@
 'use client';
 
 import { Box } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { ActivityStatus, HappyIndex, PublishStatus } from '@repo/db';
 import TagInput from '@repo/ui/components/shared/TagInput';
+import { IconPhoto, IconUpload } from '@tabler/icons-react';
+import { CldUploadWidget, CloudinaryUploadWidgetResults } from 'next-cloudinary';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { saveProjectImage } from '../../_actions/saveProjectImage';
 import { newStatus, UpdateField, updateProject, updateProjectStatus } from '../../_actions/updateProject';
 import ActivityStatusBadge from '../../_components/ActivityStatusBadge';
 import HappyStatusBadge from '../../_components/HappyStatusBadge';
@@ -39,6 +43,7 @@ interface ProjectDetailProps {
 export default function ProjectDetail({ project }: ProjectDetailProps) {
     const router = useRouter();
     const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+    const [imageUploadStatus, setImageUploadStatus] = useState<'idle' | 'uploading' | 'uploaded' | 'error'>('idle');
 
     // State for editable fields
     const [editedTitle, setEditedTitle] = useState(project.title);
@@ -160,12 +165,10 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
         }
     };
 
-    // Handle status change
     const handleStatusChange = async (statusType: UpdateField, value: newStatus) => {
         setSaveStatus('saving');
 
         try {
-            // Call the specific updateProjectStatus function for status changes
             const result = await updateProjectStatus(
                 project.id,
                 statusType,
@@ -179,7 +182,6 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
             setSaveStatus('saved');
             setTimeout(() => setSaveStatus('idle'), 2000);
 
-            // Refresh the page to get updated data
             router.refresh();
 
         } catch (error) {
@@ -196,6 +198,49 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
         'Redux', 'GraphQL', 'API', 'Authentication', 'Bootstrap',
         'Material UI', 'Firebase', 'AWS', 'Docker', 'CI/CD'
     ];
+
+    const handleCloudinaryUpload = async (results: CloudinaryUploadWidgetResults) => {
+        // Early return if not a successful upload or if info is missing
+        if (results.event !== 'success' || !results.info) return;
+
+        if (typeof results.info === 'string' || !('public_id' in results.info) || !('secure_url' in results.info)) {
+            console.error('Invalid upload result format', results);
+            setImageUploadStatus('error');
+            return;
+        }
+
+        try {
+            setImageUploadStatus('uploading');
+            const { public_id, secure_url } = results.info;
+
+            const result = await saveProjectImage(project.id, public_id, secure_url);
+
+            if (result.success) {
+                setEditedImageUrl(secure_url);
+                setImageUploadStatus('uploaded');
+
+                setTimeout(() => setImageUploadStatus('idle'), 2000);
+
+                router.refresh();
+            } else {
+                throw new Error(result.error);
+            }
+        } catch (error) {
+            console.error('Error saving uploaded image:', error);
+            setImageUploadStatus('error');
+            setTimeout(() => setImageUploadStatus('idle'), 3000);
+        }
+    };
+
+    useEffect(() => {
+        try {
+            new URL(editedImageUrl);
+        } catch (error) {
+            setEditedImageUrl("http://localhost:3000" + editedImageUrl);
+            console.error('Error parsing image URL:', error);
+        }
+
+    }, [editedImageUrl])
 
     // Display image URL or fallback
     const displayImageUrl = editedImageUrl || '/assets/img/projects/project1.webp';
@@ -252,16 +297,80 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                                     onChange={(e) => updateField('imageUrl', e.target.value)}
                                     placeholder="Enter image URL..."
                                 />
+                                <CldUploadWidget
+                                    uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "terminal_portfolio"}
+                                    options={{
+                                        maxFiles: 1,
+                                        resourceType: 'image',
+                                        clientAllowedFormats: ['png', 'jpg', 'jpeg', 'webp'],
+                                        maxFileSize: 5000000, // 5MB
+                                        showAdvancedOptions: false,
+                                        cropping: true,
+                                        multiple: false,
+                                        showPoweredBy: false,
+                                        styles: {
+                                            palette: {
+                                                window: '#000000',
+                                                windowBorder: '#333333',
+                                                tabIcon: '#FFFFFF',
+                                                menuIcons: '#CCCCCC',
+                                                textDark: '#FFFFFF',
+                                                textLight: '#333333',
+                                                link: '#0078FF',
+                                                action: '#4BB543',
+                                                error: '#FF5050',
+                                            }
+                                        }
+                                    }}
+                                    onSuccess={handleCloudinaryUpload}
+                                    onError={(error) => {
+                                        console.error("Cloudinary upload error:", error);
+                                        notifications.show({
+                                            title: 'Upload Error',
+                                            message: 'Failed to connect to image upload service. Please try again.',
+                                            color: 'red'
+                                        });
+                                    }}
+                                >
+                                    {({ open }) => (
+                                        <button
+                                            className="btn btn-dark"
+                                            type="button"
+                                            onClick={() => open()}
+                                            disabled={imageUploadStatus === 'uploading'}
+                                        >
+                                            <IconUpload size={16} />
+                                            {imageUploadStatus === 'uploading' ? (
+                                                <span className="ms-2">Uploading...</span>
+                                            ) : (
+                                                <span className="ms-2">Upload</span>
+                                            )}
+                                        </button>
+                                    )}
+                                </CldUploadWidget>
                             </div>
                         </div>
-                        <Image
-                            src={displayImageUrl}
-                            alt={editedTitle}
-                            fill
-                            style={{ objectFit: 'cover' }}
-                            className="rounded"
-                            priority
-                        />
+
+                        {editedImageUrl ? (
+                            <Image
+                                src={displayImageUrl}
+                                alt={editedTitle}
+                                fill
+                                style={{ objectFit: 'cover' }}
+                                className="rounded"
+                                priority
+                                onError={(e) => {
+                                    // Fallback to placeholder if image fails to load
+                                    e.currentTarget.src = '/assets/img/projects/project1.webp';
+                                }}
+                            />
+                        ) : (
+                            <div className="d-flex flex-column justify-content-center align-items-center h-100 bg-dark rounded text-light">
+                                <IconPhoto size={64} opacity={0.5} />
+                                <p className="mt-3">No image available</p>
+                                <p className="text-muted">Upload an image or enter a URL above</p>
+                            </div>
+                        )}
                     </div>
                 </div>
 
