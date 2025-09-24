@@ -3,7 +3,6 @@ import Footer from './_components/Footer';
 import ProfileInfoWrapper from './_components/ProfileInfo/ProfileInfoWrapper';
 
 export default async function PortfolioLayout({ children }: { children: React.ReactNode }) {
-    // Fetch profile data from the database
     const profileData = await fetchProfile();
 
     return (

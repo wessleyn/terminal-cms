@@ -20,7 +20,6 @@ export default function HireMe() {
     const [state, formAction] = useActionState(hireMe, initialState);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Handle form input focus/blur styling
     useEffect(() => {
         const handleFocusBlur = (e: Event) => {
             const element = e.target as HTMLElement;
@@ -42,7 +41,6 @@ export default function HireMe() {
         };
     }, []);
 
-    // Reset form and Turnstile on successful submission
     useEffect(() => {
         if (state.success) {
             setIsSubmitting(false);
@@ -58,7 +56,6 @@ export default function HireMe() {
         formSuccess?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     };
 
-    // Check Turnstile validation before form submission
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsSubmitting(true);
@@ -80,7 +77,6 @@ export default function HireMe() {
         <div className="col-lg-8 offset-lg-1">
             <div className="row">
                 <div className="col">
-                    {/* Cloudflare Turnstile Captcha */}
                     <Script
                         src="https://challenges.cloudflare.com/turnstile/v0/api.js"
                         async
@@ -195,7 +191,6 @@ export default function HireMe() {
                                     </div>
 
                                     <div className="mb-4">
-                                        {/* Cloudflare Turnstile Captcha element */}
                                         <div
                                             className="cf-turnstile"
                                             data-sitekey="0x4AAAAAABMxM4cbQf-x_3Cs"

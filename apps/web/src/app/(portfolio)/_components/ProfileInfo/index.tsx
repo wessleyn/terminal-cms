@@ -64,9 +64,13 @@ export default function ProfileInfo({ profile }: ProfileInfoProps) {
                         </li>
                     ))}
                 </ul>
+
                 <div className={classes.btns}>
                     <Link className={classes.btn} role="button" href="/blog">
                         ~/ cd Blog
+                    </Link>
+                    <Link className={classes.btn} role="button" href="/resume">
+                        ~/ cd Resume
                     </Link>
                     <HireMeBtn />
                 </div>
