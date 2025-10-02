@@ -25,7 +25,6 @@ const SecondarySidebar = ({ activeTabWithSecondary }: SecondarySidebarProps) => 
 
     if (!activeTabWithSecondary || !activeTabWithSecondary.secondary) return null;
 
-    // Determine appropriate class for secondary sidebar state
     const secondarySidebarClasses = `
     ${styles.secondarySidebar} 
     ${isMobile && !secondaryOpen ? styles.secondarySidebarHidden : ''}
@@ -35,18 +34,15 @@ const SecondarySidebar = ({ activeTabWithSecondary }: SecondarySidebarProps) => 
 
     const isCollapsed = !isMobile && !secondaryOpen;
 
-    // Render the header with root icon
     const renderHeader = () => {
         const Icon = activeTabWithSecondary.icon;
 
         return (
             <div className={styles.secondarySidebarHeader}>
-                {/* Root icon - aligned with primary sidebar logo */}
                 <div className={styles.rootIcon}>
                     <Icon size={24} stroke={1.5} />
                 </div>
 
-                {/* Header content - hidden when collapsed */}
                 <div className={styles.headerContent}>
                     {(!isMobile || secondaryOpen) && (
                         <Title order={4}>{activeTabWithSecondary.label}</Title>
@@ -56,9 +52,7 @@ const SecondarySidebar = ({ activeTabWithSecondary }: SecondarySidebarProps) => 
         );
     };
 
-    // Render special "new" button item
     const renderNewButtonItem = (item: SecondaryItem, isCollapsed = false) => {
-        // Use SideBarLink for consistency, with IconPlus as the icon
         return (
             <SideBarLink
                 key={item.label}
@@ -77,11 +71,9 @@ const SecondarySidebar = ({ activeTabWithSecondary }: SecondarySidebarProps) => 
         );
     };
 
-    // Render avatar with status indicator
     const renderAvatarItem = (item: SecondaryItem, isCollapsed = false) => {
         const isActive = pathname === item.link;
 
-        // Custom wrapper component for avatar items
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const AvatarIcon = (props: any) => (
             <div className={styles.avatarStatus}>
@@ -121,25 +113,21 @@ const SecondarySidebar = ({ activeTabWithSecondary }: SecondarySidebarProps) => 
         );
     };
 
-    // Helper to render secondary navigation items
     const renderSecondaryItem = (item: SecondaryItem, index?: number, isCollapsed = false) => {
         const isActive = pathname === item.link;
 
-        // Handle special "new" button
         if (item.special === 'new') {
             return renderNewButtonItem(item, isCollapsed);
         }
 
-        // Handle avatar items
         if (item.avatar) {
             return renderAvatarItem(item, isCollapsed);
         }
 
-        // Standard link with icon
         return (
             <SideBarLink
                 key={item.label || `item-${index}`}
-                icon={item.icon || (() => <Box w={20} h={20} />)} // Fallback empty icon
+                icon={item.icon || (() => <Box w={20} h={20} />)}
                 label={item.label}
                 link={item.link}
                 active={isActive}
@@ -156,7 +144,6 @@ const SecondarySidebar = ({ activeTabWithSecondary }: SecondarySidebarProps) => 
         );
     };
 
-    // Render a section with title and items
     const renderSection = (sectionItem: SectionItem, index: number, isCollapsed = false) => {
         return (
             <div key={sectionItem.section} className={styles.secondarySidebarSection}>
@@ -167,7 +154,6 @@ const SecondarySidebar = ({ activeTabWithSecondary }: SecondarySidebarProps) => 
                     </Text>
                 )}
 
-                {/* Section items */}
                 <div className={styles.sectionItems}>
                     {sectionItem.items.map((subItem, subIndex) =>
                         renderSecondaryItem(subItem, subIndex, isCollapsed)
@@ -184,12 +170,10 @@ const SecondarySidebar = ({ activeTabWithSecondary }: SecondarySidebarProps) => 
             )}
 
             <div ref={secondaryRef} className={secondarySidebarClasses}>
-                {/* Header with root icon */}
                 {renderHeader()}
 
                 {/* Group non-section items and section items separately */}
                 {(() => {
-                    // Split items into non-section and section items
                     const nonSectionItems: SecondaryItem[] = [];
                     const sectionItems: SectionItem[] = [];
 
@@ -203,7 +187,6 @@ const SecondarySidebar = ({ activeTabWithSecondary }: SecondarySidebarProps) => 
 
                     return (
                         <>
-                            {/* Non-section items wrapper */}
                             {nonSectionItems.length > 0 && (
                                 <div className={styles.nonSectionItems}>
                                     {nonSectionItems.map((item, index) =>
@@ -212,7 +195,6 @@ const SecondarySidebar = ({ activeTabWithSecondary }: SecondarySidebarProps) => 
                                 </div>
                             )}
 
-                            {/* Section items */}
                             {sectionItems.map((item, index) =>
                                 renderSection(item, index, isCollapsed)
                             )}

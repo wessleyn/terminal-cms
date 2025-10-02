@@ -2,6 +2,7 @@
 
 import { Menu, ScrollArea, Text, UnstyledButton, rem } from '@mantine/core';
 import { IconBell, IconCheck, IconSettings, IconTrash } from '@tabler/icons-react';
+import Link from 'next/link';
 import classes from './NotificationsMenu.module.css';
 
 const notifications = [
@@ -74,9 +75,12 @@ export default function NotificationsMenu() {
       <Menu.Dropdown>
         <div className={classes.header}>
           <Text fw={600} size="sm">Notifications</Text>
-          <UnstyledButton className={classes.settingsButton}>
-            <IconSettings size={16} />
-          </UnstyledButton>
+          {/* TODO: Link to notification settings */}
+          <Link href={'settings'} className={classes.link}>
+            <UnstyledButton className={classes.settingsButton}>
+              <IconSettings size={16} />
+            </UnstyledButton>
+          </Link>
         </div>
 
         <ScrollArea h={rem(300)} scrollbarSize={6} type="auto">

@@ -100,3 +100,8 @@
   color: var(--mantine-color-green-3);
   background-color: var(--mantine-color-dark-6);
 }
+
+.inboxText:hover {
+  color: var(--mantine-color-green-3);
+  background-color: var(--mantine-color-dark-6);
+}

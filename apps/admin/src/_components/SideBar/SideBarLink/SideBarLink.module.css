@@ -79,4 +79,5 @@
   border-radius: var(--mantine-radius-xl);
   padding: 2px 8px;
   font-weight: 600;
+  margin-left: .25rem;
 }

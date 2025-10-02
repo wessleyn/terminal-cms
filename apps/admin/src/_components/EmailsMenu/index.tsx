@@ -2,6 +2,7 @@
 
 import { Avatar, Menu, ScrollArea, Text, UnstyledButton, rem } from '@mantine/core';
 import { IconArchive, IconMail, IconStar, IconTrash } from '@tabler/icons-react';
+import Link from 'next/link';
 import classes from './EmailsMenu.module.css';
 
 const emails = [
@@ -86,7 +87,9 @@ export default function EmailsMenu() {
 
             <Menu.Dropdown>
                 <div className={classes.header}>
-                    <Text fw={600} size="sm">Inbox</Text>
+                    <Link href={'emails/inbox'} className={classes.inboxText}>
+                        <Text fw={600} size="sm">Inbox</Text>
+                    </Link>
                     <Text size="xs" c="dimmed">{unreadCount} unread</Text>
                 </div>
 

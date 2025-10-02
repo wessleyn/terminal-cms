@@ -29,7 +29,6 @@ const SideBar = () => {
     setMobileSidebar,
   } = useSidebarStore();
 
-  // Initialize responsive sidebar
   useResponsiveSidebar(activeTabWithSecondary);
 
   const overlayRef = useClickOutside(() => {
@@ -69,7 +68,6 @@ const SideBar = () => {
         <div className={`${styles.SideBarMain} ${(isMobile && mobileOpen) ? styles.SideBarMobileMain : ''}`}>
           <Stack justify="center" gap={collapsed && !mobileOpen ? 0 : 'xs'}>
             {sideBarTabs[section].map((item) => {
-              // Check if this link is active - matches exactly or is a parent path
               const isActive =
                 pathname === item.link ||
                 (item.link !== '/' &&
