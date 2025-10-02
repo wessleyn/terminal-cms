@@ -1,0 +1,13 @@
+{
+	"name": "email-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-09-06",
+	"observability": {
+		"enabled": true
+	},
+	"send_email": [
+		{
+			"name": "EMAIL"
+		}
+	]
+}
