@@ -11,19 +11,19 @@
     "seed": "tsx ./prisma/seed/seed.ts"
   },
   "scripts": {
-    "db:dev": "prisma dev",
-    "db:generate": "prisma generate",
-    "db:generate:prod": "prisma generate --no-engine",
-    "db:migrate": "prisma migrate dev --skip-generate",
-    "db:deploy": "prisma migrate deploy",
-    "db:prebuild": "npm run db:generate:prod",
-    "db:predev": "npm run db:generate",
-    "db:studio": "prisma studio",
-    "db:push": "prisma db push",
-    "db:forcePush": "prisma db push  --accept-data-loss",
-    "db:seed": "npm run db:generate && npx prisma db seed",
-    "db:reset": "prisma migrate reset --force",
-    "postinstall": "prisma generate --no-engine"
+    "dev": "prisma dev",
+    "gen": "prisma generate",
+    "gen:prod": "prisma generate --no-engine",
+    "migrate": "prisma migrate dev --skip-generate",
+    "deploy": "prisma migrate deploy",
+    "prebuild": "npm run gen:prod",
+    "predev": "npm run gen",
+    "studio": "prisma studio",
+    "push": "prisma db push",
+    "forcePush": "prisma db push  --accept-data-loss",
+    "seed": "npm run gen && npx prisma db seed",
+    "reset": "prisma migrate reset --force",
+    "postinstall": "prisma gen --no-engine"
   },
   "devDependencies": {
     "@types/node": "^22.15.2",

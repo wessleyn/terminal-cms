@@ -1,0 +1,39 @@
+enum EmailStatus {
+    RECEIVED
+    SENT
+    PENDING
+    FAILED
+}
+
+enum EmailType {
+    INBOX // General emails
+    BLOG
+    WORK
+    APPLICATION
+}
+
+model Email {
+    id         String           @id @default(cuid())
+    to         EmailedAddress[] @relation("EmailToAddresses")
+    fromId     String
+    from       EmailedAddress   @relation(fields: [fromId], references: [id], name: "EmailFromAddress")
+    subject    String
+    body       String
+    status     EmailStatus      @default(PENDING)
+    type       EmailType
+    sentAt     DateTime?
+    receivedAt DateTime?
+    createdAt  DateTime         @default(now())
+    updatedAt  DateTime         @updatedAt
+}
+
+model EmailedAddress {
+    id        String   @id @default(cuid())
+    email     String   @unique
+    name      String?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    sentEmails     Email[] @relation("EmailFromAddress")
+    receivedEmails Email[] @relation("EmailToAddresses")
+}

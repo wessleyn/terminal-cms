@@ -16,6 +16,7 @@
     "wrangler": "^4.41.0"
   },
   "dependencies": {
+    "@repo/db": "^0.0.0",
     "postal-mime": "^2.4.6"
   }
 }
