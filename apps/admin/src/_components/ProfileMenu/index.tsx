@@ -3,7 +3,7 @@
 import { Avatar, Loader, Menu, Text, UnstyledButton } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { getCurrentUser, SignOut } from '@repo/auth/src/utils';
-import { IconChevronDown, IconLogout, IconSettings, IconSwitchHorizontal } from '@tabler/icons-react';
+import { IconLogout, IconSettings, IconSwitchHorizontal } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -80,7 +80,6 @@ export default function ProfileMenu() {
     }
   };
 
-  const [opened, setOpened] = useState(false);
 
   if (isLoading) {
     return (
@@ -95,8 +94,6 @@ export default function ProfileMenu() {
       width={200}
       position="bottom-end"
       transitionProps={{ transition: 'pop-top-right' }}
-      onClose={() => setOpened(false)}
-      onOpen={() => setOpened(true)}
       withinPortal
     >
       <Menu.Target>
@@ -108,7 +105,6 @@ export default function ProfileMenu() {
               <Text c="dimmed" size="xs">{session?.role || 'Loading...'}</Text>
             </div>
           </div>
-          <IconChevronDown size={16} className={opened ? 'chevron-rotated' : ''} />
         </UnstyledButton>
       </Menu.Target>
 

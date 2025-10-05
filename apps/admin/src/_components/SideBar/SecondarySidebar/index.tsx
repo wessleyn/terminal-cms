@@ -3,11 +3,14 @@
 import { Avatar, Box, Text, Title } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
 import { IconPlus } from '@tabler/icons-react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSidebarStore } from '../../../_stores/sidebarStore';
 import SideBarLink from '../SideBarLink';
+import linkStyles from '../SideBarLink/SideBarLink.module.css';
 import { SecondaryItem, SectionItem, SidebarItemWithSecondary } from '../types';
 import styles from './SecondarySidebar.module.css';
+
 
 interface SecondarySidebarProps {
     activeTabWithSecondary: SidebarItemWithSecondary | null;
@@ -38,17 +41,17 @@ const SecondarySidebar = ({ activeTabWithSecondary }: SecondarySidebarProps) => 
         const Icon = activeTabWithSecondary.icon;
 
         return (
-            <div className={styles.secondarySidebarHeader}>
+            <Link href={activeTabWithSecondary.link} className={`${styles.secondarySidebarHeader} ${linkStyles.link}`}>
                 <div className={styles.rootIcon}>
                     <Icon size={24} stroke={1.5} />
                 </div>
 
                 <div className={styles.headerContent}>
                     {(!isMobile || secondaryOpen) && (
-                        <Title order={4}>{activeTabWithSecondary.label}</Title>
+                        <Title order={4} className={linkStyles.link} style={{marginLeft: '-10px'}}>{activeTabWithSecondary.label}</Title>
                     )}
                 </div>
-            </div>
+            </Link>
         );
     };
 

@@ -1,8 +1,15 @@
 import { Alert, Container, Title } from '@mantine/core';
 import { PrivacyType } from '@repo/db';
+import { Metadata } from 'next';
 import { fetchPrivacySections, getPrivacyDetails } from './_actions/fetchPrivacySections';
 import DescriptionEditor from './_components/DescriptionEditor';
 import { DragNDrop } from './_components/DragNDrop';
+
+export const metadata: Metadata = {
+    title: "Portfolio Privacy",
+    description: "Manage your portfolio privacy terms.",
+};
+
 
 export default async function PrivacyPage() {
     const privacyType = PrivacyType.PORTFOLIO;

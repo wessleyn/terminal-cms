@@ -149,9 +149,7 @@
 }
 
 .profile-button:hover {
-  background-color: var(--mantine-color-dark-7);
   color: var(--mantine-color-green-2);
-  box-shadow: 0 0 5px rgba(74, 246, 38, 0.1);
 }
 
 .profile-info {
