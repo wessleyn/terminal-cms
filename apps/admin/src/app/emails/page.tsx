@@ -1,8 +1,7 @@
-import { Box, Container, Paper } from "@mantine/core";
+import { Container, Paper } from "@mantine/core";
 import { Metadata } from "next";
-import EmailList from "./_components/EmailList";
-import EmailSelector from "./_components/EmailSelector";
-import FilterHeader from "./_components/FilterHeader";
+import fetchAllMails from "./_actions/fetchAllMails";
+import EmailPage from "./_components/EmailPage";
 
 export const metadata: Metadata = {
     title: "All Mails",
@@ -10,6 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AllMailsPage() {
+    const emails = await fetchAllMails()
     return (
         <Container p={0} fluid>
             <Paper
@@ -18,11 +18,7 @@ export default async function AllMailsPage() {
                 px="lg"
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.15)" }}
                 radius="md">
-                <FilterHeader />
-                <EmailSelector />
-                <Box mt="md">
-                    <EmailList />
-                </Box>
+               <EmailPage emails={emails} />
             </Paper>
         </Container>
     )

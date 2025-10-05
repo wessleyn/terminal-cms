@@ -1,5 +1,6 @@
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
+import { prisma } from "@repo/db";
 import CustomProvider from "@repo/ui/components/shared/CustomProvider";
 import DashboardThemeToggler from "../_components/DashboardThemeToggler";
 import EmailsMenu from "../_components/EmailsMenu";
@@ -11,12 +12,29 @@ import SideBar from "../_components/SideBar";
 import SidebarToggle from "../_components/SidebarToggle";
 import "./_styles/dashboard.css";
 
-// Make the entire admin app dynamic
 export const dynamic = 'force-dynamic';
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children
 }: { children: React.ReactNode }) {
+
+  const newMails = await prisma.email.findMany({
+    where: {
+      isRead: false,
+      isArchived: false,
+      isSpam: false,
+      receivedAt: {
+        not: null
+      }
+    },
+    include: {
+      from: true,
+    },
+    orderBy: {
+      receivedAt: 'desc'
+    }
+  })
+
   return (
     <CustomProvider>
       <div className="dashboard-layout">
@@ -37,7 +55,7 @@ export default function DashboardLayout({
             <div className="header-right">
               <DashboardThemeToggler />
               <NotificationsMenu />
-              <EmailsMenu />
+              <EmailsMenu mails={newMails} />
               <ProfileMenu />
             </div>
           </header>

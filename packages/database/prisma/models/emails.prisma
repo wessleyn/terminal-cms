@@ -15,12 +15,23 @@ enum EmailType {
 model Email {
     id         String           @id @default(cuid())
     to         EmailedAddress[] @relation("EmailToAddresses")
+    
     fromId     String
     from       EmailedAddress   @relation(fields: [fromId], references: [id], name: "EmailFromAddress")
+    
     subject    String
     body       String
+    attachments Attachment[] 
+    
+    isArchived Boolean          @default(false)
+    isRead     Boolean          @default(false)
+    isStarred  Boolean          @default(false)
+    isSpam     Boolean          @default(false)
+    isTrash    Boolean          @default(false)
+
     status     EmailStatus      @default(PENDING)
     type       EmailType
+
     sentAt     DateTime?
     receivedAt DateTime?
     createdAt  DateTime         @default(now())
@@ -36,4 +47,21 @@ model EmailedAddress {
 
     sentEmails     Email[] @relation("EmailFromAddress")
     receivedEmails Email[] @relation("EmailToAddresses")
+}
+
+
+model Attachment {
+    id        String   @id @default(cuid())
+    emailId   String
+   
+    email     Email    @relation(fields: [emailId], references: [id])
+   
+    filename  String // Original filename
+    url       String // URL or path to the stored file
+    
+    mimeType  String // e.g., "image/png", "application/pdf"
+    size      Int // Size in bytes
+ 
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
