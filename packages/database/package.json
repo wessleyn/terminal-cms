@@ -23,7 +23,7 @@
     "forcePush": "prisma db push  --accept-data-loss",
     "seed": "npm run gen && npx prisma db seed",
     "reset": "prisma migrate reset --force",
-    "postinstall": "prisma gen --no-engine"
+    "postinstall": "prisma generate --no-engine"
   },
   "devDependencies": {
     "@types/node": "^22.15.2",
