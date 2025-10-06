@@ -1,5 +1,5 @@
 {
-	"name": "email-worker",
+	"name": "portfolio-blog-mailer",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-09-06",
 	"compatibility_flags": ["nodejs_compat"],
