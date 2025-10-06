@@ -1,12 +1,12 @@
 'use client';
 
-import { Card, Group, Paper, SimpleGrid, Skeleton, Stack, Table } from '@mantine/core';
+import { Card, Group, Skeleton, Stack, Table } from '@mantine/core';
 
 export function CommentsSkeleton() {
   return (
     <Stack gap="md">
       {/* Header stats skeleton */}
-      <Paper p="md" withBorder mb="lg">
+      {/* <Paper p="md" withBorder mb="lg">
         <SimpleGrid cols={{ base: 1, xs: 2, md: 4 }}>
           {[1, 2, 3, 4].map((i) => (
             <Group key={i} p="md">
@@ -18,7 +18,7 @@ export function CommentsSkeleton() {
             </Group>
           ))}
         </SimpleGrid>
-      </Paper>
+      </Paper> */}
 
       {/* Comments table skeleton */}
       <Card p={0} radius="md" withBorder>
