@@ -85,7 +85,7 @@ const EmailList = ({ fetchedMails, toggleEmailSelection, selectedEmails, showLab
                                             )}
                                             {email.body && (
                                                 <Text size="xs" c="dimmed" lineClamp={1}>
-                                                    {email.body.replace(/<[^>]+>/g, '').substring(0, 100)}
+                                                    {email.bodyPreview ?? email.body.replace(/<[^>]+>/g, '').substring(0, 100)}
                                                 </Text>
                                             )}
                                         </Flex>

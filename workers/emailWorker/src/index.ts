@@ -32,6 +32,13 @@ export default {
 		const email = await parser.parse(await rawEmail.arrayBuffer());
 		const prisma = getPrisma(env.DATABASE_URL);
 
+		const htmlBody = email.html ?? '';
+		const plainBody = email.text ?? '';
+		const preview = (plainBody || htmlBody.replace(/<[^>]+>/g, ' '))
+			.replace(/\s+/g, ' ')
+			.slice(0, 200);
+
+
 		const savedEmail = await prisma.email.create({
 			data: {
 				id: email.messageId ?? crypto.randomUUID(),
@@ -60,11 +67,16 @@ export default {
 				},
 				subject: email.subject!,
 				body: email.html ?? '',
+				htmlBody,
+				plainBody,
+				bodyPreview: preview,
 				status: EmailStatus.RECEIVED,
 				receivedAt: new Date(email.date || Date.now()),
 				type: 'INBOX',
 			},
 		});
+
+		// TODO: handle attachments using cloudnary
 
 		console.log("Received Email:", savedEmail)
 

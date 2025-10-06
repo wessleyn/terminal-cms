@@ -62,6 +62,7 @@ export interface FetchedMail {
     isTrash: boolean;
     status: EmailStatus;
     type: EmailType;
+    bodyPreview: string | null;
     sentAt: Date | null;
     receivedAt: Date | null;
     createdAt: Date;
