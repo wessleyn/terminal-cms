@@ -16,7 +16,7 @@
         "@repo/eslint-config": "*",
         "@repo/typescript-config": "*",
         "@types/node": "^20.10.5",
-        "next": "*",
+        "next": "^15.5.15",
         "react-email": "4.0.11",
         "typescript": "^5.3.3"
     },
